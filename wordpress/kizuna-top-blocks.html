@@ -1,0 +1,802 @@
+<!-- ============================================================
+  キズナ トップページ / WordPress ブロック版
+  ------------------------------------------------------------
+  貼り付け方：
+   1. 固定ページを新規作成
+   2. 右上の「︙」→「コードエディター」に切り替え
+   3. このファイルの中身を丸ごと貼り付け
+   4. 「︙」→「ビジュアルエディター」に戻す
+   5. 「設定 → 表示設定 → ホームページの表示」でこの固定ページを指定
+  ------------------------------------------------------------
+  <style> タグを使っていないので、フリープランでも消えません。
+  すべてコアブロックなので、貼り付けたあとは普通に編集できます。
+  「［写真を入れる］」の枠は、削除して画像ブロックを置いてください。
+============================================================ -->
+
+<!-- ========== ヒーロー ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"gradient":"linear-gradient(170deg,#fde8ec 0%,#fdf6ec 55%,#fdfaf3 100%)"}},"layout":{"type":"constrained","contentSize":"860px"}} -->
+<div class="wp-block-group alignfull has-background" style="background:linear-gradient(170deg,#fde8ec 0%,#fdf6ec 55%,#fdfaf3 100%);padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","level":1,"anchor":"kzn-top","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"clamp(2.2rem,10vw,3.2rem)","letterSpacing":"0.3em"}}} -->
+<h1 class="wp-block-heading has-text-align-center has-text-color" id="kzn-top" style="color:#1f5c4d;font-size:clamp(2.2rem,10vw,3.2rem);letter-spacing:0.3em">キズナ</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"clamp(1.05rem,4.2vw,1.35rem)","fontWeight":"700","lineHeight":"2"}}} -->
+<p class="has-text-align-center" style="font-size:clamp(1.05rem,4.2vw,1.35rem);font-weight:700;line-height:2">全国の子どもたちが、<br>仏教の教えをもとに<br>ステキな毎日を送れるように。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.95rem"}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;font-size:0.95rem">さまざまなサポートを受けることができる、子どもたちのための集まりです。学校のこと、進路のこと、毎日のこと。ひとりで抱えこまずに、いっしょに考えていきましょう。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"40px","right":"20px","bottom":"40px","left":"20px"},"margin":{"top":"28px"}},"color":{"background":"#ffffff"},"border":{"radius":"24px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:24px;background-color:#ffffff;margin-top:28px;padding-top:40px;padding-right:20px;padding-bottom:40px;padding-left:20px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.9rem"}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;font-size:0.9rem">［写真を入れる］子どもたちの写真（推奨 1200×900px）<br>この枠を削除して、画像ブロックを置いてください</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"},"style":{"spacing":{"margin":{"top":"32px"}}}} -->
+<div class="wp-block-buttons" style="margin-top:32px">
+<!-- wp:button {"style":{"color":{"background":"#f3a8b8","text":"#ffffff"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"16px","bottom":"16px","left":"32px","right":"32px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#kzn-club" style="border-radius:999px;color:#ffffff;background-color:#f3a8b8;padding-top:16px;padding-right:32px;padding-bottom:16px;padding-left:32px;font-weight:700">キズナクラブに申し込む →</a></div>
+<!-- /wp:button -->
+<!-- wp:button {"style":{"color":{"background":"#ffffff","text":"#1f5c4d"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"16px","bottom":"16px","left":"32px","right":"32px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#kzn-menu" style="border-radius:999px;color:#1f5c4d;background-color:#ffffff;padding-top:16px;padding-right:32px;padding-bottom:16px;padding-left:32px;font-weight:700">できることを見る</a></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:buttons -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== お知らせ ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"background":"#fdfaf3"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#fdfaf3;padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-news","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-news" style="color:#1f5c4d;font-size:1.7rem">キズナからのお知らせ</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.92rem"},"spacing":{"margin":{"bottom":"32px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:32px;font-size:0.92rem">最新の行事・企画のご案内です。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"20px","right":"24px","bottom":"20px","left":"24px"},"margin":{"bottom":"14px"}},"color":{"background":"#ffffff"},"border":{"radius":"18px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:18px;background-color:#ffffff;margin-bottom:14px;padding-top:20px;padding-right:24px;padding-bottom:20px;padding-left:24px">
+<!-- wp:paragraph {"style":{"color":{"text":"#8a6100"},"typography":{"fontSize":"0.78rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-color" style="color:#8a6100;margin-bottom:4px;font-size:0.78rem;font-weight:700">イベント ／ 9月13日（日）</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p style="margin-bottom:0;font-size:1rem;font-weight:700"><a href="#kzn-fest">キズナ文化祭を東京ビッグサイトで開催します</a></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"20px","right":"24px","bottom":"20px","left":"24px"},"margin":{"bottom":"14px"}},"color":{"background":"#ffffff"},"border":{"radius":"18px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:18px;background-color:#ffffff;margin-bottom:14px;padding-top:20px;padding-right:24px;padding-bottom:20px;padding-left:24px">
+<!-- wp:paragraph {"style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"0.78rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-color" style="color:#1f5c4d;margin-bottom:4px;font-size:0.78rem;font-weight:700">特別企画 ／ 受付中</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p style="margin-bottom:0;font-size:1rem;font-weight:700"><a href="#kzn-shindan">キズナ式才能診断 ── スマホで2分、自分の強みを活かせる進路が分かる</a></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"20px","right":"24px","bottom":"20px","left":"24px"}},"color":{"background":"#ffffff"},"border":{"radius":"18px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:18px;background-color:#ffffff;padding-top:20px;padding-right:24px;padding-bottom:20px;padding-left:24px">
+<!-- wp:paragraph {"style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"0.78rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-color" style="color:#1f5c4d;margin-bottom:4px;font-size:0.78rem;font-weight:700">受付 ／ 二千畳行事日のみ</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p style="margin-bottom:0;font-size:1rem;font-weight:700"><a href="#kzn-corner">キズナポイントプレゼントの提供品を、キズナコーナーにて受け付けています</a></p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== メニュー ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"background":"#ffffff"}},"layout":{"type":"constrained","contentSize":"900px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#ffffff;padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-menu","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-menu" style="color:#1f5c4d;font-size:1.7rem">キズナのご案内</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.92rem"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:28px;font-size:0.92rem">気になるところからご覧ください。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"14px","bottom":"22px","left":"14px"}},"color":{"background":"#dfeaf6"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#dfeaf6;padding-top:22px;padding-right:14px;padding-bottom:22px;padding-left:14px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#2f6b8f"},"typography":{"fontSize":"0.98rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#2f6b8f;margin-bottom:4px;font-size:0.98rem;font-weight:700"><a href="#kzn-club">キズナクラブ・<br>ジュニアクラブ</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.74rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.74rem">入会・登録変更・会費</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"14px","bottom":"22px","left":"14px"}},"color":{"background":"#e2eedd"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#e2eedd;padding-top:22px;padding-right:14px;padding-bottom:22px;padding-left:14px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#3f6b3a"},"typography":{"fontSize":"0.98rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#3f6b3a;margin-bottom:4px;font-size:0.98rem;font-weight:700"><a href="#">キズナクラブ特典</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.74rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.74rem">会員のみなさまへ</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"14px","bottom":"22px","left":"14px"}},"color":{"background":"#fdf3e3"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#fdf3e3;padding-top:22px;padding-right:14px;padding-bottom:22px;padding-left:14px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#8a6435"},"typography":{"fontSize":"0.98rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#8a6435;margin-bottom:4px;font-size:0.98rem;font-weight:700"><a href="#">キズナカード・<br>キズナポイント</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.74rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.74rem">ためる・つかう</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"14px","bottom":"22px","left":"14px"}},"color":{"background":"#fbf1cd"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#fbf1cd;padding-top:22px;padding-right:14px;padding-bottom:22px;padding-left:14px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#8a6100"},"typography":{"fontSize":"0.98rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#8a6100;margin-bottom:4px;font-size:0.98rem;font-weight:700"><a href="#kzn-katsudo">キズナの活動</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.74rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.74rem">行事・文化祭のようす</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"14px","bottom":"22px","left":"14px"}},"color":{"background":"#fde8ec"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#fde8ec;padding-top:22px;padding-right:14px;padding-bottom:22px;padding-left:14px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.98rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:4px;font-size:0.98rem;font-weight:700"><a href="#kzn-juku">キズナ塾</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.74rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.74rem">申し込み・サポーター募集</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"14px","bottom":"22px","left":"14px"}},"color":{"background":"#f6e9e2"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#f6e9e2;padding-top:22px;padding-right:14px;padding-bottom:22px;padding-left:14px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#8a5a45"},"typography":{"fontSize":"0.98rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#8a5a45;margin-bottom:4px;font-size:0.98rem;font-weight:700"><a href="#">キズナスタッフ・<br>キズナサポーター紹介</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.74rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.74rem">支えている人たち</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"14px","bottom":"22px","left":"14px"}},"color":{"background":"#efeaf7"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#efeaf7;padding-top:22px;padding-right:14px;padding-bottom:22px;padding-left:14px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6d5b96"},"typography":{"fontSize":"0.98rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6d5b96;margin-bottom:4px;font-size:0.98rem;font-weight:700"><a href="#kzn-faq">よくある質問</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.74rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.74rem">会費・登録内容の変更など</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"14px","bottom":"22px","left":"14px"}},"color":{"background":"#eceae6"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#eceae6;padding-top:22px;padding-right:14px;padding-bottom:22px;padding-left:14px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#55524d"},"typography":{"fontSize":"0.98rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#55524d;margin-bottom:4px;font-size:0.98rem;font-weight:700"><a href="#kzn-contact">お問い合わせ・<br>申し込み</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.74rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.74rem">ご相談はこちらから</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.9rem","fontWeight":"700"},"spacing":{"margin":{"top":"24px","bottom":"0"}}}} -->
+<p class="has-text-align-center" style="margin-top:24px;margin-bottom:0;font-size:0.9rem;font-weight:700"><a href="#">学徒サイトに戻る →</a></p>
+<!-- /wp:paragraph -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== キズナクラブ ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"background":"#fdfaf3"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#fdfaf3;padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-club","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-club" style="color:#1f5c4d;font-size:1.7rem">キズナクラブ・ジュニアクラブ</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.92rem"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:28px;font-size:0.92rem">お子さんの年齢に合わせて参加できます。まずはお気軽にお申し込みください。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"32px","right":"24px","bottom":"32px","left":"24px"}},"color":{"background":"#ffffff"},"border":{"radius":"24px","width":"3px","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-width:3px;border-radius:24px;background-color:#ffffff;padding-top:32px;padding-right:24px;padding-bottom:32px;padding-left:24px">
+
+<!-- wp:table {"style":{"typography":{"fontSize":"0.92rem"}}} -->
+<figure class="wp-block-table" style="font-size:0.92rem"><table><tbody><tr><td>会費</td><td>月200円（キズナクラブ）</td></tr><tr><td>オンラインコース</td><td>月2000円</td></tr><tr><td>納め方</td><td>規定の納め方でご納入ください（自動引き落としはありません）</td></tr><tr><td>登録内容の変更</td><td>申し込みフォームの「登録情報の変更・修正はこちら」から</td></tr></tbody></table></figure>
+<!-- /wp:table -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"},"style":{"spacing":{"margin":{"top":"28px"}}}} -->
+<div class="wp-block-buttons" style="margin-top:28px">
+<!-- wp:button {"style":{"color":{"background":"#f3a8b8","text":"#ffffff"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"26px","right":"26px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#ffffff;background-color:#f3a8b8;padding-top:14px;padding-right:26px;padding-bottom:14px;padding-left:26px;font-weight:700">キズナクラブに申し込む →</a></div>
+<!-- /wp:button -->
+<!-- wp:button {"style":{"color":{"background":"#e4efe9","text":"#1f5c4d"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"26px","right":"26px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#1f5c4d;background-color:#e4efe9;padding-top:14px;padding-right:26px;padding-bottom:14px;padding-left:26px;font-weight:700">キズナクラブの詳細を見る</a></div>
+<!-- /wp:button -->
+<!-- wp:button {"style":{"color":{"background":"#e4efe9","text":"#1f5c4d"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"26px","right":"26px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#1f5c4d;background-color:#e4efe9;padding-top:14px;padding-right:26px;padding-bottom:14px;padding-left:26px;font-weight:700">登録内容の変更はこちら</a></div>
+<!-- /wp:button -->
+<!-- wp:button {"style":{"color":{"background":"#e4efe9","text":"#1f5c4d"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"26px","right":"26px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#1f5c4d;background-color:#e4efe9;padding-top:14px;padding-right:26px;padding-bottom:14px;padding-left:26px;font-weight:700">キズナ会費の納め方はこちら</a></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:buttons -->
+
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== キズナ塾 ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"background":"#f2f8ee"}},"layout":{"type":"constrained","contentSize":"860px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#f2f8ee;padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-juku","style":{"color":{"text":"#4a8b2f"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-juku" style="color:#4a8b2f;font-size:1.7rem">キズナ塾</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.95rem"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:28px;font-size:0.95rem">子どもたちの勉強を、みんなで支える取り組みです。<br>学びたい子と、教えたい大人をつないでいます。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"32px","right":"20px","bottom":"32px","left":"20px"}},"color":{"background":"#ffffff"},"border":{"radius":"24px","width":"2px","style":"dashed","color":"#a8cf8f"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#a8cf8f;border-style:dashed;border-width:2px;border-radius:24px;background-color:#ffffff;padding-top:32px;padding-right:20px;padding-bottom:32px;padding-left:20px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#4a8b2f"},"typography":{"fontSize":"0.9rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#4a8b2f;margin-bottom:0;font-size:0.9rem">［画像を入れる］キズナ塾のイラスト<br>この枠を削除して、画像ブロックを置いてください</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:list {"style":{"typography":{"fontSize":"0.95rem"},"spacing":{"margin":{"top":"26px"}}}} -->
+<ul class="wp-block-list" style="margin-top:26px;font-size:0.95rem"><!-- wp:list-item -->
+<li>お子さんの「申し込み」を受け付けています</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>「子供達への勉強サポート」をしてくださる方も募集しています</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"},"style":{"spacing":{"margin":{"top":"26px"}}}} -->
+<div class="wp-block-buttons" style="margin-top:26px">
+<!-- wp:button {"style":{"color":{"background":"#7ab648","text":"#ffffff"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"26px","right":"26px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#ffffff;background-color:#7ab648;padding-top:14px;padding-right:26px;padding-bottom:14px;padding-left:26px;font-weight:700">キズナ塾に申し込む →</a></div>
+<!-- /wp:button -->
+<!-- wp:button {"style":{"color":{"background":"#ffffff","text":"#4a8b2f"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"26px","right":"26px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#4a8b2f;background-color:#ffffff;padding-top:14px;padding-right:26px;padding-bottom:14px;padding-left:26px;font-weight:700">勉強サポートに応募する</a></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:buttons -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== 才能診断 ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"background":"#ffffff"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#ffffff;padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.78rem","fontWeight":"700","letterSpacing":"0.18em"},"spacing":{"margin":{"bottom":"6px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:6px;font-size:0.78rem;font-weight:700;letter-spacing:0.18em">キズナ特別企画</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-shindan","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-shindan" style="color:#1f5c4d;font-size:1.7rem">キズナ式 才能診断</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.92rem"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:28px;font-size:0.92rem">〜 自分の強みを活かせる進路が分かる！ 〜</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"32px","right":"24px","bottom":"32px","left":"24px"}},"color":{"background":"#fdfaf3"},"border":{"radius":"24px","width":"3px","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-width:3px;border-radius:24px;background-color:#fdfaf3;padding-top:32px;padding-right:24px;padding-bottom:32px;padding-left:24px">
+
+<!-- wp:heading {"textAlign":"center","level":3,"style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.35rem"}}} -->
+<h3 class="wp-block-heading has-text-align-center has-text-color" style="color:#1f5c4d;font-size:1.35rem">スマホで2分。<br>あなたの「強み」を見つけよう。</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.88rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"24px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:24px;font-size:0.88rem;font-weight:700">GoogleやFacebookなど、世界で最も活用されていると言われる心理分析「ビッグ5」を使用</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:table {"style":{"typography":{"fontSize":"0.92rem"}}} -->
+<figure class="wp-block-table" style="font-size:0.92rem"><table><tbody><tr><td>対象</td><td>中学生 〜 35才</td></tr><tr><td>所要時間</td><td>スマホで約2分</td></tr><tr><td>費用</td><td>無料</td></tr><tr><td>分析方法</td><td>心理分析「ビッグ5」</td></tr></tbody></table></figure>
+<!-- /wp:table -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"20px","right":"18px","bottom":"20px","left":"18px"},"margin":{"top":"24px"}},"color":{"background":"#e4efe9"},"border":{"radius":"18px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:18px;background-color:#e4efe9;margin-top:24px;padding-top:20px;padding-right:18px;padding-bottom:20px;padding-left:18px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"0.95rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"14px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#1f5c4d;margin-bottom:14px;font-size:0.95rem;font-weight:700">参加者限定！ どちらかお好きな特典をプレゼント 🎁</p>
+<!-- /wp:paragraph -->
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"16px","right":"12px","bottom":"16px","left":"12px"}},"color":{"background":"#ffffff"},"border":{"radius":"14px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:14px;background-color:#ffffff;padding-top:16px;padding-right:12px;padding-bottom:16px;padding-left:12px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"1.1rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:4px;font-size:1.1rem;font-weight:700">A</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.82rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center" style="margin-bottom:0;font-size:0.82rem">特典A の名称<br>（画像を入れる）</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"16px","right":"12px","bottom":"16px","left":"12px"}},"color":{"background":"#ffffff"},"border":{"radius":"14px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:14px;background-color:#ffffff;padding-top:16px;padding-right:12px;padding-bottom:16px;padding-left:12px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#2f6b8f"},"typography":{"fontSize":"1.1rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"4px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#2f6b8f;margin-bottom:4px;font-size:1.1rem;font-weight:700">B</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.82rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center" style="margin-bottom:0;font-size:0.82rem">特典B の名称<br>（画像を入れる）</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.9rem","fontWeight":"700"},"spacing":{"margin":{"top":"20px"}}}} -->
+<p class="has-text-align-center" style="margin-top:20px;font-size:0.9rem;font-weight:700"><a href="#">家族に送る文章の実例を見る →</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons">
+<!-- wp:button {"style":{"color":{"background":"#f3a8b8","text":"#ffffff"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"16px","bottom":"16px","left":"32px","right":"32px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#ffffff;background-color:#f3a8b8;padding-top:16px;padding-right:32px;padding-bottom:16px;padding-left:32px;font-weight:700">才能診断を受けてみる →</a></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:buttons -->
+
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== 文化祭 ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"48px","right":"20px","bottom":"48px","left":"20px"}},"color":{"background":"#fdfaf3"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#fdfaf3;padding-top:48px;padding-right:20px;padding-bottom:48px;padding-left:20px">
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"36px","right":"24px","bottom":"36px","left":"24px"}},"color":{"gradient":"linear-gradient(135deg,#fff5f8 0%,#f2f7ff 100%)"},"border":{"radius":"28px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:28px;background:linear-gradient(135deg,#fff5f8 0%,#f2f7ff 100%);padding-top:36px;padding-right:24px;padding-bottom:36px;padding-left:24px">
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.78rem","fontWeight":"700","letterSpacing":"0.14em"},"spacing":{"margin":{"bottom":"8px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:8px;font-size:0.78rem;font-weight:700;letter-spacing:0.14em">SPECIAL EVENT</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-fest","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"1.9rem","letterSpacing":"0.12em"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-fest" style="color:#d8657c;font-size:1.9rem;letter-spacing:0.12em">キズナ文化祭</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.3rem","fontWeight":"700"},"spacing":{"margin":{"top":"14px","bottom":"2px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#1f5c4d;margin-top:14px;margin-bottom:2px;font-size:1.3rem;font-weight:700">9月13日（日）</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.95rem"},"spacing":{"margin":{"bottom":"22px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:22px;font-size:0.95rem">in 東京ビッグサイト</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons">
+<!-- wp:button {"style":{"color":{"background":"#f0b429","text":"#4a3300"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"28px","right":"28px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#4a3300;background-color:#f0b429;padding-top:14px;padding-right:28px;padding-bottom:14px;padding-left:28px;font-weight:700">文化祭の詳細はこちら →</a></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:buttons -->
+
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== キズナの活動 ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"background":"#ffffff"}},"layout":{"type":"constrained","contentSize":"900px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#ffffff;padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-katsudo","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-katsudo" style="color:#1f5c4d;font-size:1.7rem">キズナの活動</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.92rem"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:28px;font-size:0.92rem">全国で、こんな時間を過ごしています。<br>下の枠を削除して、ギャラリーブロックで写真を入れると簡単です。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"28px","right":"8px","bottom":"28px","left":"8px"}},"color":{"background":"#ffffff"},"border":{"radius":"20px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:20px;background-color:#ffffff;padding-top:28px;padding-right:8px;padding-bottom:28px;padding-left:8px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.76rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:0;font-size:0.76rem">写真1</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"28px","right":"8px","bottom":"28px","left":"8px"}},"color":{"background":"#ffffff"},"border":{"radius":"20px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:20px;background-color:#ffffff;padding-top:28px;padding-right:8px;padding-bottom:28px;padding-left:8px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.76rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:0;font-size:0.76rem">写真2</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"28px","right":"8px","bottom":"28px","left":"8px"}},"color":{"background":"#ffffff"},"border":{"radius":"20px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:20px;background-color:#ffffff;padding-top:28px;padding-right:8px;padding-bottom:28px;padding-left:8px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.76rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:0;font-size:0.76rem">写真3</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"28px","right":"8px","bottom":"28px","left":"8px"}},"color":{"background":"#ffffff"},"border":{"radius":"20px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:20px;background-color:#ffffff;padding-top:28px;padding-right:8px;padding-bottom:28px;padding-left:8px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.76rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:0;font-size:0.76rem">写真4</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"28px","right":"8px","bottom":"28px","left":"8px"}},"color":{"background":"#ffffff"},"border":{"radius":"20px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:20px;background-color:#ffffff;padding-top:28px;padding-right:8px;padding-bottom:28px;padding-left:8px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.76rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:0;font-size:0.76rem">写真5</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"28px","right":"8px","bottom":"28px","left":"8px"}},"color":{"background":"#ffffff"},"border":{"radius":"20px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:20px;background-color:#ffffff;padding-top:28px;padding-right:8px;padding-bottom:28px;padding-left:8px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.76rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:0;font-size:0.76rem">写真6</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"28px"}}}} -->
+<div class="wp-block-buttons" style="margin-top:28px">
+<!-- wp:button {"style":{"color":{"background":"#e4efe9","text":"#1f5c4d"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"14px","bottom":"14px","left":"28px","right":"28px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#1f5c4d;background-color:#e4efe9;padding-top:14px;padding-right:28px;padding-bottom:14px;padding-left:28px;font-weight:700">活動の記録をもっと見る</a></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:buttons -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== キズナコーナー ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"background":"#e4efe9"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#e4efe9;padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-corner","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-corner" style="color:#1f5c4d;font-size:1.7rem">キズナコーナーのご案内</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.92rem"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:28px;font-size:0.92rem">キズナポイントプレゼントの提供品を受け付けています。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"24px","right":"20px","bottom":"24px","left":"20px"}},"color":{"background":"#ffffff"},"border":{"radius":"24px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:24px;background-color:#ffffff;padding-top:24px;padding-right:20px;padding-bottom:24px;padding-left:20px">
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"0.95rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"2px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#1f5c4d;margin-bottom:2px;font-size:0.95rem;font-weight:700">高校生までの子供達が喜ぶもの</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.78rem"},"spacing":{"margin":{"bottom":"18px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:18px;font-size:0.78rem">（おもちゃ、漫画、ゲーム など）</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"10px","bottom":"22px","left":"10px"}},"color":{"background":"#f0625f","text":"#ffffff"},"border":{"radius":"12px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-text-color has-background" style="border-radius:12px;color:#ffffff;background-color:#f0625f;padding-top:22px;padding-right:10px;padding-bottom:22px;padding-left:10px">
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.92rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center" style="margin-bottom:0;font-size:0.92rem;font-weight:700">正本堂２階</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"10px","bottom":"22px","left":"10px"}},"color":{"background":"#4a9fd8","text":"#ffffff"},"border":{"radius":"12px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-text-color has-background" style="border-radius:12px;color:#ffffff;background-color:#4a9fd8;padding-top:22px;padding-right:10px;padding-bottom:22px;padding-left:10px">
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.92rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center" style="margin-bottom:0;font-size:0.92rem;font-weight:700">サンキュー売店</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"22px","right":"10px","bottom":"22px","left":"10px"},"margin":{"top":"10px"}},"color":{"background":"#ffe066"},"border":{"radius":"12px","width":"3px","color":"#f0b429"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f0b429;border-width:3px;border-radius:12px;background-color:#ffe066;margin-top:10px;padding-top:22px;padding-right:10px;padding-bottom:22px;padding-left:10px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#2f6b8f"},"typography":{"fontSize":"1rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#2f6b8f;margin-bottom:0;font-size:1rem;font-weight:700">キズナコーナー</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.85rem","fontWeight":"700"},"spacing":{"margin":{"top":"12px","bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-top:12px;margin-bottom:0;font-size:0.85rem;font-weight:700">↑ サンキュー売店のすぐそばです</p>
+<!-- /wp:paragraph -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- wp:heading {"level":3,"style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.1rem"},"spacing":{"margin":{"top":"32px"}}}} -->
+<h3 class="wp-block-heading has-text-color" style="color:#1f5c4d;margin-top:32px;font-size:1.1rem">受付について</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list {"style":{"typography":{"fontSize":"0.94rem"}}} -->
+<ul class="wp-block-list" style="font-size:0.94rem"><!-- wp:list-item -->
+<li>場所：正本堂２階・サンキュー売店のすぐそば「キズナコーナー」</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>受付品：高校生までの子供達が喜ぶもの（おもちゃ・漫画・ゲームなど）</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>キズナ担当へのご紹介、打ち合わせも承っています</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>個別コース登録・無料体験のご相談もこちらへ</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"14px","right":"18px","bottom":"14px","left":"18px"},"margin":{"top":"18px"}},"color":{"background":"#fff6e5"},"border":{"radius":"14px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:14px;background-color:#fff6e5;margin-top:18px;padding-top:14px;padding-right:18px;padding-bottom:14px;padding-left:18px">
+<!-- wp:paragraph {"style":{"color":{"text":"#8a6100"},"typography":{"fontSize":"0.86rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-color" style="color:#8a6100;margin-bottom:0;font-size:0.86rem;font-weight:700">※ 二千畳行事日のみ受付しております。</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== よくある質問 ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"background":"#efeaf7"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-background" style="background-color:#efeaf7;padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-faq","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-faq" style="color:#1f5c4d;font-size:1.7rem">よくある質問</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.92rem"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:28px;font-size:0.92rem">質問をタップすると、答えが開きます。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:details {"style":{"spacing":{"padding":{"top":"18px","right":"22px","bottom":"18px","left":"22px"},"margin":{"bottom":"14px"}},"color":{"background":"#ffffff"},"border":{"radius":"18px"},"typography":{"fontSize":"0.95rem"}}} -->
+<details class="wp-block-details has-background" style="border-radius:18px;background-color:#ffffff;margin-bottom:14px;padding-top:18px;padding-right:22px;padding-bottom:18px;padding-left:22px;font-size:0.95rem"><summary>Q. キズナクラブの登録内容の変更はどうすればいいでしょうか？</summary><!-- wp:paragraph -->
+<p>申し込みフォームの「登録情報の変更・修正はこちら」から変更していただけます。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"style":{"typography":{"fontWeight":"700"}}} -->
+<p style="font-weight:700"><a href="#">登録内容の変更はこちら →</a></p>
+<!-- /wp:paragraph --></details>
+<!-- /wp:details -->
+
+<!-- wp:details {"style":{"spacing":{"padding":{"top":"18px","right":"22px","bottom":"18px","left":"22px"},"margin":{"bottom":"14px"}},"color":{"background":"#ffffff"},"border":{"radius":"18px"},"typography":{"fontSize":"0.95rem"}}} -->
+<details class="wp-block-details has-background" style="border-radius:18px;background-color:#ffffff;margin-bottom:14px;padding-top:18px;padding-right:22px;padding-bottom:18px;padding-left:22px;font-size:0.95rem"><summary>Q. キズナ会費の納め方はどのようにすればいいでしょうか？</summary><!-- wp:paragraph -->
+<p>以下のページからご確認ください。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"style":{"typography":{"fontWeight":"700"}}} -->
+<p style="font-weight:700"><a href="#">キズナ会費の納め方はこちら →</a></p>
+<!-- /wp:paragraph --></details>
+<!-- /wp:details -->
+
+<!-- wp:details {"style":{"spacing":{"padding":{"top":"18px","right":"22px","bottom":"18px","left":"22px"},"margin":{"bottom":"14px"}},"color":{"background":"#ffffff"},"border":{"radius":"18px"},"typography":{"fontSize":"0.95rem"}}} -->
+<details class="wp-block-details has-background" style="border-radius:18px;background-color:#ffffff;margin-bottom:14px;padding-top:18px;padding-right:22px;padding-bottom:18px;padding-left:22px;font-size:0.95rem"><summary>Q. キズナクラブ会費の自動引き落としはされていますか？</summary><!-- wp:paragraph -->
+<p>キズナクラブ会費の自動引き落としは行っていないため、規定の納め方で納入をお願いいたします。</p>
+<!-- /wp:paragraph --></details>
+<!-- /wp:details -->
+
+<!-- wp:details {"style":{"spacing":{"padding":{"top":"18px","right":"22px","bottom":"18px","left":"22px"}},"color":{"background":"#ffffff"},"border":{"radius":"18px"},"typography":{"fontSize":"0.95rem"}}} -->
+<details class="wp-block-details has-background" style="border-radius:18px;background-color:#ffffff;padding-top:18px;padding-right:22px;padding-bottom:18px;padding-left:22px;font-size:0.95rem"><summary>Q. 会費をまとめて納めていますが、途中からオンラインコース（2000円）に切り替わった時の会費はどうなりますか？</summary><!-- wp:paragraph -->
+<p>オンラインコースに登録された月の翌月から、2000円の会費に切り替わります。すでに納入済みの額は、オンラインコース2000円分に含めていただけたらと思います。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"14px","right":"16px","bottom":"14px","left":"16px"}},"color":{"background":"#fdfaf3"},"border":{"radius":"14px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:14px;background-color:#fdfaf3;padding-top:14px;padding-right:16px;padding-bottom:14px;padding-left:16px">
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"0.86rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p style="margin-bottom:0;font-size:0.86rem"><strong>例）</strong>現在4月。月200円の会費を、昨年12月に1年分（2400円）納入済み。5月からオンラインコース（2000円）の場合。<br>→ 5月分として、あと600円ご納入ください。6月分以降は2000円として納めます。</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group --></details>
+<!-- /wp:details -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.9rem","fontWeight":"700"},"spacing":{"margin":{"top":"24px","bottom":"0"}}}} -->
+<p class="has-text-align-center" style="margin-top:24px;margin-bottom:0;font-size:0.9rem;font-weight:700"><a href="#kzn-contact">解決しない場合はお問い合わせください →</a></p>
+<!-- /wp:paragraph -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== お問い合わせ ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","right":"20px","bottom":"64px","left":"20px"}},"color":{"gradient":"linear-gradient(180deg,#fdfaf3 0%,#fde8ec 100%)"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-background" style="background:linear-gradient(180deg,#fdfaf3 0%,#fde8ec 100%);padding-top:64px;padding-right:20px;padding-bottom:64px;padding-left:20px">
+
+<!-- wp:heading {"textAlign":"center","anchor":"kzn-contact","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"1.7rem"}}} -->
+<h2 class="wp-block-heading has-text-align-center has-text-color" id="kzn-contact" style="color:#1f5c4d;font-size:1.7rem">お問い合わせ・申し込み</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.92rem"},"spacing":{"margin":{"bottom":"28px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:28px;font-size:0.92rem">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談はこちらから。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"34px","right":"24px","bottom":"34px","left":"24px"}},"color":{"background":"#ffffff"},"border":{"radius":"28px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:28px;background-color:#ffffff;padding-top:34px;padding-right:24px;padding-bottom:34px;padding-left:24px">
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"}} -->
+<div class="wp-block-buttons">
+<!-- wp:button {"style":{"color":{"background":"#f3a8b8","text":"#ffffff"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"16px","bottom":"16px","left":"30px","right":"30px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#ffffff;background-color:#f3a8b8;padding-top:16px;padding-right:30px;padding-bottom:16px;padding-left:30px;font-weight:700">相談フォームを開く →</a></div>
+<!-- /wp:button -->
+<!-- wp:button {"style":{"color":{"background":"#e4efe9","text":"#1f5c4d"},"border":{"radius":"999px"},"spacing":{"padding":{"top":"16px","bottom":"16px","left":"30px","right":"30px"}},"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background wp-element-button" href="#" style="border-radius:999px;color:#1f5c4d;background-color:#e4efe9;padding-top:16px;padding-right:30px;padding-bottom:16px;padding-left:30px;font-weight:700">キズナクラブに申し込む</a></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:buttons -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#1f5c4d"},"typography":{"fontSize":"2.1rem","fontWeight":"700"},"spacing":{"margin":{"top":"28px","bottom":"2px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#1f5c4d;margin-top:28px;margin-bottom:2px;font-size:2.1rem;font-weight:700"><a href="tel:07041717569">070-4171-7569</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.82rem"},"spacing":{"margin":{"bottom":"14px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:14px;font-size:0.82rem">お急ぎの方は、タップで電話がかけられます</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.9rem"},"spacing":{"margin":{"bottom":"24px"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#6f6b64;margin-bottom:24px;font-size:0.9rem">主催：キズナクラブ ／ 担当：宮部 成美</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"28px","right":"20px","bottom":"28px","left":"20px"}},"color":{"background":"#fdfaf3"},"border":{"radius":"18px","width":"2px","style":"dashed","color":"#f3a8b8"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-border-color has-background" style="border-color:#f3a8b8;border-style:dashed;border-width:2px;border-radius:18px;background-color:#fdfaf3;padding-top:28px;padding-right:20px;padding-bottom:28px;padding-left:20px">
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d8657c"},"typography":{"fontSize":"0.85rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d8657c;margin-bottom:0;font-size:0.85rem">［画像を入れる］QRコード<br>この枠を削除して、画像ブロックを置いてください</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"16px","right":"18px","bottom":"16px","left":"18px"},"margin":{"top":"24px"}},"color":{"background":"#fdfaf3"},"border":{"radius":"14px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:14px;background-color:#fdfaf3;margin-top:24px;padding-top:16px;padding-right:18px;padding-bottom:16px;padding-left:18px">
+<!-- wp:paragraph {"style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.86rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.86rem"><strong>お返事について</strong><br>フォーム入力後のお返事は、目安として3日後です。お急ぎの場合は、キズナ担当に直接ご連絡ください。</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"16px","right":"18px","bottom":"16px","left":"18px"},"margin":{"top":"12px"}},"color":{"background":"#fdfaf3"},"border":{"radius":"14px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-radius:14px;background-color:#fdfaf3;margin-top:12px;padding-top:16px;padding-right:18px;padding-bottom:16px;padding-left:18px">
+<!-- wp:paragraph {"style":{"color":{"text":"#6f6b64"},"typography":{"fontSize":"0.86rem"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-color" style="color:#6f6b64;margin-bottom:0;font-size:0.86rem"><strong>個別コースのご案内について</strong><br>お子さんへのご案内は、キズナ担当との打ち合わせ後にしていただけたらと思います。お子さんの年齢や状況に応じた伝え方がありますので、打ち合わせ後のご案内を推奨いたします。</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- ========== 締め ========== -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"48px","right":"20px","bottom":"48px","left":"20px"}},"color":{"background":"#1f5c4d","text":"#e9f1ed"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull has-text-color has-background" style="color:#e9f1ed;background-color:#1f5c4d;padding-top:48px;padding-right:20px;padding-bottom:48px;padding-left:20px">
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1.3rem","fontWeight":"700","letterSpacing":"0.28em"},"spacing":{"margin":{"bottom":"10px"}}}} -->
+<p class="has-text-align-center" style="margin-bottom:10px;font-size:1.3rem;font-weight:700;letter-spacing:0.28em">キズナ</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.85rem"},"spacing":{"margin":{"bottom":"20px"}}}} -->
+<p class="has-text-align-center" style="margin-bottom:20px;font-size:0.85rem">全国の子どもたちが、仏教の教えをもとに、<br>ステキな毎日を送れるよう応援しています。</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.88rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0"}}}} -->
+<p class="has-text-align-center" style="margin-bottom:0;font-size:0.88rem;font-weight:700"><a href="#">学徒サイトに戻る →</a></p>
+<!-- /wp:paragraph -->
+
+</div>
+<!-- /wp:group -->
