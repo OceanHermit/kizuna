@@ -4,667 +4,894 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>キズナ｜全国の子どもたちを応援する集まり</title>
-<meta name="description" content="キズナは、全国の子どもたちが仏教の教えをもとにステキな毎日を送れるよう、さまざまなサポートを受けられる集まりです。キズナクラブ・ジュニアクラブ、キズナ塾、才能診断、行事のご案内。">
+<meta name="description" content="キズナは、全国の子どもたちが仏教の教えをもとにステキな毎日を送れるよう、さまざまなサポートを受けられる集まりです。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 </head>
 <body>
 <!-- ===== WP-BLOCK-START ===== -->
 <style>
 /* ============================================================
-   キズナ トップページ  ── すべて .kzn 配下にスコープしています
-   WordPress のカスタムHTMLブロックにそのまま貼り付け可能 / JS不使用
+   キズナ トップページ v3
+   すべて .kzn 配下にスコープ / 写真はデモ（picsum.photos）
    ============================================================ */
 .kzn *,.kzn *::before,.kzn *::after{box-sizing:border-box}
 .kzn{
-  --pink:#f3a8b8; --pink-l:#fde8ec; --pink-d:#d8657c;
-  --green:#1f5c4d; --green-l:#e4efe9;
-  --purple:#cfc5e4; --purple-l:#efeaf7; --purple-d:#6d5b96;
-  --gold:#f0b429; --cream:#fdfaf3; --ink:#33322f; --ink-l:#6f6b64;
-  --line:#eae2d6;
-  --r:20px; --r-lg:28px;
-  --shadow:0 6px 24px rgba(70,50,40,.08);
-  --shadow-h:0 12px 34px rgba(70,50,40,.14);
-  margin:0;color:var(--ink);background:var(--cream);
-  font-family:"Zen Maru Gothic","Noto Sans JP",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;
-  font-size:16px;line-height:1.9;letter-spacing:.02em;
-  -webkit-font-smoothing:antialiased;
+  /* --- 色 --- */
+  --paper:#FBF8F3;      /* 生成り */
+  --paper-d:#F3EDE3;    /* 一段濃い生成り */
+  --white:#fff;
+  --ink:#1C1A17;        /* 墨 */
+  --ink-2:#4A443C;
+  --ink-3:#8B837777;
+  --sub:#7A736A;
+  --forest:#14503F;     /* 深緑（ブランド） */
+  --forest-l:#E7EFEA;
+  --sakura:#D98C93;     /* 桜（差し色） */
+  --sakura-l:#F7E9E8;
+  --gold:#B08D3F;
+  --line:#E2DACD;
+
+  /* --- 余白リズム --- */
+  --gut:clamp(20px,5vw,64px);
+  --sec:clamp(80px,12vw,168px);
+
+  margin:0;color:var(--ink);background:var(--paper);
+  font-family:"Zen Kaku Gothic New",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;
+  font-size:16px;line-height:2;letter-spacing:.04em;font-weight:400;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
 }
-.kzn img{max-width:100%;height:auto;display:block}
-.kzn a{color:inherit}
-.kzn p{margin:0 0 1em}
-.kzn h1,.kzn h2,.kzn h3,.kzn h4{margin:0;line-height:1.5;font-weight:900;letter-spacing:.04em}
+.kzn img{max-width:100%;height:auto;display:block;background:var(--paper-d)}
+.kzn a{color:inherit;text-decoration:none}
+.kzn p{margin:0}
+.kzn h1,.kzn h2,.kzn h3,.kzn h4{margin:0;font-weight:500;line-height:1.7}
 .kzn ul,.kzn ol{margin:0;padding:0;list-style:none}
-.kzn small{font-size:.82em}
+.kzn button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.kzn ::selection{background:var(--sakura-l)}
 
-/* ---------- レイアウト部品 ---------- */
-.kzn__wrap{position:relative;max-width:1080px;margin:0 auto;padding:0 20px}
-.kzn__wrap--narrow{max-width:820px}
-.kzn__sec{padding:72px 0}
-.kzn [id^="kzn-"]{scroll-margin-top:80px}  /* 固定ヘッダーに隠れないように */
-.kzn__sec--tight{padding:48px 0}
-.kzn__sec--white{background:#fff}
-.kzn__head{text-align:center;margin-bottom:40px}
-.kzn__eyebrow{
-  display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.18em;
-  color:var(--pink-d);background:var(--pink-l);border-radius:999px;padding:6px 18px;margin-bottom:14px;
-}
-.kzn__h2{font-size:clamp(1.5rem,5.2vw,2.1rem);color:var(--green)}
-.kzn__lead{margin-top:12px;color:var(--ink-l);font-size:.95rem}
+/* 明朝＝見出し / ラテン＝ガラモン */
+.kzn .mn{font-family:"Zen Old Mincho",serif;font-weight:500}
+.kzn .lt{font-family:"Cormorant Garamond",serif;font-weight:300;letter-spacing:.16em}
 
-/* ---------- ボタン ---------- */
+/* --- 共通レイアウト --- */
+.kzn__wrap{max-width:1240px;margin:0 auto;padding-inline:var(--gut)}
+.kzn__wrap--n{max-width:940px}
+.kzn__sec{padding-block:var(--sec)}
+.kzn [id^="kzn-"]{scroll-margin-top:78px}
+
+/* --- セクション見出し --- */
+.kzn__shead{display:flex;align-items:baseline;gap:18px;margin-bottom:clamp(32px,5vw,64px);flex-wrap:wrap}
+.kzn__no{font-family:"Cormorant Garamond",serif;font-size:.9rem;letter-spacing:.2em;color:var(--sakura)}
+.kzn__en{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:300;letter-spacing:.1em;line-height:1;color:var(--ink)}
+.kzn__ja{font-size:.82rem;letter-spacing:.22em;color:var(--sub);padding-bottom:.35em}
+.kzn__rule{flex:1 1 60px;height:1px;background:var(--line);transform:translateY(-.4em);min-width:40px}
+
+/* --- リンク・ボタン --- */
+.kzn__more{display:inline-flex;align-items:center;gap:.9em;font-size:.84rem;letter-spacing:.16em;color:var(--ink);padding-block:.4em}
+.kzn__more::after{content:"";width:38px;height:1px;background:currentColor;transition:width .35s cubic-bezier(.2,.8,.3,1)}
+.kzn__more:hover::after{width:56px}
 .kzn__btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.5em;
-  min-height:58px;padding:14px 30px;border-radius:999px;border:0;
-  font-family:inherit;font-size:1.02rem;font-weight:700;text-decoration:none;cursor:pointer;
-  text-align:center;transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease,color .2s ease;
+  display:inline-flex;align-items:center;justify-content:center;gap:.8em;
+  min-height:60px;padding:16px 38px;border-radius:999px;
+  font-size:.94rem;letter-spacing:.1em;font-weight:500;
+  transition:background-color .3s,color .3s,border-color .3s,transform .3s;
 }
-.kzn__btn--pri{background:var(--pink);color:#fff;box-shadow:0 6px 0 #d8657c}
-.kzn__btn--pri:hover{background:var(--pink-d);transform:translateY(2px);box-shadow:0 4px 0 #b64f64}
-.kzn__btn--sec{background:#fff;color:var(--green);border:2px solid var(--green);box-shadow:var(--shadow)}
-.kzn__btn--sec:hover{background:var(--green);color:#fff}
-.kzn__btn--gold{background:var(--gold);color:#4a3300;box-shadow:0 6px 0 #c98f13}
-.kzn__btn--gold:hover{transform:translateY(2px);box-shadow:0 4px 0 #a87510}
-.kzn__btn--sm{min-height:46px;padding:8px 22px;font-size:.9rem;box-shadow:none}
-.kzn__btn--full{width:100%}
-.kzn__btn__ar{font-size:1.2em;line-height:1}
-.kzn__link{display:inline-flex;align-items:center;gap:.4em;color:var(--green);font-weight:700;text-decoration:underline;text-underline-offset:4px}
-.kzn__link:hover{color:var(--pink-d)}
+.kzn__btn--fill{background:var(--forest);color:#fff}
+.kzn__btn--fill:hover{background:#0d3B2E;transform:translateY(-2px)}
+.kzn__btn--out{border:1px solid var(--ink);color:var(--ink)}
+.kzn__btn--out:hover{background:var(--ink);color:var(--paper)}
+.kzn__btn--light{border:1px solid rgba(255,255,255,.6);color:#fff}
+.kzn__btn--light:hover{background:#fff;color:var(--forest)}
+.kzn__btn--sakura{background:var(--sakura);color:#fff}
+.kzn__btn--sakura:hover{background:#c4757d;transform:translateY(-2px)}
 
-/* ---------- ヘッダー ---------- */
-.kzn__header{
-  position:sticky;top:0;z-index:50;background:rgba(253,250,243,.94);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+/* --- 出現アニメーション（JSなしでも見える） --- */
+.kzn .rv{opacity:1;transform:none}
+.kzn.js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.8,.3,1),transform .9s cubic-bezier(.2,.8,.3,1)}
+.kzn.js .rv.on{opacity:1;transform:none}
+.kzn.js .rv.d1{transition-delay:.1s}.kzn.js .rv.d2{transition-delay:.2s}
+.kzn.js .rv.d3{transition-delay:.3s}.kzn.js .rv.d4{transition-delay:.4s}
+
+/* ============ ヘッダー ============ */
+.kzn__hd{position:fixed;inset:0 0 auto;z-index:80;transition:background-color .4s,box-shadow .4s,backdrop-filter .4s}
+.kzn__hd.solid{background:rgba(251,248,243,.9);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+.kzn__hdIn{display:flex;align-items:center;gap:24px;height:78px;max-width:1400px;margin:0 auto;padding-inline:var(--gut)}
+.kzn__logo{display:flex;align-items:center;gap:11px;font-family:"Zen Old Mincho",serif;font-size:1.22rem;letter-spacing:.32em;color:var(--forest)}
+.kzn__hd:not(.solid) .kzn__logo{color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.kzn__hd:not(.solid) .kzn__logo svg circle{fill:rgba(255,255,255,.9)}
+.kzn__hd:not(.solid) .kzn__logo svg path{fill:var(--forest)}
+.kzn__nav{margin-left:auto;display:none;gap:30px}
+.kzn__nav a{font-size:.82rem;letter-spacing:.14em;position:relative;padding-block:6px}
+.kzn__hd:not(.solid) .kzn__nav a{color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+.kzn__nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:currentColor;transition:width .35s}
+.kzn__nav a:hover::after{width:100%}
+.kzn__hdCta{display:none;min-height:46px;padding:8px 26px;font-size:.82rem}
+.kzn__hd:not(.solid) .kzn__hdCta{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.55);color:#fff;backdrop-filter:blur(6px)}
+
+/* モバイルメニュー（CSSのみ） */
+.kzn__mt{position:absolute;opacity:0;width:0;height:0}
+.kzn__burger{margin-left:auto;width:46px;height:46px;display:grid;place-content:center;gap:6px;cursor:pointer;z-index:2}
+.kzn__burger i{display:block;width:24px;height:1px;background:var(--ink);transition:transform .35s,opacity .3s,background-color .3s}
+.kzn__hd:not(.solid) .kzn__burger i{background:#fff}
+.kzn__mt:checked ~ .kzn__hdIn .kzn__burger i{background:var(--paper)}
+.kzn__mt:checked ~ .kzn__hdIn .kzn__burger i:nth-child(1){transform:translateY(7px) rotate(42deg)}
+.kzn__mt:checked ~ .kzn__hdIn .kzn__burger i:nth-child(2){opacity:0}
+.kzn__mt:checked ~ .kzn__hdIn .kzn__burger i:nth-child(3){transform:translateY(-7px) rotate(-42deg)}
+.kzn__drawer{
+  position:fixed;inset:0;background:var(--forest);color:var(--paper);
+  display:grid;align-content:center;gap:4px;padding:0 var(--gut);
+  opacity:0;visibility:hidden;transform:translateY(-14px);
+  transition:opacity .45s,transform .45s,visibility .45s;z-index:-1;
 }
-.kzn__hbar{display:flex;align-items:center;gap:16px;min-height:64px}
-.kzn__logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:1.25rem;color:var(--green);letter-spacing:.22em}
-.kzn__logo svg{flex:0 0 auto}
-.kzn__nav{margin-left:auto;display:none;gap:20px}
-.kzn__nav a{text-decoration:none;font-size:.88rem;font-weight:700;color:var(--ink);padding:6px 0;border-bottom:2px solid transparent;white-space:nowrap}
-.kzn__nav a:hover{color:var(--pink-d);border-bottom-color:var(--pink)}
-.kzn__hcta{display:none;margin-left:16px}
-.kzn__toggle{position:absolute;opacity:0;width:0;height:0}
-.kzn__burger{
-  margin-left:auto;width:44px;height:44px;border-radius:12px;background:var(--pink-l);
-  display:grid;place-content:center;gap:5px;cursor:pointer;
+.kzn__mt:checked ~ .kzn__drawer{opacity:1;visibility:visible;transform:none;z-index:1}
+.kzn__drawer a{font-family:"Zen Old Mincho",serif;font-size:1.32rem;letter-spacing:.16em;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.16)}
+.kzn__drawer a small{display:block;font-family:"Cormorant Garamond",serif;font-size:.66rem;letter-spacing:.24em;opacity:.55;margin-top:-2px}
+
+/* ============ ヒーロー ============ */
+.kzn__hero{position:relative;min-height:min(104vh,860px);display:grid;align-items:end;overflow:hidden}
+.kzn__heroBg{position:absolute;inset:0}
+.kzn__heroBg img{width:100%;height:100%;object-fit:cover;animation:kznZoom 16s ease-out forwards}
+@keyframes kznZoom{from{transform:scale(1.1)}to{transform:scale(1)}}
+.kzn__heroBg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,30,26,.5) 0%,rgba(20,30,26,.18) 38%,rgba(20,30,26,.62) 100%)}
+.kzn__heroIn{position:relative;width:100%;max-width:1240px;margin:0 auto;padding:0 var(--gut) clamp(70px,12vw,130px)}
+.kzn__heroEn{font-family:"Cormorant Garamond",serif;font-size:.8rem;letter-spacing:.4em;color:rgba(255,255,255,.8);margin-bottom:22px}
+.kzn__heroTtl{font-family:"Zen Old Mincho",serif;color:#fff;font-size:clamp(2.1rem,7.4vw,4.2rem);line-height:1.52;letter-spacing:.08em;font-weight:500;text-shadow:0 2px 30px rgba(0,0,0,.28)}
+.kzn__heroTtl span{display:block;overflow:hidden}
+.kzn__heroTtl span i{display:block;font-style:normal;transform:translateY(105%);transition:transform 1.1s cubic-bezier(.16,.84,.28,1)}
+.kzn.js .kzn__heroTtl span i{transform:translateY(105%)}
+.kzn.js .kzn__heroTtl.on span:nth-child(1) i{transform:none;transition-delay:.15s}
+.kzn.js .kzn__heroTtl.on span:nth-child(2) i{transform:none;transition-delay:.3s}
+.kzn.js .kzn__heroTtl.on span:nth-child(3) i{transform:none;transition-delay:.45s}
+.kzn:not(.js) .kzn__heroTtl span i{transform:none}
+.kzn__heroLead{color:rgba(255,255,255,.9);font-size:clamp(.88rem,2.6vw,1rem);line-height:2.2;margin-top:26px;max-width:34em;text-shadow:0 1px 16px rgba(0,0,0,.35)}
+.kzn__heroBtns{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+.kzn__scroll{position:absolute;right:var(--gut);bottom:0;display:none;align-items:center;gap:14px;writing-mode:vertical-rl;font-family:"Cormorant Garamond",serif;font-size:.7rem;letter-spacing:.34em;color:rgba(255,255,255,.85)}
+.kzn__scrollBar{width:1px;height:78px;background:rgba(255,255,255,.35);position:relative}
+.kzn__scrollBar::before{content:"";position:absolute;inset:0;background:#fff;animation:kznBar 2.4s cubic-bezier(.6,0,.3,1) infinite;transform-origin:top}
+@keyframes kznBar{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============ 01 イベント（横スライド） ============ */
+.kzn__ev{background:var(--paper);position:relative}
+.kzn__evHead{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.kzn__evNav{display:none;gap:10px}
+.kzn__arw{width:52px;height:52px;border:1px solid var(--line);border-radius:50%;display:grid;place-content:center;transition:background-color .3s,border-color .3s,color .3s}
+.kzn__arw:hover{background:var(--forest);border-color:var(--forest);color:#fff}
+.kzn__arw:disabled{opacity:.3;cursor:default;background:none;border-color:var(--line);color:inherit}
+.kzn__track{
+  display:flex;gap:clamp(16px,2.4vw,30px);overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:6px var(--gut) 30px;margin-inline:calc(var(--gut) * -1);scroll-padding-left:var(--gut);
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
 }
-.kzn__toggle:focus-visible + .kzn__hbar .kzn__burger{outline:3px solid var(--green);outline-offset:2px}
-.kzn__burger span{display:block;width:20px;height:2px;background:var(--green);border-radius:2px;transition:.25s}
-.kzn__toggle:checked ~ .kzn__hbar .kzn__burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.kzn__toggle:checked ~ .kzn__hbar .kzn__burger span:nth-child(2){opacity:0}
-.kzn__toggle:checked ~ .kzn__hbar .kzn__burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.kzn__drawer{display:none;padding:8px 0 20px;border-top:1px solid var(--line)}
-.kzn__toggle:checked ~ .kzn__drawer{display:block}
-.kzn__drawer a{display:block;padding:13px 4px;text-decoration:none;font-weight:700;border-bottom:1px dashed var(--line)}
-.kzn__drawer .kzn__btn{margin-top:18px}
-
-/* ---------- ヒーロー ---------- */
-.kzn__hero{position:relative;overflow:hidden;background:linear-gradient(170deg,var(--pink-l) 0%,#fdf6ec 55%,var(--cream) 100%)}
-.kzn__hero::before,.kzn__hero::after{content:"";position:absolute;border-radius:50%;opacity:.5;pointer-events:none}
-.kzn__hero::before{width:260px;height:260px;background:#cfe3d9;top:-90px;right:-70px}
-.kzn__hero::after{width:180px;height:180px;background:#f7dfc4;bottom:-60px;left:-50px}
-.kzn__heroIn{position:relative;display:grid;gap:32px;padding:56px 0 64px}
-.kzn__heroTtl{font-size:clamp(2.2rem,10vw,3.4rem);color:var(--green);letter-spacing:.3em;margin-bottom:18px}
-.kzn__heroCopy{font-size:clamp(1.05rem,4.2vw,1.35rem);font-weight:700;line-height:2;margin-bottom:18px}
-.kzn__heroCopy b{background:linear-gradient(transparent 62%,#ffe9a8 62%)}
-.kzn__heroTxt{color:var(--ink-l);font-size:.95rem}
-.kzn__heroBtns{display:grid;gap:12px;margin-top:26px}
-
-/* 画像スロット（差し替え用の枠） */
-.kzn__slotBox{
-  position:relative;border-radius:var(--r-lg);overflow:hidden;background:#fff;
-  box-shadow:var(--shadow);display:grid;place-content:center;text-align:center;color:var(--ink-l);
-  border:2px dashed var(--pink);
+.kzn__track::-webkit-scrollbar{height:3px}
+.kzn__track::-webkit-scrollbar-track{background:var(--line);border-radius:3px}
+.kzn__track::-webkit-scrollbar-thumb{background:var(--forest);border-radius:3px}
+.kzn__evCard{flex:0 0 76%;max-width:340px;scroll-snap-align:start}
+.kzn__evThumb{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:3px;background:var(--paper-d)}
+.kzn__evThumb img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.8,.3,1)}
+.kzn__evCard:hover .kzn__evThumb img{transform:scale(1.07)}
+.kzn__evDate{
+  position:absolute;left:0;bottom:0;background:var(--paper);padding:11px 18px 9px;
+  font-family:"Cormorant Garamond",serif;letter-spacing:.1em;line-height:1.2;text-align:center;
 }
-.kzn__slotBox--hero{aspect-ratio:4/3}
-.kzn__slot{font-size:.85rem;padding:20px;line-height:1.8;margin:0}
-.kzn__slot b{display:block;color:var(--pink-d);font-size:.95rem;margin-bottom:4px}
+.kzn__evDate b{display:block;font-size:1.5rem;font-weight:400}
+.kzn__evDate small{display:block;font-size:.6rem;letter-spacing:.22em;color:var(--sub)}
+.kzn__evTag{position:absolute;right:12px;top:12px;background:rgba(20,80,63,.92);color:#fff;font-size:.66rem;letter-spacing:.14em;padding:5px 13px;border-radius:999px}
+.kzn__evTtl{font-family:"Zen Old Mincho",serif;font-size:1.06rem;line-height:1.75;margin-top:20px;letter-spacing:.05em}
+.kzn__evMeta{font-size:.76rem;letter-spacing:.1em;color:var(--sub);margin-top:9px}
+.kzn__evHint{font-size:.72rem;letter-spacing:.14em;color:var(--sub);margin-top:2px}
 
-/* ---------- お知らせ ---------- */
-.kzn__news{display:grid;gap:16px}
-.kzn__newsItem{
-  display:grid;gap:6px;background:#fff;border-radius:var(--r);padding:20px 22px;
-  box-shadow:var(--shadow);text-decoration:none;border-left:6px solid var(--pink);
-  transition:transform .2s,box-shadow .2s;
-}
-.kzn__newsItem:hover{transform:translateY(-3px);box-shadow:var(--shadow-h)}
-.kzn__newsMeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.8rem;color:var(--ink-l)}
-.kzn__tag{background:var(--green-l);color:var(--green);font-weight:700;border-radius:999px;padding:3px 12px}
-.kzn__tag--gold{background:#fdf0cf;color:#8a6100}
-.kzn__newsTtl{font-size:1.02rem;font-weight:700;line-height:1.7}
+/* ============ 02 お知らせ一覧 ============ */
+.kzn__news{background:var(--white)}
+.kzn__post{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:26px 0;border-top:1px solid var(--line);align-items:start}
+.kzn__post:last-of-type{border-bottom:1px solid var(--line)}
+.kzn__postThumb{aspect-ratio:1/1;overflow:hidden;border-radius:2px;background:var(--paper-d)}
+.kzn__postThumb img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.3,1)}
+.kzn__post:hover .kzn__postThumb img{transform:scale(1.08)}
+.kzn__postMeta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:7px}
+.kzn__postDate{font-family:"Cormorant Garamond",serif;font-size:.86rem;letter-spacing:.14em;color:var(--sub)}
+.kzn__cat{font-size:.66rem;letter-spacing:.14em;padding:3px 12px;border:1px solid var(--line);border-radius:999px;color:var(--ink-2)}
+.kzn__cat--ev{border-color:var(--sakura);color:var(--sakura)}
+.kzn__cat--im{border-color:var(--forest);color:var(--forest)}
+.kzn__postTtl{font-family:"Zen Old Mincho",serif;font-size:1.02rem;line-height:1.8;letter-spacing:.04em;transition:color .3s}
+.kzn__post:hover .kzn__postTtl{color:var(--forest)}
+.kzn__postEx{font-size:.84rem;line-height:1.95;color:var(--sub);margin-top:8px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kzn__newsFoot{margin-top:44px;text-align:center}
 
-/* ---------- メニュータイル ---------- */
-.kzn__tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.kzn__tile{
-  display:grid;align-content:center;gap:6px;min-height:118px;padding:20px 16px;
-  border-radius:var(--r-lg);text-decoration:none;text-align:center;font-weight:700;
-  font-size:.98rem;line-height:1.6;box-shadow:var(--shadow);
-  transition:transform .2s,box-shadow .2s;
-}
-.kzn__tile:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
-.kzn__tile span{display:block;font-size:.76rem;font-weight:500;color:var(--ink-l)}
-.kzn__tile--purple{background:var(--purple-l);color:var(--purple-d)}
-.kzn__tile--blue{background:#dfeaf6;color:#2f6b8f}
-.kzn__tile--yellow{background:#fbf1cd;color:#8a6100}
-.kzn__tile--green{background:#e2eedd;color:#3f6b3a}
-.kzn__tile--cream{background:#fdf3e3;color:#8a6435}
-.kzn__tile--beige{background:#f6e9e2;color:#8a5a45}
-.kzn__tile--pink{background:var(--pink-l);color:var(--pink-d)}
-.kzn__tile--gray{background:#eceae6;color:#55524d}
-.kzn__tilesFoot{text-align:center;margin-top:26px}
+/* ============ 03 キズナとは ============ */
+.kzn__about{background:var(--paper-d);position:relative;overflow:hidden}
+.kzn__aboutGrid{display:grid;gap:clamp(34px,5vw,72px)}
+.kzn__aboutMedia{position:relative}
+.kzn__aboutMedia img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
+.kzn__aboutSub{display:none;position:absolute;right:-8%;bottom:-9%;width:52%;box-shadow:0 24px 60px rgba(40,32,22,.18);border-radius:3px}
+.kzn__aboutSub img{aspect-ratio:1/1}
+.kzn__aboutVert{display:none;position:absolute;left:-2.6em;top:0;writing-mode:vertical-rl;font-family:"Zen Old Mincho",serif;font-size:.78rem;letter-spacing:.5em;color:var(--sub)}
+.kzn__aboutTtl{font-family:"Zen Old Mincho",serif;font-size:clamp(1.5rem,4.6vw,2.35rem);line-height:1.85;letter-spacing:.08em;margin-bottom:28px}
+.kzn__aboutTxt{font-size:.94rem;line-height:2.3;color:var(--ink-2)}
+.kzn__aboutTxt + .kzn__aboutTxt{margin-top:1.6em}
+.kzn__pts{display:grid;gap:26px;margin-top:44px}
+.kzn__pt{display:grid;grid-template-columns:74px 1fr;gap:18px;align-items:center}
+.kzn__pt img{width:74px;height:74px;object-fit:cover;border-radius:50%}
+.kzn__ptTtl{font-family:"Zen Old Mincho",serif;font-size:1rem;letter-spacing:.06em;margin-bottom:3px}
+.kzn__ptTxt{font-size:.8rem;line-height:1.85;color:var(--sub)}
 
-/* ---------- 汎用パネル ---------- */
-.kzn__panel{background:#fff;border-radius:var(--r-lg);padding:32px 24px;box-shadow:var(--shadow)}
-.kzn__panel--pink{border:3px solid var(--pink)}
-.kzn__panelTtl{font-size:clamp(1.3rem,5.4vw,1.8rem);color:var(--green);text-align:center;letter-spacing:.12em}
-.kzn__panelSub{text-align:center;color:var(--pink-d);font-weight:700;margin:10px 0 24px}
-.kzn__panelFoot{text-align:center;margin-top:24px}
-.kzn__btnRow{display:grid;gap:12px;margin-top:8px}
+/* ============ 04 できること（写真タイル） ============ */
+.kzn__menuGrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.4vw,34px) clamp(12px,2vw,26px)}
+.kzn__mi{display:block}
+.kzn__miThumb{aspect-ratio:4/5;overflow:hidden;border-radius:3px;background:var(--paper-d);position:relative}
+.kzn__miThumb img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.8,.3,1)}
+.kzn__mi:hover .kzn__miThumb img{transform:scale(1.07)}
+.kzn__miNo{position:absolute;left:12px;top:10px;font-family:"Cormorant Garamond",serif;font-size:.78rem;letter-spacing:.2em;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.kzn__miTtl{font-family:"Zen Old Mincho",serif;font-size:clamp(.92rem,2.7vw,1.06rem);letter-spacing:.05em;margin-top:16px;line-height:1.7}
+.kzn__miEn{font-family:"Cormorant Garamond",serif;font-size:.66rem;letter-spacing:.24em;color:var(--sakura);margin-top:4px}
+.kzn__miTxt{font-size:.78rem;line-height:1.9;color:var(--sub);margin-top:7px}
 
-/* ---------- 定義リスト（会費・仕様など） ---------- */
-.kzn__specs{display:grid;gap:10px}
-.kzn__spec{display:flex;gap:12px;align-items:flex-start;background:var(--cream);border-radius:14px;padding:12px 16px;font-size:.92rem}
-.kzn__specKey{flex:0 0 auto;font-weight:700;color:var(--green);min-width:5.6em}
+/* ============ 05 活動（マーキー） ============ */
+.kzn__act{background:var(--forest);color:var(--paper);overflow:hidden}
+.kzn__act .kzn__en,.kzn__act .kzn__no{color:var(--paper)}
+.kzn__act .kzn__no{color:var(--sakura)}
+.kzn__act .kzn__ja{color:rgba(251,248,243,.62)}
+.kzn__act .kzn__rule{background:rgba(251,248,243,.24)}
+.kzn__actLead{max-width:32em;font-size:.9rem;line-height:2.2;color:rgba(251,248,243,.82);margin-bottom:clamp(36px,6vw,60px)}
+.kzn__mq{display:flex;gap:18px;width:max-content;animation:kznMq 42s linear infinite}
+.kzn__mq:hover{animation-play-state:paused}
+.kzn__mq img{width:clamp(180px,26vw,300px);aspect-ratio:4/3;object-fit:cover;border-radius:3px;opacity:.92}
+@keyframes kznMq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.kzn__mqWrap{margin-inline:calc(var(--gut) * -1)}
+.kzn__actFoot{margin-top:44px}
+.kzn__act .kzn__more{color:var(--paper)}
 
-/* ---------- 箇条書き ---------- */
-.kzn__list{display:grid;gap:10px}
-.kzn__list li{display:flex;gap:10px;align-items:flex-start;font-size:.94rem}
-.kzn__list li::before{content:"●";color:var(--pink);font-size:.7em;line-height:2.6;flex:0 0 auto}
+/* ============ 06 キズナコーナー ============ */
+.kzn__corner{background:var(--white)}
+.kzn__cnGrid{display:grid;gap:clamp(34px,5vw,64px)}
+.kzn__map{background:var(--paper);padding:clamp(22px,4vw,34px);border-radius:3px}
+.kzn__mapTtl{font-family:"Zen Old Mincho",serif;text-align:center;font-size:.98rem;letter-spacing:.06em}
+.kzn__mapNote{text-align:center;font-size:.74rem;color:var(--sub);margin:2px 0 22px}
+.kzn__mapBox{display:grid;grid-template-columns:1fr 1fr;gap:9px;text-align:center;font-size:.88rem;letter-spacing:.06em}
+.kzn__mc{border-radius:2px;padding:20px 8px;display:grid;place-content:center;min-height:82px}
+.kzn__mc--a{background:#D8615C;color:#fff}
+.kzn__mc--b{background:#4A8FBF;color:#fff}
+.kzn__mc--c{grid-column:1/-1;background:#F0C93F;color:#1C1A17;font-weight:700;letter-spacing:.14em}
+.kzn__mapArw{grid-column:1/-1;font-size:.78rem;color:var(--sakura);letter-spacing:.1em;margin-top:2px}
+.kzn__cnList{display:grid;gap:0}
+.kzn__cnList li{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line);font-size:.88rem;line-height:1.9}
+.kzn__cnList li:first-child{border-top:1px solid var(--line)}
+.kzn__cnList b{font-family:"Cormorant Garamond",serif;font-size:.78rem;letter-spacing:.16em;color:var(--sakura);padding-top:.35em}
+.kzn__cnNote{margin-top:22px;font-size:.82rem;color:var(--gold);letter-spacing:.06em}
 
-/* ---------- 特典A/B ---------- */
-.kzn__gift{background:var(--green-l);border-radius:var(--r);padding:20px;margin:24px 0}
-.kzn__giftTtl{text-align:center;font-size:.98rem;color:var(--green);margin-bottom:14px}
-.kzn__giftRow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.kzn__giftBox{background:#fff;border-radius:14px;padding:14px;text-align:center;font-size:.85rem;box-shadow:var(--shadow)}
-.kzn__giftBadge{display:inline-grid;place-content:center;width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:900;margin-bottom:8px}
-.kzn__giftBox--b .kzn__giftBadge{background:#7fb5d5}
-
-/* ---------- キズナ塾 ---------- */
-.kzn__juku{background:linear-gradient(180deg,#f2f8ee 0%,#fff 100%)}
-.kzn__jukuGrid{display:grid;gap:26px;align-items:center}
-.kzn__jukuTtl{font-size:clamp(1.5rem,6vw,2rem);color:#4a8b2f;letter-spacing:.1em;margin-bottom:14px}
-
-/* ---------- 文化祭 ---------- */
-.kzn__fest{
-  border-radius:var(--r-lg);background:linear-gradient(135deg,#fff5f8 0%,#f2f7ff 100%);
-  border:2px dashed var(--pink);padding:36px 24px;text-align:center;
-}
-.kzn__festLabel{display:inline-block;background:var(--pink);color:#fff;font-weight:700;font-size:.78rem;letter-spacing:.14em;border-radius:999px;padding:5px 16px;margin-bottom:14px}
-.kzn__festTtl{font-size:clamp(1.6rem,6.4vw,2.3rem);color:var(--pink-d);letter-spacing:.12em}
-.kzn__festDate{font-size:clamp(1.1rem,4.6vw,1.5rem);font-weight:900;color:var(--green);margin:14px 0 4px}
-.kzn__festPlace{color:var(--ink-l);font-size:.95rem;margin-bottom:22px}
-
-/* ---------- 活動ギャラリー ---------- */
-.kzn__gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.kzn__gItem{aspect-ratio:1/1;border-radius:24px;background:#fff;border:2px dashed var(--pink);display:grid;place-content:center;text-align:center;font-size:.76rem;color:var(--ink-l);padding:10px}
-
-/* ---------- キズナコーナー（案内図） ---------- */
-.kzn__corner{background:var(--green-l)}
-.kzn__cornerGrid{display:grid;gap:28px}
-.kzn__map{background:#fff;border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow)}
-.kzn__mapTtl{text-align:center;font-size:.95rem;color:var(--green);margin-bottom:4px}
-.kzn__mapNote{text-align:center;font-size:.78rem;color:var(--ink-l);margin-bottom:18px}
-.kzn__mapBox{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-weight:700;font-size:.92rem;text-align:center}
-.kzn__mapCell{border-radius:12px;padding:18px 10px;display:grid;place-content:center;min-height:76px}
-.kzn__mapCell--main{background:#f0625f;color:#fff}
-.kzn__mapCell--shop{background:#4a9fd8;color:#fff}
-.kzn__mapCell--kizuna{grid-column:1/-1;background:#ffe066;color:#2f6b8f;border:3px solid #f0b429}
-.kzn__mapArrow{grid-column:1/-1;text-align:center;font-size:.85rem;color:var(--pink-d);font-weight:700;margin:0}
-.kzn__caution{margin-top:18px;background:#fff6e5;border-radius:14px;padding:14px 18px;font-size:.86rem;color:#8a6100;font-weight:700}
-
-/* ---------- よくある質問（details / JS不要） ---------- */
-.kzn__faq{background:var(--purple-l)}
-.kzn__qa{display:grid;gap:14px}
-.kzn__q{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+/* ============ 07 Q&A ============ */
+.kzn__faq{background:var(--paper)}
+.kzn__q{border-bottom:1px solid var(--line)}
+.kzn__q:first-of-type{border-top:1px solid var(--line)}
 .kzn__q summary{
-  display:flex;gap:12px;align-items:flex-start;cursor:pointer;list-style:none;
-  padding:20px 22px;font-weight:700;font-size:.99rem;line-height:1.7;
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;
+  list-style:none;cursor:pointer;padding:26px 4px;font-size:.96rem;line-height:1.85;letter-spacing:.04em;
+  font-family:"Zen Old Mincho",serif;transition:color .3s;
 }
 .kzn__q summary::-webkit-details-marker{display:none}
-.kzn__q summary::before{content:"Q.";flex:0 0 auto;color:var(--purple-d);font-weight:900}
-.kzn__q summary::after{content:"＋";margin-left:auto;flex:0 0 auto;color:var(--purple-d);font-weight:900;transition:transform .2s}
-.kzn__q[open] summary::after{content:"−"}
-.kzn__q summary:hover{background:var(--purple-l)}
-.kzn__a{display:flex;gap:12px;align-items:flex-start;padding:0 22px 22px;font-size:.92rem;color:var(--ink-l)}
-.kzn__a::before{content:"A.";flex:0 0 auto;color:var(--pink-d);font-weight:900}
-.kzn__a p:last-child{margin-bottom:0}
-.kzn__example{background:var(--cream);border-radius:14px;padding:14px 16px;font-size:.86rem;margin-top:12px}
-.kzn__faqFoot{text-align:center;margin-top:26px}
+.kzn__q summary:hover{color:var(--forest)}
+.kzn__q summary::before{content:"Q";font-family:"Cormorant Garamond",serif;font-size:1.15rem;color:var(--sakura);line-height:1.5}
+.kzn__q summary::after{content:"";width:13px;height:13px;margin-top:.6em;flex:0 0 auto;
+  background:
+    linear-gradient(currentColor,currentColor) center/100% 1px no-repeat,
+    linear-gradient(currentColor,currentColor) center/1px 100% no-repeat;
+  transition:transform .35s}
+.kzn__q[open] summary::after{transform:rotate(90deg);background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat}
+.kzn__a{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:0 4px 30px;font-size:.87rem;line-height:2.1;color:var(--sub)}
+.kzn__a::before{content:"A";font-family:"Cormorant Garamond",serif;font-size:1.15rem;color:var(--forest);line-height:1.5}
+.kzn__a p + p{margin-top:1em}
+.kzn__ex{background:var(--white);padding:16px 20px;font-size:.8rem;line-height:2;margin-top:14px;border-left:2px solid var(--sakura)}
+.kzn__faqFoot{margin-top:40px;text-align:center}
 
-/* ---------- お問い合わせ ---------- */
-.kzn__contact{background:linear-gradient(180deg,var(--cream) 0%,var(--pink-l) 100%)}
-.kzn__contactBox{background:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow);padding:34px 24px;text-align:center}
-.kzn__tel{display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;margin:10px 0 6px}
-.kzn__telNum{font-size:clamp(1.8rem,8vw,2.6rem);font-weight:900;color:var(--green);letter-spacing:.04em;line-height:1.3}
-.kzn__telSub{font-size:.82rem;color:var(--ink-l)}
-.kzn__person{font-size:.9rem;color:var(--ink-l);margin-bottom:22px}
-.kzn__qr{width:132px;height:132px;margin:0 auto 10px;border:2px dashed var(--pink);border-radius:14px;display:grid;place-content:center;font-size:.72rem;color:var(--ink-l);text-align:center;padding:8px}
-.kzn__notes{display:grid;gap:12px;margin-top:26px;text-align:left}
-.kzn__note{background:var(--cream);border-radius:14px;padding:16px 18px;font-size:.86rem;color:var(--ink-l)}
-.kzn__note b{color:var(--green)}
+/* ============ 08 お問い合わせ ============ */
+.kzn__ct{position:relative;color:#fff;overflow:hidden}
+.kzn__ctBg{position:absolute;inset:0}
+.kzn__ctBg img{width:100%;height:100%;object-fit:cover}
+.kzn__ctBg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,40,32,.86),rgba(12,40,32,.78))}
+.kzn__ctIn{position:relative;text-align:center}
+.kzn__ctEn{font-family:"Cormorant Garamond",serif;font-size:.78rem;letter-spacing:.4em;color:rgba(255,255,255,.7)}
+.kzn__ctTtl{font-family:"Zen Old Mincho",serif;font-size:clamp(1.55rem,5vw,2.5rem);letter-spacing:.1em;line-height:1.7;margin:16px 0 20px}
+.kzn__ctTxt{font-size:.88rem;line-height:2.1;color:rgba(255,255,255,.82);max-width:34em;margin:0 auto}
+.kzn__ctBtns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:38px}
+.kzn__ctInfo{display:grid;gap:22px;margin-top:clamp(44px,7vw,66px);padding-top:clamp(34px,5vw,46px);border-top:1px solid rgba(255,255,255,.22)}
+.kzn__tel{font-family:"Cormorant Garamond",serif;font-size:clamp(1.9rem,7vw,2.7rem);letter-spacing:.06em;line-height:1.3;display:block}
+.kzn__telSub{font-size:.76rem;letter-spacing:.14em;color:rgba(255,255,255,.62);display:block;margin-top:4px}
+.kzn__ctMeta{font-size:.82rem;letter-spacing:.08em;color:rgba(255,255,255,.78)}
+.kzn__ctNotes{display:grid;gap:16px;margin-top:34px;text-align:left}
+.kzn__ctNote{font-size:.79rem;line-height:2;color:rgba(255,255,255,.72);padding-left:16px;border-left:1px solid rgba(255,255,255,.3)}
+.kzn__ctNote b{color:#fff;font-weight:500;display:block;letter-spacing:.08em}
 
-/* ---------- フッター ---------- */
-.kzn__footer{background:var(--green);color:#e9f1ed;padding:40px 0 32px;text-align:center}
-.kzn__footer a{color:#e9f1ed;text-decoration:none}
-.kzn__flogo{font-size:1.3rem;font-weight:900;letter-spacing:.28em;margin-bottom:10px}
-.kzn__fnav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;font-size:.88rem;margin:18px 0 20px}
-.kzn__fnav a:hover{text-decoration:underline}
-.kzn__fback{display:inline-block;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 22px;font-size:.86rem;margin-bottom:20px}
-.kzn__fback:hover{background:rgba(255,255,255,.12)}
-.kzn__copy{font-size:.75rem;opacity:.7}
+/* ============ フッター ============ */
+.kzn__ft{background:var(--ink);color:rgba(251,248,243,.78);padding-block:clamp(56px,8vw,80px) 34px}
+.kzn__ftTop{display:grid;gap:38px;padding-bottom:40px;border-bottom:1px solid rgba(251,248,243,.14)}
+.kzn__ftLogo{font-family:"Zen Old Mincho",serif;font-size:1.4rem;letter-spacing:.36em;color:var(--paper)}
+.kzn__ftTxt{font-size:.8rem;line-height:2.1;margin-top:16px;max-width:24em}
+.kzn__ftNav{display:grid;grid-template-columns:1fr 1fr;gap:2px 24px}
+.kzn__ftNav a{font-size:.82rem;letter-spacing:.08em;padding:9px 0;display:block;transition:color .3s}
+.kzn__ftNav a:hover{color:var(--sakura)}
+.kzn__ftBack{display:inline-flex;align-items:center;gap:.8em;margin-top:26px;font-size:.78rem;letter-spacing:.14em;
+  border:1px solid rgba(251,248,243,.3);border-radius:999px;padding:11px 24px;transition:background-color .3s,color .3s}
+.kzn__ftBack:hover{background:var(--paper);color:var(--ink)}
+.kzn__ftBtm{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:26px;font-size:.7rem;letter-spacing:.12em;color:rgba(251,248,243,.5)}
 
-/* ---------- 追従CTA（モバイル） ---------- */
-.kzn__fixed{
-  position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:8px;padding:10px 14px;
-  background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);
-}
-.kzn__fixed .kzn__btn{flex:1;min-height:52px;padding:12px 10px;font-size:.92rem;box-shadow:none}
-.kzn--pad{padding-bottom:82px}
+/* ============ 追従CTA（スマホ） ============ */
+.kzn__fx{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;background:var(--forest);box-shadow:0 -6px 24px rgba(0,0,0,.14)}
+.kzn__fx a{flex:1;display:grid;place-content:center;min-height:58px;color:#fff;font-size:.84rem;letter-spacing:.1em}
+.kzn__fx a + a{border-left:1px solid rgba(255,255,255,.2);background:var(--sakura)}
+.kzn--pad{padding-bottom:58px}
 
-/* ---------- 画面が広いとき ---------- */
+/* ============ 画面が広いとき ============ */
 @media (min-width:768px){
-  .kzn__sec{padding:96px 0}
-  .kzn__nav{display:flex}
-  .kzn__hcta{display:inline-flex}
-  .kzn__burger,.kzn__drawer{display:none!important}
-  .kzn__heroIn{grid-template-columns:1.05fr .95fr;align-items:center;padding:80px 0 88px;gap:48px}
-  .kzn__heroBtns{grid-template-columns:1fr 1fr}
-  .kzn__tiles{grid-template-columns:repeat(4,1fr)}
-  .kzn__panel{padding:48px 52px}
-  .kzn__specs{grid-template-columns:1fr 1fr}
-  .kzn__btnRow{grid-template-columns:1fr 1fr}
-  .kzn__jukuGrid{grid-template-columns:.9fr 1.1fr}
-  .kzn__gallery{grid-template-columns:repeat(5,1fr)}
-  .kzn__cornerGrid{grid-template-columns:1fr 1fr;align-items:center}
-  .kzn__notes{grid-template-columns:1fr 1fr}
-  .kzn__fixed{display:none}
+  .kzn__evCard{flex:0 0 clamp(300px,30vw,360px)}
+  .kzn__post{grid-template-columns:200px 1fr;gap:34px;padding:34px 0}
+  .kzn__postThumb{aspect-ratio:4/3}
+  .kzn__postTtl{font-size:1.16rem}
+  .kzn__postEx{font-size:.87rem;-webkit-line-clamp:2}
+  .kzn__aboutGrid{grid-template-columns:.92fr 1.08fr;align-items:center}
+  .kzn__aboutSub,.kzn__aboutVert{display:block}
+  .kzn__pts{grid-template-columns:1fr;gap:22px}
+  .kzn__menuGrid{grid-template-columns:repeat(3,1fr)}
+  .kzn__cnGrid{grid-template-columns:1fr 1fr;align-items:center}
+  .kzn__ctInfo{grid-template-columns:1fr 1fr;align-items:center;text-align:left}
+  .kzn__ctNotes{grid-template-columns:1fr 1fr;margin-top:0}
+  .kzn__ftTop{grid-template-columns:1fr 1fr}
+  .kzn__ftNav{grid-template-columns:1fr 1fr 1fr}
+  .kzn__evNav{display:flex}
+  .kzn__scroll{display:flex}
+  .kzn__fx{display:none}
   .kzn--pad{padding-bottom:0}
 }
+@media (min-width:1024px){
+  .kzn__nav{display:flex}
+  .kzn__hdCta{display:inline-flex}
+  .kzn__burger{display:none}
+  .kzn__mt:checked ~ .kzn__drawer{opacity:0;visibility:hidden;z-index:-1}
+}
 @media (prefers-reduced-motion:reduce){
-  .kzn *{transition:none!important;animation:none!important}
+  .kzn *,.kzn *::before,.kzn *::after{animation:none!important;transition:none!important}
+  .kzn.js .rv{opacity:1!important;transform:none!important}
+  .kzn.js .kzn__heroTtl span i{transform:none!important}
 }
 </style>
 
 <div class="kzn kzn--pad">
 
-  <!-- ========== ヘッダー ========== -->
-  <header class="kzn__header">
-    <div class="kzn__wrap">
-      <input class="kzn__toggle" type="checkbox" id="kzn-toggle">
-      <div class="kzn__hbar">
-        <a class="kzn__logo" href="#kzn-top">
-          <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
-            <circle cx="15" cy="15" r="14" fill="#e4efe9"/>
-            <path d="M15 6c3.6 0 6.5 2.7 6.5 6 0 2.8-2 5.1-4.8 5.8V22h-3.4v-4.2C10.5 17.1 8.5 14.8 8.5 12c0-3.3 2.9-6 6.5-6z" fill="#1f5c4d"/>
-          </svg>
-          <span>キズナ</span>
-        </a>
-        <nav class="kzn__nav" aria-label="メインメニュー">
-          <a href="#kzn-menu">メニュー</a>
-          <a href="#kzn-club">キズナクラブ</a>
-          <a href="#kzn-juku">キズナ塾</a>
-          <a href="#kzn-shindan">才能診断</a>
-          <a href="#kzn-katsudo">活動</a>
-          <a href="#kzn-faq">よくある質問</a>
-          <a href="#kzn-contact">お問い合わせ</a>
-        </nav>
-        <a class="kzn__btn kzn__btn--pri kzn__btn--sm kzn__hcta" href="#kzn-club">申し込み</a>
-        <label class="kzn__burger" for="kzn-toggle" aria-label="メニューを開閉する">
-          <span></span><span></span><span></span>
-        </label>
-      </div>
-      <nav class="kzn__drawer" aria-label="メニュー">
-        <a href="#kzn-menu">メニュー一覧</a>
-        <a href="#kzn-club">キズナクラブ・ジュニアクラブ</a>
-        <a href="#kzn-juku">キズナ塾</a>
-        <a href="#kzn-shindan">キズナ式才能診断</a>
-        <a href="#kzn-fest">キズナ文化祭</a>
-        <a href="#kzn-katsudo">キズナの活動</a>
-        <a href="#kzn-corner">キズナコーナー</a>
-        <a href="#kzn-faq">よくある質問</a>
-        <a href="#kzn-contact">お問い合わせ・申し込み</a>
-        <a class="kzn__btn kzn__btn--pri kzn__btn--full" href="#kzn-club">キズナクラブに申し込む</a>
-      </nav>
+<!-- ========== ヘッダー ========== -->
+<header class="kzn__hd">
+  <input class="kzn__mt" type="checkbox" id="kzn-mt">
+  <div class="kzn__hdIn">
+    <a class="kzn__logo" href="#kzn-top">
+      <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true">
+        <circle cx="15" cy="15" r="14" fill="#E7EFEA"/>
+        <path d="M15 6c3.6 0 6.5 2.7 6.5 6 0 2.8-2 5.1-4.8 5.8V22h-3.4v-4.2C10.5 17.1 8.5 14.8 8.5 12c0-3.3 2.9-6 6.5-6z" fill="#14503F"/>
+      </svg>
+      <span>キズナ</span>
+    </a>
+    <nav class="kzn__nav" aria-label="メインメニュー">
+      <a href="#kzn-event">イベント</a>
+      <a href="#kzn-news">お知らせ</a>
+      <a href="#kzn-about">キズナとは</a>
+      <a href="#kzn-menu">できること</a>
+      <a href="#kzn-act">活動</a>
+      <a href="#kzn-faq">Q&amp;A</a>
+    </nav>
+    <a class="kzn__btn kzn__btn--fill kzn__hdCta" href="#kzn-contact">申し込み・相談</a>
+    <label class="kzn__burger" for="kzn-mt" aria-label="メニューを開閉する"><i></i><i></i><i></i></label>
+  </div>
+  <nav class="kzn__drawer" aria-label="メニュー">
+    <a href="#kzn-event">イベント<small>EVENT</small></a>
+    <a href="#kzn-news">お知らせ<small>NEWS</small></a>
+    <a href="#kzn-about">キズナとは<small>ABOUT</small></a>
+    <a href="#kzn-menu">できること<small>SERVICE</small></a>
+    <a href="#kzn-act">活動<small>ACTIVITY</small></a>
+    <a href="#kzn-corner">キズナコーナー<small>ACCESS</small></a>
+    <a href="#kzn-faq">よくある質問<small>Q&amp;A</small></a>
+    <a href="#kzn-contact">お問い合わせ<small>CONTACT</small></a>
+  </nav>
+</header>
+
+<!-- ========== ヒーロー ========== -->
+<section class="kzn__hero" id="kzn-top">
+  <div class="kzn__heroBg">
+    <img src="https://picsum.photos/seed/kizuna-hero-2/1800/1200" alt="キズナの子どもたち">
+  </div>
+  <div class="kzn__heroIn">
+    <p class="kzn__heroEn">KIZUNA CLUB</p>
+    <h1 class="kzn__heroTtl" data-hero>
+      <span><i>子どもたちの毎日に、</i></span>
+      <span><i>ちいさな灯りを。</i></span>
+    </h1>
+    <p class="kzn__heroLead">全国の子どもたちが、仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。</p>
+    <div class="kzn__heroBtns">
+      <a class="kzn__btn kzn__btn--fill" href="#kzn-contact">キズナクラブに申し込む</a>
+      <a class="kzn__btn kzn__btn--light" href="#kzn-about">キズナについて知る</a>
     </div>
-  </header>
+  </div>
+  <div class="kzn__scroll"><span>SCROLL</span><span class="kzn__scrollBar"></span></div>
+</section>
 
-  <!-- ========== ヒーロー ========== -->
-  <section class="kzn__hero" id="kzn-top">
-    <div class="kzn__wrap">
-      <div class="kzn__heroIn">
-        <div>
-          <h1 class="kzn__heroTtl">キズナ</h1>
-          <p class="kzn__heroCopy">全国の子どもたちが、<br><b>仏教の教えをもとに</b><br>ステキな毎日を送れるように。</p>
-          <p class="kzn__heroTxt">さまざまなサポートを受けることができる、子どもたちのための集まりです。学校のこと、進路のこと、毎日のこと。ひとりで抱えこまずに、いっしょに考えていきましょう。</p>
-          <div class="kzn__heroBtns">
-            <a class="kzn__btn kzn__btn--pri" href="#kzn-club">キズナクラブに申し込む<span class="kzn__btn__ar">→</span></a>
-            <a class="kzn__btn kzn__btn--sec" href="#kzn-menu">できることを見る</a>
-          </div>
-        </div>
-        <div class="kzn__slotBox kzn__slotBox--hero">
-          <p class="kzn__slot"><b>［画像スロット］</b>子どもたちの写真コラージュ<br>（推奨 1200×900px / JPG）</p>
-        </div>
+<!-- ========== 01 イベント ========== -->
+<section class="kzn__sec kzn__ev" id="kzn-event">
+  <div class="kzn__wrap">
+    <div class="kzn__evHead rv">
+      <div class="kzn__shead" style="margin-bottom:0">
+        <span class="kzn__no">01</span>
+        <h2 class="kzn__en">Event</h2>
+        <p class="kzn__ja">イベント・行事</p>
       </div>
-    </div>
-  </section>
-
-  <!-- ========== お知らせ ========== -->
-  <section class="kzn__sec" id="kzn-news">
-    <div class="kzn__wrap kzn__wrap--narrow">
-      <div class="kzn__head">
-        <span class="kzn__eyebrow">NEWS</span>
-        <h2 class="kzn__h2">キズナからのお知らせ</h2>
-        <p class="kzn__lead">最新の行事・企画のご案内です。</p>
-      </div>
-      <ul class="kzn__news">
-        <li><a class="kzn__newsItem" href="#kzn-fest">
-          <span class="kzn__newsMeta"><span class="kzn__tag kzn__tag--gold">イベント</span><time datetime="2026-09-13">9月13日（日）</time></span>
-          <span class="kzn__newsTtl">キズナ文化祭を東京ビッグサイトで開催します</span>
-        </a></li>
-        <li><a class="kzn__newsItem" href="#kzn-shindan">
-          <span class="kzn__newsMeta"><span class="kzn__tag">特別企画</span><span>受付中</span></span>
-          <span class="kzn__newsTtl">キズナ式才能診断 ── スマホで2分、自分の強みを活かせる進路が分かる</span>
-        </a></li>
-        <li><a class="kzn__newsItem" href="#kzn-corner">
-          <span class="kzn__newsMeta"><span class="kzn__tag">受付</span><span>二千畳行事日のみ</span></span>
-          <span class="kzn__newsTtl">キズナポイントプレゼントの提供品を、キズナコーナーにて受け付けています</span>
-        </a></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ========== メニュー（サイトの入口） ========== -->
-  <section class="kzn__sec kzn__sec--white" id="kzn-menu">
-    <div class="kzn__wrap">
-      <div class="kzn__head">
-        <span class="kzn__eyebrow">MENU</span>
-        <h2 class="kzn__h2">キズナのご案内</h2>
-        <p class="kzn__lead">気になるところからご覧ください。</p>
-      </div>
-      <div class="kzn__tiles">
-        <a class="kzn__tile kzn__tile--blue" href="#kzn-club">キズナクラブ・<br>ジュニアクラブ<span>入会・登録変更・会費</span></a>
-        <a class="kzn__tile kzn__tile--green" href="#kzn-tokuten">キズナクラブ特典<span>会員のみなさまへ</span></a>
-        <a class="kzn__tile kzn__tile--cream" href="#kzn-card">キズナカード・<br>キズナポイント<span>ためる・つかう</span></a>
-        <a class="kzn__tile kzn__tile--yellow" href="#kzn-katsudo">キズナの活動<span>行事・文化祭のようす</span></a>
-        <a class="kzn__tile kzn__tile--pink" href="#kzn-juku">キズナ塾<span>申し込み・サポーター募集</span></a>
-        <a class="kzn__tile kzn__tile--beige" href="#">キズナスタッフ・<br>キズナサポーター紹介<span>支えている人たち</span></a>
-        <a class="kzn__tile kzn__tile--purple" href="#kzn-faq">よくある質問<span>会費・登録内容の変更など</span></a>
-        <a class="kzn__tile kzn__tile--gray" href="#kzn-contact">お問い合わせ・<br>申し込み<span>ご相談はこちらから</span></a>
-      </div>
-      <p class="kzn__tilesFoot"><a class="kzn__link" href="#">学徒サイトに戻る<span aria-hidden="true">→</span></a></p>
-    </div>
-  </section>
-
-  <!-- ========== キズナクラブ ========== -->
-  <section class="kzn__sec" id="kzn-club">
-    <div class="kzn__wrap kzn__wrap--narrow">
-      <div class="kzn__head">
-        <span class="kzn__eyebrow">CLUB</span>
-        <h2 class="kzn__h2">キズナクラブ・ジュニアクラブ</h2>
-        <p class="kzn__lead">お子さんの年齢に合わせて参加できます。まずはお気軽にお申し込みください。</p>
-      </div>
-      <div class="kzn__panel kzn__panel--pink">
-        <div class="kzn__specs">
-          <div class="kzn__spec"><span class="kzn__specKey">会費</span><span>月200円（キズナクラブ）</span></div>
-          <div class="kzn__spec"><span class="kzn__specKey">オンライン<br>コース</span><span>月2000円</span></div>
-          <div class="kzn__spec"><span class="kzn__specKey">納め方</span><span>規定の納め方でご納入ください（自動引き落としはありません）</span></div>
-          <div class="kzn__spec"><span class="kzn__specKey">登録変更</span><span>申し込みフォームの「登録情報の変更・修正はこちら」から</span></div>
-        </div>
-        <div class="kzn__btnRow" style="margin-top:24px">
-          <a class="kzn__btn kzn__btn--pri" href="#">キズナクラブに申し込む<span class="kzn__btn__ar">→</span></a>
-          <a class="kzn__btn kzn__btn--sec" href="#">キズナクラブの詳細を見る</a>
-        </div>
-        <div class="kzn__btnRow">
-          <a class="kzn__btn kzn__btn--sec" href="#">登録内容の変更はこちら</a>
-          <a class="kzn__btn kzn__btn--sec" href="#">キズナ会費の納め方はこちら</a>
-        </div>
-      </div>
-
-      <!-- 特典 / カード・ポイント -->
-      <div class="kzn__tiles" style="grid-template-columns:1fr;margin-top:20px" id="kzn-tokuten">
-        <a class="kzn__tile kzn__tile--green" href="#" style="min-height:96px">キズナクラブ特典<span>会員のみなさまが受けられる特典のご案内</span></a>
-      </div>
-      <div class="kzn__tiles" style="grid-template-columns:1fr;margin-top:14px" id="kzn-card">
-        <a class="kzn__tile kzn__tile--cream" href="#" style="min-height:96px">キズナカード・キズナポイント<span>ポイントのため方・つかい方はこちら</span></a>
+      <div class="kzn__evNav">
+        <button class="kzn__arw" data-ev="prev" aria-label="前へ">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M6 1L1 6l5 5M1 6h15" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+        <button class="kzn__arw" data-ev="next" aria-label="次へ">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M10 1l5 5-5 5M15 6H0" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
       </div>
     </div>
-  </section>
+    <p class="kzn__evHint rv d1" style="margin-bottom:26px">← 横にスワイプしてご覧ください</p>
+  </div>
 
-  <!-- ========== キズナ塾 ========== -->
-  <section class="kzn__sec kzn__juku" id="kzn-juku">
-    <div class="kzn__wrap">
-      <div class="kzn__jukuGrid">
-        <div class="kzn__slotBox" style="aspect-ratio:1/1">
-          <p class="kzn__slot"><b>［画像スロット］</b>キズナ塾のイラスト<br>（推奨 800×800px / PNG）</p>
+  <div class="kzn__wrap">
+    <div class="kzn__track" data-track tabindex="0" aria-label="イベント一覧">
+
+      <a class="kzn__evCard" href="#">
+        <div class="kzn__evThumb">
+          <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ev1/800/600" alt="">
+          <span class="kzn__evTag">文化祭</span>
+          <span class="kzn__evDate"><b>09.13</b><small>SUN</small></span>
         </div>
-        <div>
-          <span class="kzn__eyebrow">STUDY</span>
-          <h2 class="kzn__jukuTtl">キズナ塾</h2>
-          <p>子どもたちの勉強を、みんなで支える取り組みです。学びたい子と、教えたい大人をつないでいます。</p>
-          <ul class="kzn__list" style="margin:20px 0 26px">
-            <li>お子さんの「申し込み」を受け付けています</li>
-            <li>「子供達への勉強サポート」をしてくださる方も募集しています</li>
-          </ul>
-          <div class="kzn__btnRow">
-            <a class="kzn__btn kzn__btn--pri" href="#">キズナ塾に申し込む<span class="kzn__btn__ar">→</span></a>
-            <a class="kzn__btn kzn__btn--sec" href="#">勉強サポートに応募する</a>
-          </div>
+        <h3 class="kzn__evTtl">キズナ文化祭 2026<br>in 東京ビッグサイト</h3>
+        <p class="kzn__evMeta">東京ビッグサイト ／ 10:00 - 16:00</p>
+      </a>
+
+      <a class="kzn__evCard" href="#">
+        <div class="kzn__evThumb">
+          <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ev2/800/600" alt="">
+          <span class="kzn__evTag">特別企画</span>
+          <span class="kzn__evDate"><b>受付中</b><small>ANYTIME</small></span>
         </div>
-      </div>
+        <h3 class="kzn__evTtl">キズナ式 才能診断<br>自分の強みを見つけよう</h3>
+        <p class="kzn__evMeta">スマホで2分 ／ 中学生〜35才 ／ 無料</p>
+      </a>
+
+      <a class="kzn__evCard" href="#">
+        <div class="kzn__evThumb">
+          <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ev3/800/600" alt="">
+          <span class="kzn__evTag">キズナ塾</span>
+          <span class="kzn__evDate"><b>10.05</b><small>SUN</small></span>
+        </div>
+        <h3 class="kzn__evTtl">キズナ塾 体験会<br>勉強のはじめかた</h3>
+        <p class="kzn__evMeta">オンライン開催 ／ 参加無料</p>
+      </a>
+
+      <a class="kzn__evCard" href="#">
+        <div class="kzn__evThumb">
+          <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ev4/800/600" alt="">
+          <span class="kzn__evTag">受付</span>
+          <span class="kzn__evDate"><b>行事日</b><small>ONLY</small></span>
+        </div>
+        <h3 class="kzn__evTtl">キズナポイント<br>提供品の受付</h3>
+        <p class="kzn__evMeta">正本堂2階 キズナコーナー ／ 二千畳行事日のみ</p>
+      </a>
+
+      <a class="kzn__evCard" href="#">
+        <div class="kzn__evThumb">
+          <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ev5/800/600" alt="">
+          <span class="kzn__evTag">交流会</span>
+          <span class="kzn__evDate"><b>11.03</b><small>MON</small></span>
+        </div>
+        <h3 class="kzn__evTtl">ジュニアクラブ<br>秋の交流会</h3>
+        <p class="kzn__evMeta">小学生対象 ／ 保護者の見学もできます</p>
+      </a>
+
+      <a class="kzn__evCard" href="#">
+        <div class="kzn__evThumb">
+          <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ev6/800/600" alt="">
+          <span class="kzn__evTag">募集</span>
+          <span class="kzn__evDate"><b>通年</b><small>ALL YEAR</small></span>
+        </div>
+        <h3 class="kzn__evTtl">キズナサポーター<br>募集のご案内</h3>
+        <p class="kzn__evMeta">子供達への勉強サポートをしてくださる方へ</p>
+      </a>
+
     </div>
-  </section>
+  </div>
 
-  <!-- ========== 才能診断 ========== -->
-  <section class="kzn__sec kzn__sec--white" id="kzn-shindan">
-    <div class="kzn__wrap kzn__wrap--narrow">
-      <div class="kzn__head">
-        <span class="kzn__eyebrow">キズナ特別企画</span>
-        <h2 class="kzn__h2">キズナ式 才能診断</h2>
-        <p class="kzn__lead">〜 自分の強みを活かせる進路が分かる！ 〜</p>
-      </div>
-      <div class="kzn__panel kzn__panel--pink">
-        <h3 class="kzn__panelTtl">スマホで2分。<br>あなたの「強み」を見つけよう。</h3>
-        <p class="kzn__panelSub">GoogleやFacebookなど、世界で最も活用されていると言われる心理分析「ビッグ5」を使用</p>
-        <div class="kzn__specs">
-          <div class="kzn__spec"><span class="kzn__specKey">対象</span><span>中学生 〜 35才</span></div>
-          <div class="kzn__spec"><span class="kzn__specKey">所要時間</span><span>スマホで約2分</span></div>
-          <div class="kzn__spec"><span class="kzn__specKey">費用</span><span>無料</span></div>
-          <div class="kzn__spec"><span class="kzn__specKey">分析方法</span><span>心理分析「ビッグ5」</span></div>
-        </div>
-        <div class="kzn__gift">
-          <h4 class="kzn__giftTtl">参加者限定！ どちらかお好きな特典をプレゼント 🎁</h4>
-          <div class="kzn__giftRow">
-            <div class="kzn__giftBox"><span class="kzn__giftBadge">A</span><br>特典A の名称<br><small>（画像スロット）</small></div>
-            <div class="kzn__giftBox kzn__giftBox--b"><span class="kzn__giftBadge">B</span><br>特典B の名称<br><small>（画像スロット）</small></div>
-          </div>
-        </div>
-        <p style="text-align:center;font-size:.92rem">
-          <a class="kzn__link" href="#">家族に送る文章の実例を見る<span aria-hidden="true">→</span></a>
-        </p>
-        <div class="kzn__panelFoot">
-          <a class="kzn__btn kzn__btn--pri" href="#">才能診断を受けてみる<span class="kzn__btn__ar">→</span></a>
-        </div>
-      </div>
+  <div class="kzn__wrap" style="margin-top:14px">
+    <a class="kzn__more" href="#">イベントをすべて見る</a>
+  </div>
+</section>
+
+<!-- ========== 02 お知らせ ========== -->
+<section class="kzn__sec kzn__news" id="kzn-news">
+  <div class="kzn__wrap kzn__wrap--n">
+    <div class="kzn__shead rv">
+      <span class="kzn__no">02</span>
+      <h2 class="kzn__en">News</h2>
+      <p class="kzn__ja">お知らせ</p>
+      <span class="kzn__rule"></span>
     </div>
-  </section>
 
-  <!-- ========== 文化祭 ========== -->
-  <section class="kzn__sec kzn__sec--tight" id="kzn-fest">
-    <div class="kzn__wrap kzn__wrap--narrow">
-      <div class="kzn__fest">
-        <span class="kzn__festLabel">SPECIAL EVENT</span>
-        <h2 class="kzn__festTtl">キズナ文化祭</h2>
-        <p class="kzn__festDate">9月13日（日）</p>
-        <p class="kzn__festPlace">in 東京ビッグサイト</p>
-        <a class="kzn__btn kzn__btn--gold" href="#">文化祭の詳細はこちら<span class="kzn__btn__ar">→</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== キズナの活動 ========== -->
-  <section class="kzn__sec" id="kzn-katsudo">
-    <div class="kzn__wrap">
-      <div class="kzn__head">
-        <span class="kzn__eyebrow">ACTIVITY</span>
-        <h2 class="kzn__h2">キズナの活動</h2>
-        <p class="kzn__lead">全国で、こんな時間を過ごしています。</p>
-      </div>
-      <div class="kzn__gallery">
-        <div class="kzn__gItem">［写真1］</div>
-        <div class="kzn__gItem">［写真2］</div>
-        <div class="kzn__gItem">［写真3］</div>
-        <div class="kzn__gItem">［写真4］</div>
-        <div class="kzn__gItem">［写真5］</div>
-      </div>
-      <p class="kzn__tilesFoot"><a class="kzn__btn kzn__btn--sec" href="#">活動の記録をもっと見る</a></p>
-    </div>
-  </section>
-
-  <!-- ========== キズナコーナー ========== -->
-  <section class="kzn__sec kzn__corner" id="kzn-corner">
-    <div class="kzn__wrap">
-      <div class="kzn__head">
-        <span class="kzn__eyebrow">ACCESS</span>
-        <h2 class="kzn__h2">キズナコーナーのご案内</h2>
-        <p class="kzn__lead">キズナポイントプレゼントの提供品を受け付けています。</p>
-      </div>
-      <div class="kzn__cornerGrid">
-        <div class="kzn__map">
-          <h3 class="kzn__mapTtl">高校生までの子供達が喜ぶもの</h3>
-          <p class="kzn__mapNote">（おもちゃ、漫画、ゲーム など）</p>
-          <div class="kzn__mapBox">
-            <div class="kzn__mapCell kzn__mapCell--main">正本堂２階</div>
-            <div class="kzn__mapCell kzn__mapCell--shop">サンキュー売店</div>
-            <div class="kzn__mapCell kzn__mapCell--kizuna">キズナコーナー</div>
-            <p class="kzn__mapArrow">↑ サンキュー売店のすぐそばです</p>
-          </div>
+    <a class="kzn__post rv" href="#">
+      <div class="kzn__postThumb"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-p1/700/520" alt=""></div>
+      <div>
+        <div class="kzn__postMeta">
+          <time class="kzn__postDate" datetime="2026-09-01">2026.09.01</time>
+          <span class="kzn__cat kzn__cat--ev">行事</span>
         </div>
-        <div>
-          <h3 class="kzn__panelTtl" style="text-align:left;font-size:1.14rem;margin-bottom:12px">受付について</h3>
-          <ul class="kzn__list">
-            <li>場所：正本堂２階・サンキュー売店のすぐそば「キズナコーナー」</li>
-            <li>受付品：高校生までの子供達が喜ぶもの（おもちゃ・漫画・ゲームなど）</li>
-            <li>キズナ担当へのご紹介、打ち合わせも承っています</li>
-            <li>個別コース登録・無料体験のご相談もこちらへ</li>
-          </ul>
-          <p class="kzn__caution">※ 二千畳行事日のみ受付しております。</p>
+        <h3 class="kzn__postTtl">キズナ文化祭を東京ビッグサイトで開催します</h3>
+        <p class="kzn__postEx">今年もキズナ文化祭の季節がやってきました。9月13日（日）、東京ビッグサイトにて開催いたします。子どもたちが準備してきた出しものや、キズナポイントで参加できるコーナーをたくさん用意して…</p>
+      </div>
+    </a>
+
+    <a class="kzn__post rv" href="#">
+      <div class="kzn__postThumb"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-p2/700/520" alt=""></div>
+      <div>
+        <div class="kzn__postMeta">
+          <time class="kzn__postDate" datetime="2026-08-24">2026.08.24</time>
+          <span class="kzn__cat kzn__cat--im">特別企画</span>
         </div>
+        <h3 class="kzn__postTtl">キズナ式才能診断がはじまりました</h3>
+        <p class="kzn__postEx">GoogleやFacebookなど世界で最も活用されていると言われる心理分析「ビッグ5」をもとに、自分の強みを活かせる進路が分かる診断です。スマホで2分、中学生から35才までどなたでも…</p>
       </div>
-    </div>
-  </section>
+    </a>
 
-  <!-- ========== よくある質問 ========== -->
-  <section class="kzn__sec kzn__faq" id="kzn-faq">
-    <div class="kzn__wrap kzn__wrap--narrow">
-      <div class="kzn__head">
-        <span class="kzn__eyebrow">FAQ</span>
-        <h2 class="kzn__h2">よくある質問</h2>
-        <p class="kzn__lead">質問をタップすると、答えが開きます。</p>
+    <a class="kzn__post rv" href="#">
+      <div class="kzn__postThumb"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-p3/700/520" alt=""></div>
+      <div>
+        <div class="kzn__postMeta">
+          <time class="kzn__postDate" datetime="2026-08-10">2026.08.10</time>
+          <span class="kzn__cat">受付</span>
+        </div>
+        <h3 class="kzn__postTtl">キズナポイントプレゼントの提供品を受け付けています</h3>
+        <p class="kzn__postEx">高校生までの子供達が喜ぶもの（おもちゃ・漫画・ゲームなど）を、二千畳行事日にキズナコーナーにて受け付けております。場所は正本堂2階、サンキュー売店のすぐそばです…</p>
       </div>
-      <div class="kzn__qa">
+    </a>
 
-        <details class="kzn__q">
-          <summary>キズナクラブの登録内容の変更はどうすればいいでしょうか？</summary>
-          <div class="kzn__a">
+    <a class="kzn__post rv" href="#">
+      <div class="kzn__postThumb"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-p4/700/520" alt=""></div>
+      <div>
+        <div class="kzn__postMeta">
+          <time class="kzn__postDate" datetime="2026-07-28">2026.07.28</time>
+          <span class="kzn__cat">キズナ塾</span>
+        </div>
+        <h3 class="kzn__postTtl">キズナ塾で、勉強サポーターを募集しています</h3>
+        <p class="kzn__postEx">キズナ塾は、学びたい子と教えたい大人をつなぐ取り組みです。得意な教科がひとつでもあれば大丈夫。オンラインでの参加もできますので、まずはお気軽にご相談ください…</p>
+      </div>
+    </a>
+
+    <p class="kzn__newsFoot"><a class="kzn__more" href="#">お知らせをすべて見る</a></p>
+  </div>
+</section>
+
+<!-- ========== 03 キズナとは ========== -->
+<section class="kzn__sec kzn__about" id="kzn-about">
+  <div class="kzn__wrap">
+    <div class="kzn__aboutGrid">
+      <div class="kzn__aboutMedia rv">
+        <span class="kzn__aboutVert">ABOUT KIZUNA</span>
+        <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ab1/900/1120" alt="">
+        <div class="kzn__aboutSub"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ab2/600/600" alt=""></div>
+      </div>
+      <div class="rv d1">
+        <div class="kzn__shead">
+          <span class="kzn__no">03</span>
+          <h2 class="kzn__en">About</h2>
+          <p class="kzn__ja">キズナとは</p>
+        </div>
+        <h3 class="kzn__aboutTtl">ひとりで抱えこまずに、<br>いっしょに考えていく。</h3>
+        <p class="kzn__aboutTxt">キズナは、全国の子どもたちが仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。</p>
+        <p class="kzn__aboutTxt">学校のこと、進路のこと、毎日のこと。子どもたち一人ひとりの状況に合わせて、無理のないかたちで参加できます。保護者の方のご相談も、いつでもお受けしています。</p>
+
+        <div class="kzn__pts">
+          <div class="kzn__pt">
+            <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-pt1/200/200" alt="">
             <div>
-              <p>申し込みフォームの「登録情報の変更・修正はこちら」から変更していただけます。</p>
-              <p style="margin-bottom:0"><a class="kzn__link" href="#">登録内容の変更はこちら<span aria-hidden="true">→</span></a></p>
+              <h4 class="kzn__ptTtl">仏教の教えをもとに</h4>
+              <p class="kzn__ptTxt">毎日をステキに過ごすための考え方を、子どもたちの言葉で伝えています。</p>
             </div>
           </div>
-        </details>
-
-        <details class="kzn__q">
-          <summary>キズナ会費の納め方はどのようにすればいいでしょうか？</summary>
-          <div class="kzn__a">
+          <div class="kzn__pt">
+            <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-pt2/200/200" alt="">
             <div>
-              <p>以下のページからご確認ください。</p>
-              <p style="margin-bottom:0"><a class="kzn__link" href="#">キズナ会費の納め方はこちら<span aria-hidden="true">→</span></a></p>
+              <h4 class="kzn__ptTtl">一人ひとりに合わせて</h4>
+              <p class="kzn__ptTxt">年齢や状況に応じたコースをご用意。無料体験からはじめられます。</p>
             </div>
           </div>
-        </details>
-
-        <details class="kzn__q">
-          <summary>キズナクラブ会費の自動引き落としはされていますか？</summary>
-          <div class="kzn__a">
-            <div><p style="margin-bottom:0">キズナクラブ会費の自動引き落としは行っていないため、規定の納め方で納入をお願いいたします。</p></div>
-          </div>
-        </details>
-
-        <details class="kzn__q">
-          <summary>会費をまとめて納めていますが、途中からオンラインコース（2000円）に切り替わった時の会費はどうなりますか？</summary>
-          <div class="kzn__a">
+          <div class="kzn__pt">
+            <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-pt3/200/200" alt="">
             <div>
-              <p>オンラインコースに登録された月の翌月から、2000円の会費に切り替わります。すでに納入済みの額は、オンラインコース2000円分に含めていただけたらと思います。</p>
-              <div class="kzn__example">
-                <b>例）</b>現在4月。月200円の会費を、昨年12月に1年分（2400円）納入済み。5月からオンラインコース（2000円）の場合。<br>
-                → 5月分として、あと600円ご納入ください。6月分以降は2000円として納めます。
-              </div>
+              <h4 class="kzn__ptTtl">全国に、仲間がいる</h4>
+              <p class="kzn__ptTxt">行事や文化祭を通じて、同じ年ごろの仲間と出会うことができます。</p>
             </div>
           </div>
-        </details>
-
-      </div>
-      <p class="kzn__faqFoot"><a class="kzn__link" href="#kzn-contact">解決しない場合はお問い合わせください<span aria-hidden="true">→</span></a></p>
-    </div>
-  </section>
-
-  <!-- ========== お問い合わせ ========== -->
-  <section class="kzn__sec kzn__contact" id="kzn-contact">
-    <div class="kzn__wrap kzn__wrap--narrow">
-      <div class="kzn__head">
-        <span class="kzn__eyebrow">CONTACT</span>
-        <h2 class="kzn__h2">お問い合わせ・申し込み</h2>
-        <p class="kzn__lead">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談はこちらから。</p>
-      </div>
-      <div class="kzn__contactBox">
-        <div class="kzn__btnRow" style="margin-bottom:26px">
-          <a class="kzn__btn kzn__btn--pri" href="#">相談フォームを開く<span class="kzn__btn__ar">→</span></a>
-          <a class="kzn__btn kzn__btn--sec" href="#">キズナクラブに申し込む</a>
         </div>
-        <a class="kzn__tel" href="tel:07041717569">
-          <span class="kzn__telNum">070-4171-7569</span>
-          <span class="kzn__telSub">お急ぎの方は、タップで電話がかけられます</span>
-        </a>
-        <p class="kzn__person">主催：キズナクラブ ／ 担当：宮部 成美</p>
-        <div class="kzn__qr"><span>［QRコード<br>画像スロット］</span></div>
-        <p style="font-size:.85rem;color:var(--ink-l)">QRコードからも受け付けています</p>
 
-        <div class="kzn__notes">
-          <p class="kzn__note"><b>お返事について</b><br>フォーム入力後のお返事は、目安として3日後です。お急ぎの場合は、キズナ担当に直接ご連絡ください。</p>
-          <p class="kzn__note"><b>個別コースのご案内について</b><br>お子さんへのご案内は、キズナ担当との打ち合わせ後にしていただけたらと思います。お子さんの年齢や状況に応じた伝え方がありますので、打ち合わせ後のご案内を推奨いたします。</p>
-        </div>
+        <p style="margin-top:38px"><a class="kzn__more" href="#">キズナクラブの詳細を見る</a></p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ========== フッター ========== -->
-  <footer class="kzn__footer">
-    <div class="kzn__wrap">
-      <p class="kzn__flogo">キズナ</p>
-      <p style="font-size:.85rem;opacity:.85;margin:0 0 18px">全国の子どもたちが、仏教の教えをもとに、<br>ステキな毎日を送れるよう応援しています。</p>
-      <a class="kzn__fback" href="#">学徒サイトに戻る →</a>
-      <nav class="kzn__fnav" aria-label="フッターメニュー">
-        <a href="#kzn-club">キズナクラブ</a>
-        <a href="#kzn-juku">キズナ塾</a>
-        <a href="#kzn-shindan">才能診断</a>
-        <a href="#kzn-fest">文化祭</a>
-        <a href="#kzn-katsudo">活動</a>
+<!-- ========== 04 できること ========== -->
+<section class="kzn__sec" id="kzn-menu">
+  <div class="kzn__wrap">
+    <div class="kzn__shead rv">
+      <span class="kzn__no">04</span>
+      <h2 class="kzn__en">Service</h2>
+      <p class="kzn__ja">キズナでできること</p>
+      <span class="kzn__rule"></span>
+    </div>
+
+    <div class="kzn__menuGrid">
+      <a class="kzn__mi rv" href="#">
+        <div class="kzn__miThumb"><span class="kzn__miNo">01</span><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-m1/700/880" alt=""></div>
+        <h3 class="kzn__miTtl">キズナクラブ・ジュニアクラブ</h3>
+        <p class="kzn__miEn">CLUB</p>
+        <p class="kzn__miTxt">入会・登録内容の変更・会費のご案内。まずはお気軽にお申し込みください。</p>
+      </a>
+      <a class="kzn__mi rv d1" href="#">
+        <div class="kzn__miThumb"><span class="kzn__miNo">02</span><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-m2/700/880" alt=""></div>
+        <h3 class="kzn__miTtl">キズナ塾</h3>
+        <p class="kzn__miEn">STUDY</p>
+        <p class="kzn__miTxt">学びたい子と、教えたい大人をつなぐ取り組み。サポーターも募集中です。</p>
+      </a>
+      <a class="kzn__mi rv d2" href="#">
+        <div class="kzn__miThumb"><span class="kzn__miNo">03</span><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-m3/700/880" alt=""></div>
+        <h3 class="kzn__miTtl">キズナ式 才能診断</h3>
+        <p class="kzn__miEn">DIAGNOSIS</p>
+        <p class="kzn__miTxt">心理分析「ビッグ5」で、自分の強みを活かせる進路が分かります。</p>
+      </a>
+      <a class="kzn__mi rv" href="#">
+        <div class="kzn__miThumb"><span class="kzn__miNo">04</span><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-m4/700/880" alt=""></div>
+        <h3 class="kzn__miTtl">キズナクラブ特典</h3>
+        <p class="kzn__miEn">BENEFITS</p>
+        <p class="kzn__miTxt">会員のみなさまが受けられる特典をご案内しています。</p>
+      </a>
+      <a class="kzn__mi rv d1" href="#">
+        <div class="kzn__miThumb"><span class="kzn__miNo">05</span><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-m5/700/880" alt=""></div>
+        <h3 class="kzn__miTtl">キズナカード・キズナポイント</h3>
+        <p class="kzn__miEn">POINT</p>
+        <p class="kzn__miTxt">ポイントのため方・つかい方、提供品の受付についてはこちら。</p>
+      </a>
+      <a class="kzn__mi rv d2" href="#">
+        <div class="kzn__miThumb"><span class="kzn__miNo">06</span><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-m6/700/880" alt=""></div>
+        <h3 class="kzn__miTtl">スタッフ・サポーター紹介</h3>
+        <p class="kzn__miEn">MEMBER</p>
+        <p class="kzn__miTxt">キズナを支えている人たちをご紹介します。</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 05 活動 ========== -->
+<section class="kzn__sec kzn__act" id="kzn-act">
+  <div class="kzn__wrap">
+    <div class="kzn__shead rv">
+      <span class="kzn__no">05</span>
+      <h2 class="kzn__en">Activity</h2>
+      <p class="kzn__ja">キズナの活動</p>
+      <span class="kzn__rule"></span>
+    </div>
+    <p class="kzn__actLead rv d1">全国で、こんな時間を過ごしています。行事、文化祭、勉強会、そしてなんでもない日のおしゃべりまで。子どもたちが安心して過ごせる場所をつくっています。</p>
+  </div>
+  <div class="kzn__mqWrap">
+    <div class="kzn__mq">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a1/800/600" alt="">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a2/800/600" alt="">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a3/800/600" alt="">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a4/800/600" alt="">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a5/800/600" alt="">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a6/800/600" alt="">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a1/800/600" alt="" aria-hidden="true">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a2/800/600" alt="" aria-hidden="true">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a3/800/600" alt="" aria-hidden="true">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a4/800/600" alt="" aria-hidden="true">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a5/800/600" alt="" aria-hidden="true">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-a6/800/600" alt="" aria-hidden="true">
+    </div>
+  </div>
+  <div class="kzn__wrap kzn__actFoot">
+    <a class="kzn__more" href="#">活動の記録をもっと見る</a>
+  </div>
+</section>
+
+<!-- ========== 06 キズナコーナー ========== -->
+<section class="kzn__sec kzn__corner" id="kzn-corner">
+  <div class="kzn__wrap">
+    <div class="kzn__shead rv">
+      <span class="kzn__no">06</span>
+      <h2 class="kzn__en">Access</h2>
+      <p class="kzn__ja">キズナコーナー</p>
+      <span class="kzn__rule"></span>
+    </div>
+    <div class="kzn__cnGrid">
+      <div class="kzn__map rv">
+        <p class="kzn__mapTtl">高校生までの子供達が喜ぶもの</p>
+        <p class="kzn__mapNote">（おもちゃ、漫画、ゲーム など）</p>
+        <div class="kzn__mapBox">
+          <div class="kzn__mc kzn__mc--a">正本堂２階</div>
+          <div class="kzn__mc kzn__mc--b">サンキュー売店</div>
+          <div class="kzn__mc kzn__mc--c">キズナコーナー</div>
+          <p class="kzn__mapArw">↑ サンキュー売店のすぐそばです</p>
+        </div>
+      </div>
+      <div class="rv d1">
+        <ul class="kzn__cnList">
+          <li><b>PLACE</b><span>正本堂２階・サンキュー売店のすぐそば「キズナコーナー」</span></li>
+          <li><b>ITEM</b><span>高校生までの子供達が喜ぶもの（おもちゃ・漫画・ゲームなど）</span></li>
+          <li><b>MEETING</b><span>キズナ担当へのご紹介、打ち合わせも承っています</span></li>
+          <li><b>TRIAL</b><span>個別コース登録・無料体験のご相談もこちらへ</span></li>
+        </ul>
+        <p class="kzn__cnNote">※ 二千畳行事日のみ受付しております。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 07 Q&A ========== -->
+<section class="kzn__sec kzn__faq" id="kzn-faq">
+  <div class="kzn__wrap kzn__wrap--n">
+    <div class="kzn__shead rv">
+      <span class="kzn__no">07</span>
+      <h2 class="kzn__en">Q &amp; A</h2>
+      <p class="kzn__ja">よくある質問</p>
+      <span class="kzn__rule"></span>
+    </div>
+
+    <details class="kzn__q rv">
+      <summary>キズナクラブの登録内容の変更はどうすればいいでしょうか？</summary>
+      <div class="kzn__a"><div>
+        <p>申し込みフォームの「登録情報の変更・修正はこちら」から変更していただけます。</p>
+        <p><a class="kzn__more" href="#">登録内容の変更はこちら</a></p>
+      </div></div>
+    </details>
+
+    <details class="kzn__q rv">
+      <summary>キズナ会費の納め方はどのようにすればいいでしょうか？</summary>
+      <div class="kzn__a"><div>
+        <p>以下のページからご確認ください。会費はキズナクラブが月200円、オンラインコースが月2000円です。</p>
+        <p><a class="kzn__more" href="#">キズナ会費の納め方はこちら</a></p>
+      </div></div>
+    </details>
+
+    <details class="kzn__q rv">
+      <summary>キズナクラブ会費の自動引き落としはされていますか？</summary>
+      <div class="kzn__a"><div>
+        <p>キズナクラブ会費の自動引き落としは行っておりません。規定の納め方で納入をお願いいたします。</p>
+      </div></div>
+    </details>
+
+    <details class="kzn__q rv">
+      <summary>会費をまとめて納めていますが、途中からオンラインコース（2000円）に切り替わった時の会費はどうなりますか？</summary>
+      <div class="kzn__a"><div>
+        <p>オンラインコースに登録された月の翌月から、2000円の会費に切り替わります。すでに納入済みの額は、オンラインコース2000円分に含めていただけたらと思います。</p>
+        <div class="kzn__ex">
+          <b>例）</b>現在4月。月200円の会費を、昨年12月に1年分（2400円）納入済み。5月からオンラインコース（2000円）の場合。<br>
+          → 5月分として、あと600円ご納入ください。6月分以降は2000円として納めます。
+        </div>
+      </div></div>
+    </details>
+
+    <details class="kzn__q rv">
+      <summary>子どもへの個別コースの案内は、いつすればよいですか？</summary>
+      <div class="kzn__a"><div>
+        <p>キズナ担当との打ち合わせ後にしていただけたらと思います。お子さんの年齢や状況に応じた伝え方がありますので、打ち合わせ後のご案内を推奨しております。</p>
+      </div></div>
+    </details>
+
+    <p class="kzn__faqFoot"><a class="kzn__more" href="#kzn-contact">解決しない場合はお問い合わせください</a></p>
+  </div>
+</section>
+
+<!-- ========== 08 お問い合わせ ========== -->
+<section class="kzn__sec kzn__ct" id="kzn-contact">
+  <div class="kzn__ctBg"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/kizuna-ct/1600/900" alt=""></div>
+  <div class="kzn__wrap kzn__wrap--n kzn__ctIn">
+    <p class="kzn__ctEn rv">CONTACT</p>
+    <h2 class="kzn__ctTtl rv">まずは、お話を<br>聞かせてください。</h2>
+    <p class="kzn__ctTxt rv d1">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談を承っています。どんな小さなことでも、お気軽にご連絡ください。</p>
+    <div class="kzn__ctBtns rv d2">
+      <a class="kzn__btn kzn__btn--sakura" href="#">相談フォームを開く</a>
+      <a class="kzn__btn kzn__btn--light" href="#">キズナクラブに申し込む</a>
+    </div>
+
+    <div class="kzn__ctInfo rv d2">
+      <div>
+        <a class="kzn__tel" href="tel:07041717569">070-4171-7569</a>
+        <span class="kzn__telSub">タップで電話がかけられます</span>
+        <p class="kzn__ctMeta" style="margin-top:14px">主催：キズナクラブ ／ 担当：宮部 成美</p>
+      </div>
+      <div class="kzn__ctNotes">
+        <p class="kzn__ctNote"><b>お返事について</b>フォーム入力後のお返事は、目安として3日後です。お急ぎの場合は、キズナ担当に直接ご連絡ください。</p>
+        <p class="kzn__ctNote"><b>個別コースのご案内</b>お子さんへのご案内は、キズナ担当との打ち合わせ後を推奨しております。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== フッター ========== -->
+<footer class="kzn__ft">
+  <div class="kzn__wrap">
+    <div class="kzn__ftTop">
+      <div>
+        <p class="kzn__ftLogo">キズナ</p>
+        <p class="kzn__ftTxt">全国の子どもたちが、仏教の教えをもとに、ステキな毎日を送れるよう応援しています。</p>
+        <a class="kzn__ftBack" href="#">学徒サイトに戻る →</a>
+      </div>
+      <nav class="kzn__ftNav" aria-label="フッターメニュー">
+        <a href="#kzn-event">イベント</a>
+        <a href="#kzn-news">お知らせ</a>
+        <a href="#kzn-about">キズナとは</a>
+        <a href="#kzn-menu">できること</a>
+        <a href="#kzn-act">活動</a>
         <a href="#kzn-corner">キズナコーナー</a>
         <a href="#kzn-faq">よくある質問</a>
         <a href="#kzn-contact">お問い合わせ</a>
       </nav>
-      <p class="kzn__copy">&copy; キズナクラブ</p>
     </div>
-  </footer>
-
-  <!-- ========== 追従CTA（スマホのみ） ========== -->
-  <div class="kzn__fixed">
-    <a class="kzn__btn kzn__btn--sec" href="tel:07041717569">電話する</a>
-    <a class="kzn__btn kzn__btn--pri" href="#kzn-contact">相談・申し込み</a>
+    <div class="kzn__ftBtm">
+      <span>&copy; KIZUNA CLUB</span>
+      <span class="lt">Supporting children across Japan</span>
+    </div>
   </div>
+</footer>
+
+<!-- ========== 追従CTA（スマホ） ========== -->
+<div class="kzn__fx">
+  <a href="tel:07041717569">電話する</a>
+  <a href="#kzn-contact">相談・申し込み</a>
+</div>
 
 </div>
+
+<script>
+(function(){
+  var root=document.querySelector('.kzn'); if(!root) return;
+  root.classList.add('js');
+
+  /* 出現アニメーション */
+  var io=window.IntersectionObserver ? new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -12% 0px'}) : null;
+  if(io){ root.querySelectorAll('.rv').forEach(function(el){ io.observe(el); }); }
+  else { root.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }
+
+  /* ヒーロー見出し */
+  var h=root.querySelector('[data-hero]');
+  if(h) requestAnimationFrame(function(){ h.classList.add('on'); });
+
+  /* ヘッダーの背景切り替え */
+  var hd=root.querySelector('.kzn__hd');
+  var onScroll=function(){ hd.classList.toggle('solid', window.scrollY > 60); };
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+
+  /* イベントカルーセル */
+  var tr=root.querySelector('[data-track]');
+  if(tr){
+    var step=function(){ var c=tr.querySelector('.kzn__evCard'); return c ? c.offsetWidth + 24 : 320; };
+    root.querySelectorAll('[data-ev]').forEach(function(b){
+      b.addEventListener('click',function(){
+        tr.scrollBy({left: (b.dataset.ev==='next'?1:-1) * step(), behavior:'smooth'});
+      });
+    });
+    var sync=function(){
+      var p=root.querySelector('[data-ev="prev"]'), n=root.querySelector('[data-ev="next"]');
+      if(!p||!n) return;
+      p.disabled = tr.scrollLeft < 4;
+      n.disabled = tr.scrollLeft > tr.scrollWidth - tr.clientWidth - 4;
+    };
+    sync(); tr.addEventListener('scroll',sync,{passive:true});
+  }
+
+  /* ドロワーを開いたら背面をスクロールさせない */
+  var mt=document.getElementById('kzn-mt');
+  if(mt) mt.addEventListener('change',function(){
+    document.body.style.overflow = mt.checked ? 'hidden' : '';
+  });
+})();
+</script>
 <!-- ===== WP-BLOCK-END ===== -->
 </body>
 </html>
