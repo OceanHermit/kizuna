@@ -269,9 +269,8 @@ doc = f"""<!DOCTYPE html>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-{draft}
 <header class="hd">
-  <div class="wrap hd__in">
+{draft}  <div class="wrap hd__in">
     <a class="logo" href="#top">
       <span class="logo__mark" aria-hidden="true"><span></span></span>
       <span>{e(site['name'])}</span>

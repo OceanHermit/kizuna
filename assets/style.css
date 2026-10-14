@@ -64,7 +64,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .wrap{max-width:1240px;margin:0 auto;padding-inline:var(--gut)}
 .wrap--n{max-width:860px}
 .sec{padding-block:var(--sec)}
-[id]{scroll-margin-top:84px}
+[id]{scroll-margin-top:120px}
 
 /* 小さい見出しラベル（一番小さい文字） */
 .cap{display:inline-block;font-size:var(--t-cap);font-weight:700;letter-spacing:.26em;
@@ -82,7 +82,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .rule{height:1px;background:var(--hair);border:0;margin:0}
 
 /* ---------- 準備中バナー ---------- */
-.draft{background:var(--ink);color:var(--beige);text-align:center;
+/* 準備中バナー：ヘッダーの中に入っているので、透過時も読めるように自前で地を敷く */
+.draft{background:var(--ink);color:var(--beige);text-align:center;margin:0;
   padding:9px var(--gut);font-size:var(--t-cap);letter-spacing:.1em;line-height:1.8}
 
 /* ---------- ヘッダー（最初は透過、スクロールで地が出る） ---------- */
