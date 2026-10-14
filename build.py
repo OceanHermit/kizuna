@@ -11,11 +11,10 @@ data/*.json を読んで index.html を書き出します。
 git にコミットするだけです。見た目は assets/style.css が持っています。
 """
 
+import datetime
 import html
 import json
-import os
 import pathlib
-import datetime
 
 ROOT = pathlib.Path(__file__).parent
 DATA = ROOT / "data"
@@ -28,159 +27,208 @@ def load(name):
 
 
 def e(s):
-    """テキストとして安全に埋め込む（HTMLタグを書きたい箇所では使わない）"""
+    """テキストとして安全に埋め込む（HTMLを書きたい箇所では使わない）"""
     return html.escape(str(s), quote=True)
 
 
-# ---------------------------------------------------------------- 読み込み
 site = load("site")
-words = load("words")
+hero = load("hero")
+about = load("about")
+juku = load("juku")
+member = load("member")
 events = load("events")
 news = load("news")
 faq = load("faq")
-menu = load("menu")
-images = load("images")
 
 L = site["links"]
 
 
 def link(key):
-    """menu.json / faq.json の link はキー名。site.json のURLに解決する"""
-    return L.get(key, key if key else "#")
+    """data の link はキー名。site.json の links に無ければそのまま URL として扱う"""
+    if not key:
+        return "#"
+    return L.get(key, key)
 
 
-def img(key):
-    """assets/img/<key>.png があればそれを、無ければ生成元のURLを返す"""
-    for ext in (".png", ".jpg", ".webp"):
-        if (ROOT / "assets" / "img" / f"{key}{ext}").exists():
-            return f"assets/img/{key}{ext}"
-    f = images["files"].get(key)
-    return images["base"] + f if f else ""
+def ph(ratio, label, cls=""):
+    """写真が入る枠。写真を入れるときは、この関数の出力を <img> に差し替える"""
+    c = f" {cls}" if cls else ""
+    # 比率は CSS 変数で渡す。こうするとセクションごとに CSS 側で上書きできる
+    return (f'<div class="ph{c}" style="--ar:{ratio}">'
+            f'<p class="ph__t"><b>📷</b>写真が入ります<br>{e(ratio.replace("/", " : "))}</p></div>')
 
 
-def alt(key):
-    return images["alt"].get(key, "")
-
-
-def picture(key, cls="", decorative=False):
-    """decorative=True のときは alt="" にする。
-    （文字が隣にある飾りの絵。読み上げでも読み込み失敗時でも邪魔にならない）"""
-    src = img(key)
-    if not src:
-        return ""
-    c = f' class="{cls}"' if cls else ""
-    a = "" if decorative else alt(key)
-    return f'<img{c} src="{e(src)}" alt="{e(a)}" loading="lazy" decoding="async">'
+def jp_date(ymd):
+    y, m, d = (int(v) for v in ymd.split("-"))
+    return f"{m}月{d}日（{WD[datetime.date(y, m, d).weekday() - 6]}）"
 
 
 # ---------------------------------------------------------------- 部品
-def section_head(icon, title, en, more=None):
-    m = ""
-    if more:
-        m = f'<a class="sh__more" href="{e(more[1])}">{e(more[0])}</a>'
-    return f"""      <div class="sh">
-        <span class="sh__ic" aria-hidden="true">{icon}</span>
+NAV = [
+    ("キズナとは", "#about", "ABOUT"),
+    ("イベント", "#event", "EVENT"),
+    ("お知らせ", "#news", "NEWS"),
+    ("キズナ塾", "#juku", "STUDY"),
+    ("会員メニュー", "#member", "MEMBER"),
+    ("よくある質問", "#faq", "Q & A"),
+    ("お問い合わせ", "#contact", "CONTACT"),
+]
+
+
+def nav_bar():
+    return "".join(f'<a href="{h}">{e(t)}</a>' for t, h, _ in NAV[:6])
+
+
+def nav_overlay():
+    return "\n".join(
+        f'        <a href="{h}"><span>{e(t)}<small>{e(en)}</small></span><i aria-hidden="true">→</i></a>'
+        for t, h, en in NAV)
+
+
+def section_head(en, title, text="", more=None, row=False):
+    cls = "sh sh--row" if row else "sh"
+    m = f'<a class="link" href="{e(more[1])}">{e(more[0])} <span aria-hidden="true">→</span></a>' if more else ""
+    x = f'<p class="sh__x">{e(text)}</p>' if text else ""
+    return f"""      <div class="{cls}">
         <div>
+          <span class="sh__en">{en}</span>
           <h2 class="sh__t">{e(title)}</h2>
-          <p class="sh__en">{e(en)}</p>
+          {x}
         </div>{m}
       </div>"""
 
 
-def event_items():
+def hero_block():
+    chips = []
+    if hero.get("date"):
+        chips.append(f'<span class="chip chip--blue">🗓 {e(jp_date(hero["date"]))}</span>')
+    if hero.get("time"):
+        chips.append(f'<span class="chip chip--green">🕐 {e(hero["time"])}</span>')
+    if hero.get("place"):
+        chips.append(f'<span class="chip chip--purple">📍 {e(hero["place"])}</span>')
+    count = ""
+    if hero.get("date"):
+        count = (f'<span class="hero__count" data-count="{e(hero["date"])}" hidden></span>')
+    return f"""      <div class="hero__card">
+        {ph(hero.get('photo', '16/9'), '', 'hero__ph')}
+        <div class="hero__b">
+          <span class="hero__label">{e(hero['label'])}</span>
+          <h1 class="hero__t">{e(hero['title'])}</h1>
+          <div class="hero__meta">{''.join(chips)}</div>
+          <p class="hero__x">{e(hero['body'])}</p>
+          <div class="hero__btns">
+            <a class="btn btn--primary" href="{e(link(hero.get('cta_link')))}">{e(hero['cta_label'])}</a>
+            {count}
+          </div>
+        </div>
+      </div>"""
+
+
+def about_block():
+    body = "\n          ".join(f'<p class="about__p">{e(p)}</p>' for p in about["body"])
+    pts = "\n            ".join(
+        f'<div class="pt"><span class="pt__i" aria-hidden="true">{p["icon"]}</span>'
+        f'<div><p class="pt__t">{e(p["title"])}</p><p class="pt__x">{e(p["text"])}</p></div></div>'
+        for p in about["points"])
+    return f"""      <div class="about__grid">
+        {ph(about.get('photo', '4/5'), '', 'about__ph')}
+        <div>
+          <h3 class="about__t">{about['title']}</h3>
+          {body}
+          <div class="pts">
+            {pts}
+          </div>
+        </div>
+      </div>"""
+
+
+def event_cards():
     out = []
-    for ev in sorted(events, key=lambda x: x["date"]):
-        y, m, d = (int(v) for v in ev["date"].split("-"))
-        w = WD[datetime.date(y, m, d).weekday() - 6]  # 月曜=0 → 日曜起点に寄せる
+    for ev in sorted(events, key=lambda x: x["date"])[:3]:   # トップは3件まで
         meta = "　".join(x for x in (ev.get("time", ""), ev.get("place", "")) if x)
-        out.append(f"""        <a class="ev__item" href="{e(ev.get('link', '#'))}" data-ev-date="{e(ev['date'])}">
-          <span class="ev__date">
-            <span class="ev__m">{m}月</span>
-            <span class="ev__d">{d}</span>
-            <span class="ev__w">{w}</span>
-          </span>
-          <span>
-            <span class="ev__tag">{e(ev.get('tag', '行事'))}</span>
-            <span class="ev__ttl mr">{e(ev['title'])}</span>
-            <span class="ev__meta">{e(meta)}</span>
-            <span class="ev__body">{e(ev.get('body', ''))}</span>
-          </span>
+        out.append(f"""        <a class="ev" href="{e(ev.get('link', '#'))}" data-ev-date="{e(ev['date'])}">
+          {ph('4/3', '', 'ev__ph')}
+          <div class="ev__b">
+            <div class="ev__top">
+              <span class="ev__date">{e(jp_date(ev['date']))}</span>
+              <span class="chip chip--purple" data-soon hidden></span>
+            </div>
+            <h3 class="ev__t">{e(ev['title'])}</h3>
+            <p class="ev__x">{e(ev.get('body', ''))}</p>
+            <p class="ev__meta">{e(meta)}</p>
+          </div>
         </a>""")
     return "\n".join(out)
 
 
-def news_items():
+def news_list():
     out = []
-    for n in sorted(news, key=lambda x: x["date"], reverse=True):
+    for n in sorted(news, key=lambda x: x["date"], reverse=True)[:5]:
         y, m, d = n["date"].split("-")
-        out.append(f"""        <a class="news__item" href="{e(n.get('link', '#'))}">
-          <span class="news__meta">
-            <time class="news__date" datetime="{e(n['date'])}">{y}.{m}.{d}</time>
-            <span class="news__cat">{e(n.get('cat', 'お知らせ'))}</span>
+        out.append(f"""        <a class="news__i" href="{e(n.get('link', '#'))}">
+          <span class="news__m">
+            <time class="news__d" datetime="{e(n['date'])}">{y}.{m}.{d}</time>
+            <span class="chip chip--blue">{e(n.get('cat', 'お知らせ'))}</span>
           </span>
-          <span class="news__ttl mr">{e(n['title'])}</span>
-          <span class="news__body">{e(n.get('body', ''))}</span>
+          <span class="news__t">{e(n['title'])}</span>
+          <span class="news__x">{e(n.get('body', ''))}</span>
         </a>""")
     return "\n".join(out)
 
 
-def menu_items():
-    out = []
-    for mi in menu:
-        attr = f' data-for="{mi["for"]}"' if mi.get("for") in ("kid", "adult") else ""
-        out.append(f"""        <a class="mi"{attr} href="{e(link(mi.get('link')))}">
-          <span class="mi__img">{picture(mi['img'])}</span>
-          <span class="mi__b">
-            <span class="mi__en">{e(mi['no'])}　{e(mi['en'])}</span>
-            <span class="mi__t mr">{e(mi['title'])}</span>
-            <span class="mi__x">{e(mi['text'])}</span>
-          </span>
-        </a>""")
-    return "\n".join(out)
+def juku_block():
+    lis = "\n            ".join(f"<li>{e(p)}</li>" for p in juku["points"])
+    btns = "\n            ".join(
+        f'<a class="btn btn--{"primary" if b.get("style") == "primary" else "ghost"}" '
+        f'href="{e(link(b.get("link")))}">{e(b["label"])}</a>'
+        for b in juku["buttons"])
+    return f"""      <div class="juku__grid">
+        <div>
+          <p class="juku__sub">{e(juku['sub'])}</p>
+          <h2 class="juku__t">{e(juku['title'])}</h2>
+          <p class="juku__x">{e(juku['body'])}</p>
+          <ul class="juku__list">
+            {lis}
+          </ul>
+          <div class="juku__btns">
+            {btns}
+          </div>
+        </div>
+        {ph(juku.get('photo', '3/2'), '', 'juku__ph')}
+      </div>"""
+
+
+def member_tiles():
+    return "\n".join(
+        f"""        <a class="mi mi--{e(m.get('tone', 'blue'))}" href="{e(link(m.get('link')))}">
+          <span class="mi__i" aria-hidden="true">{m['icon']}</span>
+          <span class="mi__t">{e(m['title'])}</span>
+          <span class="mi__x">{e(m['text'])}</span>
+        </a>""" for m in member["items"])
 
 
 def faq_items():
     out = []
     for q in faq:
-        attr = f' data-for="{q["for"]}"' if q.get("for") in ("kid", "adult") else ""
         body = [f"<p>{e(q['a'])}</p>"]
         if q.get("example"):
-            body.append(f'<p class="q__ex">{q["example"]}</p>')   # 例文はHTMLを許可
+            body.append(f'<p class="q__ex">{q["example"]}</p>')   # 例文だけ HTML を許可
         if q.get("link_label"):
-            body.append(f'<a class="q__link" href="{e(link(q.get("link")))}">'
+            body.append(f'<a class="link q__link" href="{e(link(q.get("link")))}">'
                         f'{e(q["link_label"])} <span aria-hidden="true">→</span></a>')
-        out.append(f"""        <details class="q"{attr}>
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>{e(q['q'])}</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div>{''.join(body)}</div></div>
+        out.append(f"""        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>{e(q['q'])}</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div>{''.join(body)}</div></div>
         </details>""")
     return "\n".join(out)
 
 
-# JSON は f-string の外で用意する（f-string 内の {} と衝突するため）
-WORDS_JSON = json.dumps(words, ensure_ascii=False)
-EVENTS_JSON = json.dumps(
-    [{"date": x["date"], "title": x["title"], "time": x.get("time", ""),
-      "place": x.get("place", ""), "link": x.get("link", "#")} for x in events],
-    ensure_ascii=False)
-
-
-NAV = [("つぎの行事", "#event"), ("できること", "#menu"), ("お知らせ", "#news"),
-       ("キズナのこと", "#about"), ("よくある質問", "#faq"), ("お問い合わせ", "#contact")]
-
-# 画像が全部そろっているかの確認に使う
-ALL_IMG = ("hero", "mascot", "club", "juku", "shindan", "point",
-           "festival", "staff", "parent", "landscape")
-
-
-def nav_links(cls=""):
-    c = f' class="{cls}"' if cls else ""
-    return "".join(f'<a{c} href="{h}">{e(t)}</a>\n        ' for t, h in NAV).rstrip()
-
-
 # ---------------------------------------------------------------- 組み立て
-draft = ""
-if site.get("draft"):
-    draft = f'<p class="draft">{e(site["draft_note"])}</p>\n'
+draft = f'<p class="draft">{e(site["draft_note"])}</p>\n' if site.get("draft") else ""
 
 doc = f"""<!DOCTYPE html>
 <html lang="ja">
@@ -192,83 +240,63 @@ doc = f"""<!DOCTYPE html>
 <meta property="og:title" content="{e(site['title'])}">
 <meta property="og:description" content="{e(site['description'])}">
 <meta property="og:type" content="website">
-<meta property="og:image" content="{e(img('hero'))}">
-<meta name="theme-color" content="#1F5D4C">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23FAF6EE'/><path d='M16 7c3.9 0 7 2.9 7 6.5 0 3-2.2 5.5-5.2 6.2V24h-3.6v-4.3C11.2 19 9 16.5 9 13.5 9 9.9 12.1 7 16 7z' fill='%231F5D4C'/></svg>">
+<meta name="theme-color" content="#A8C9E5">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23A8C9E5'/><circle cx='16' cy='16' r='5' fill='%23FFFCF6'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
-<body data-mode="kid">
+<body>
 {draft}
 <header class="hd">
   <div class="wrap hd__in">
-    <a class="logo" href="#top">{picture('mascot', decorative=True)}<span>{e(site['name'])}</span></a>
-    <nav class="hd__nav" aria-label="メインメニュー">
-        {nav_links()}
-    </nav>
-    <div class="mode" role="group" aria-label="表示の切り替え">
-      <button type="button" data-mode="kid" aria-pressed="true">こども</button>
-      <button type="button" data-mode="adult" aria-pressed="false">おとな</button>
-    </div>
-    <button class="burger" type="button" aria-expanded="false" aria-label="メニューを開閉する"><i></i><i></i><i></i></button>
-  </div>
-  <div class="wrap">
-    <nav class="drawer" aria-label="メニュー">
-        {nav_links()}
-    </nav>
+    <a class="logo mr" href="#top">
+      <span class="logo__mark" aria-hidden="true"><span></span></span>
+      <span>{e(site['name'])}</span>
+    </a>
+    <nav class="hd__nav" aria-label="メインメニュー">{nav_bar()}</nav>
+    <a class="btn btn--primary btn--sm hd__cta" href="{e(L['join'])}">入会のご案内</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="kzn-menu"
+            aria-label="メニューを開閉する"><i></i><i></i><i></i></button>
   </div>
 </header>
 
+<div class="ovl" id="kzn-menu" aria-hidden="true">
+  <div class="ovl__in">
+    <nav class="ovl__nav" aria-label="メニュー">
+{nav_overlay()}
+    </nav>
+    <div class="ovl__foot">
+      <a class="btn btn--primary" href="{e(L['join'])}">入会のご案内</a>
+      <a class="btn btn--ghost" href="{e(site['tel_href'])}">電話する</a>
+    </div>
+  </div>
+</div>
+
 <main id="top">
 
-  <!-- ============ きょうのキズナ ============ -->
-  <section class="dash">
-    <div class="wrap dash__in">
-      <div class="dash__hello">
-        <h1 class="dash__greet mr" data-greet>こんにちは。</h1>
-        <p class="dash__date" data-today></p>
-      </div>
-      <div class="dash__grid">
-
-        <div class="card word">
-          <span class="card__label">きょうのことば</span>
-          <p class="word__txt" data-word-text>{e(words[0]['text'])}</p>
-          <p class="word__note" data-word-note>{e(words[0].get('note', ''))}</p>
-          {picture('mascot', 'word__mascot', decorative=True)}
-        </div>
-
-        <div class="card next" data-next>
-          <div>
-            <span class="card__label">つぎの行事まで</span>
-            <p class="next__d"><span class="next__num" data-next-num>—</span><span class="next__unit" data-next-unit></span></p>
-            <p class="next__ttl" data-next-title></p>
-            <p class="next__meta" data-next-meta></p>
-          </div>
-          <a class="next__link" href="#event" data-next-link>くわしく見る <span aria-hidden="true">→</span></a>
-        </div>
-
-      </div>
+  <!-- ============ 大カラム：注目のイベント ============ -->
+  <section class="hero" id="hero">
+    <div class="wrap hero__in">
+{hero_block()}
     </div>
   </section>
 
-  <!-- ============ つぎの行事 ============ -->
+  <!-- ============ キズナとは ============ -->
+  <section class="sec" id="about">
+    <div class="wrap">
+{section_head('ABOUT', 'キズナとは')}
+{about_block()}
+    </div>
+  </section>
+
+  <!-- ============ 直近のイベント ============ -->
   <section class="sec" id="event">
     <div class="wrap">
-{section_head('🗓', 'つぎの行事', 'EVENT')}
-      <div class="ev">
-{event_items()}
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ できること ============ -->
-  <section class="sec" id="menu">
-    <div class="wrap">
-{section_head('🌱', 'キズナでできること', 'SERVICE')}
-      <div class="menu">
-{menu_items()}
+{section_head('EVENT', '直近のイベント', '', ('すべて見る', '#'), row=True)}
+      <div class="evs">
+{event_cards()}
       </div>
     </div>
   </section>
@@ -276,88 +304,35 @@ doc = f"""<!DOCTYPE html>
   <!-- ============ お知らせ ============ -->
   <section class="sec" id="news">
     <div class="wrap wrap--n">
-{section_head('📣', 'お知らせ', 'NEWS', ('すべて見る', '#'))}
+{section_head('NEWS', 'お知らせ', '', ('すべて見る', '#'), row=True)}
       <div class="news">
-{news_items()}
+{news_list()}
       </div>
     </div>
   </section>
 
-  <!-- ============ キズナのこと ============ -->
-  <section class="sec about" id="about">
+  <!-- ============ キズナ塾 ============ -->
+  <section class="sec juku" id="juku">
     <div class="wrap">
-{section_head('🌳', 'キズナのこと', 'ABOUT')}
-      <div class="about__grid">
-        <div class="about__img">{picture('hero')}</div>
-        <div>
-          <h3 class="about__t">{site['tagline']}</h3>
-          <p class="about__p">{e(site['lead'])}</p>
-          <p class="about__p">学校のこと、進路のこと、毎日のこと。子どもたち一人ひとりの状況に合わせて、無理のないかたちで参加できます。保護者の方のご相談も、いつでもお受けしています。</p>
-          <div class="pts">
-            <div class="pt"><span class="pt__i" aria-hidden="true">🍃</span><div>
-              <p class="pt__t">仏教の教えをもとに</p>
-              <p class="pt__x">毎日をステキに過ごすための考え方を、子どもたちの言葉で伝えています。</p></div></div>
-            <div class="pt"><span class="pt__i" aria-hidden="true">🧭</span><div>
-              <p class="pt__t">一人ひとりに合わせて</p>
-              <p class="pt__x">年齢や状況に応じたコースをご用意。無料体験からはじめられます。</p></div></div>
-            <div class="pt"><span class="pt__i" aria-hidden="true">🤝</span><div>
-              <p class="pt__t">全国に、仲間がいる</p>
-              <p class="pt__x">行事や文化祭を通じて、同じ年ごろの仲間と出会うことができます。</p></div></div>
-          </div>
-        </div>
-      </div>
+{juku_block()}
     </div>
   </section>
 
-  <!-- ============ 全幅の帯 ============ -->
-  <div class="band">{picture('landscape', decorative=True)}</div>
-
-  <!-- ============ モード別パネル ============ -->
-  <section class="sec" id="for-you" style="padding-top:0">
+  <!-- ============ 会員メニュー ============ -->
+  <section class="sec mem" id="member">
     <div class="wrap">
-
-      <div class="panel" data-for="kid">
-        <div class="panel__img">{picture('festival')}</div>
-        <div class="panel__b">
-          <h2 class="panel__t">はじめての子へ</h2>
-          <p class="panel__x">ひとりで来ても大丈夫。はじめての子には、かならずスタッフが声をかけます。ずっといなくてもいいし、見ているだけでもかまいません。</p>
-          <ul class="panel__list">
-            <li>とちゅうで帰ってもいいよ</li>
-            <li>話したくないときは、話さなくていいよ</li>
-            <li>行事に出ると、キズナポイントがたまるよ</li>
-            <li>こまったことは、スタッフに言ってね</li>
-          </ul>
-          <div class="panel__btns">
-            <a class="btn btn--f" href="#event">つぎの行事を見る</a>
-          </div>
-        </div>
+{section_head('MEMBER', member['title'], member['sub'])}
+      <div class="mem__grid">
+{member_tiles()}
       </div>
-
-      <div class="panel" data-for="adult">
-        <div class="panel__img">{picture('parent')}</div>
-        <div class="panel__b">
-          <h2 class="panel__t">保護者の方へ</h2>
-          <p class="panel__x">お子さんの年齢や状況に合わせて、無理のないかたちで参加していただけます。ご不明な点は、キズナ担当がお話をうかがいます。</p>
-          <ul class="panel__list">
-            <li>会費はキズナクラブが月200円、オンラインコースが月2000円です</li>
-            <li>自動引き落としは行っておりません。規定の納め方でご納入ください</li>
-            <li>個別コースのご案内は、キズナ担当との打ち合わせ後を推奨しております</li>
-            <li>無料体験からはじめていただけます</li>
-          </ul>
-          <div class="panel__btns">
-            <a class="btn btn--f" href="{e(L['consult'])}">相談フォームを開く</a>
-            <a class="btn" style="border:1.5px solid var(--line)" href="{e(L['fee'])}">会費の納め方</a>
-          </div>
-        </div>
-      </div>
-
+      <p class="mem__note">会員証やポイントのことでお困りのときは、キズナ担当までご連絡ください。</p>
     </div>
   </section>
 
   <!-- ============ よくある質問 ============ -->
   <section class="sec" id="faq">
     <div class="wrap wrap--n">
-{section_head('💬', 'よくある質問', 'Q & A')}
+{section_head('Q &amp; A', 'よくある質問')}
 {faq_items()}
     </div>
   </section>
@@ -370,15 +345,14 @@ doc = f"""<!DOCTYPE html>
           <h2 class="ct__t">まずは、お話を<br>聞かせてください。</h2>
           <p class="ct__x">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談を承っています。どんな小さなことでも、お気軽にご連絡ください。</p>
           <div class="ct__btns">
-            <a class="btn btn--w" href="{e(L['consult'])}">相談フォームを開く</a>
-            <a class="btn btn--o" href="{e(L['join'])}">キズナクラブに申し込む</a>
+            <a class="btn btn--primary" href="{e(L['consult'])}">相談フォームを開く</a>
+            <a class="btn btn--ghost" href="{e(L['join'])}">入会のご案内</a>
           </div>
           <div class="ct__tel">
             <a class="ct__num" href="{e(site['tel_href'])}">{e(site['tel'])}</a>
-            <span class="ct__sub">タップで電話がかけられます</span>
-            <p class="ct__sub" style="margin-top:10px">主催：{e(site['organizer'])} ／ 担当：{e(site['staff'])}</p>
+            <span class="ct__s">タップで電話がかけられます</span>
+            <span class="ct__s" style="margin-top:8px">主催：{e(site['organizer'])} ／ 担当：{e(site['staff'])}</span>
           </div>
-          <p class="ct__note"><b>お返事について</b><br>フォーム入力後のお返事は、目安として3日後です。お急ぎの場合は、キズナ担当に直接ご連絡ください。お子さんへの個別コースのご案内は、打ち合わせ後を推奨しております。</p>
         </div>
       </div>
     </div>
@@ -390,12 +364,12 @@ doc = f"""<!DOCTYPE html>
   <div class="wrap">
     <div class="ft__top">
       <div>
-        <p class="ft__logo">{e(site['name'])}</p>
+        <p class="ft__logo mr"><span class="logo__mark" aria-hidden="true"><span></span></span>{e(site['name'])}</p>
         <p class="ft__x">{e(site['lead'])}</p>
-        <a class="ft__back" href="{e(L['gakuto'])}">学徒サイトに戻る →</a>
       </div>
       <nav class="ft__nav" aria-label="フッターメニュー">
-        {nav_links()}
+        {''.join(f'<a href="{h}">{e(t)}</a>' for t, h, _ in NAV)}
+        <a href="{e(L['gakuto'])}">学徒サイトに戻る</a>
       </nav>
     </div>
     <div class="ft__btm">
@@ -406,12 +380,10 @@ doc = f"""<!DOCTYPE html>
 </footer>
 
 <div class="fx">
-  <a href="{e(site['tel_href'])}">電話する</a>
-  <a href="{e(L['consult'])}">相談・申し込み</a>
+  <a class="btn btn--ghost" href="{e(site['tel_href'])}">電話する</a>
+  <a class="btn btn--primary" href="{e(L['consult'])}">相談する</a>
 </div>
 
-<script type="application/json" id="kizuna-words">{WORDS_JSON}</script>
-<script type="application/json" id="kizuna-events">{EVENTS_JSON}</script>
 <script src="assets/app.js" defer></script>
 </body>
 </html>
@@ -420,8 +392,7 @@ doc = f"""<!DOCTYPE html>
 out = ROOT / "index.html"
 out.write_text(doc, encoding="utf-8")
 print(f"書き出しました: {out}  ({len(doc.encode()):,} bytes)")
-print(f"  行事 {len(events)} 件 / お知らせ {len(news)} 件 / "
-      f"質問 {len(faq)} 件 / ことば {len(words)} 件")
-missing = [k for k in ALL_IMG if not img(k)]
-if missing:
-    print("  画像が未設定:", ", ".join(missing))
+print(f"  イベント {len(events)} 件 / お知らせ {len(news)} 件 / "
+      f"質問 {len(faq)} 件 / 会員メニュー {len(member['items'])} 件")
+ph_count = doc.count('<div class="ph')
+print(f"  写真の枠 {ph_count} か所（まだ画像は入っていません）")

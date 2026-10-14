@@ -8,216 +8,140 @@
 <meta property="og:title" content="キズナ｜こどもと家族のポータル">
 <meta property="og:description" content="全国の子どもたちが、仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095239_75cb36b0-df3b-4872-8144-f2085ed75304.png">
-<meta name="theme-color" content="#1F5D4C">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23FAF6EE'/><path d='M16 7c3.9 0 7 2.9 7 6.5 0 3-2.2 5.5-5.2 6.2V24h-3.6v-4.3C11.2 19 9 16.5 9 13.5 9 9.9 12.1 7 16 7z' fill='%231F5D4C'/></svg>">
+<meta name="theme-color" content="#A8C9E5">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23A8C9E5'/><circle cx='16' cy='16' r='5' fill='%23FFFCF6'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
-<body data-mode="kid">
+<body>
 <p class="draft">このページは準備中のサンプルです。行事の日程や内容は、まだ正式なものではありません。</p>
 
 <header class="hd">
   <div class="wrap hd__in">
-    <a class="logo" href="#top"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095239_6c616294-4c27-4662-8fd9-425e6a6435e1.png" alt="" loading="lazy" decoding="async"><span>キズナ</span></a>
-    <nav class="hd__nav" aria-label="メインメニュー">
-        <a href="#event">つぎの行事</a>
-        <a href="#menu">できること</a>
-        <a href="#news">お知らせ</a>
-        <a href="#about">キズナのこと</a>
-        <a href="#faq">よくある質問</a>
-        <a href="#contact">お問い合わせ</a>
-    </nav>
-    <div class="mode" role="group" aria-label="表示の切り替え">
-      <button type="button" data-mode="kid" aria-pressed="true">こども</button>
-      <button type="button" data-mode="adult" aria-pressed="false">おとな</button>
-    </div>
-    <button class="burger" type="button" aria-expanded="false" aria-label="メニューを開閉する"><i></i><i></i><i></i></button>
-  </div>
-  <div class="wrap">
-    <nav class="drawer" aria-label="メニュー">
-        <a href="#event">つぎの行事</a>
-        <a href="#menu">できること</a>
-        <a href="#news">お知らせ</a>
-        <a href="#about">キズナのこと</a>
-        <a href="#faq">よくある質問</a>
-        <a href="#contact">お問い合わせ</a>
-    </nav>
+    <a class="logo mr" href="#top">
+      <span class="logo__mark" aria-hidden="true"><span></span></span>
+      <span>キズナ</span>
+    </a>
+    <nav class="hd__nav" aria-label="メインメニュー"><a href="#about">キズナとは</a><a href="#event">イベント</a><a href="#news">お知らせ</a><a href="#juku">キズナ塾</a><a href="#member">会員メニュー</a><a href="#faq">よくある質問</a></nav>
+    <a class="btn btn--primary btn--sm hd__cta" href="#">入会のご案内</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="kzn-menu"
+            aria-label="メニューを開閉する"><i></i><i></i><i></i></button>
   </div>
 </header>
 
+<div class="ovl" id="kzn-menu" aria-hidden="true">
+  <div class="ovl__in">
+    <nav class="ovl__nav" aria-label="メニュー">
+        <a href="#about"><span>キズナとは<small>ABOUT</small></span><i aria-hidden="true">→</i></a>
+        <a href="#event"><span>イベント<small>EVENT</small></span><i aria-hidden="true">→</i></a>
+        <a href="#news"><span>お知らせ<small>NEWS</small></span><i aria-hidden="true">→</i></a>
+        <a href="#juku"><span>キズナ塾<small>STUDY</small></span><i aria-hidden="true">→</i></a>
+        <a href="#member"><span>会員メニュー<small>MEMBER</small></span><i aria-hidden="true">→</i></a>
+        <a href="#faq"><span>よくある質問<small>Q &amp; A</small></span><i aria-hidden="true">→</i></a>
+        <a href="#contact"><span>お問い合わせ<small>CONTACT</small></span><i aria-hidden="true">→</i></a>
+    </nav>
+    <div class="ovl__foot">
+      <a class="btn btn--primary" href="#">入会のご案内</a>
+      <a class="btn btn--ghost" href="tel:07041717569">電話する</a>
+    </div>
+  </div>
+</div>
+
 <main id="top">
 
-  <!-- ============ きょうのキズナ ============ -->
-  <section class="dash">
-    <div class="wrap dash__in">
-      <div class="dash__hello">
-        <h1 class="dash__greet mr" data-greet>こんにちは。</h1>
-        <p class="dash__date" data-today></p>
-      </div>
-      <div class="dash__grid">
-
-        <div class="card word">
-          <span class="card__label">きょうのことば</span>
-          <p class="word__txt" data-word-text>きょう できたことを、ひとつ思い出してみよう。</p>
-          <p class="word__note" data-word-note>小さなことでいいのです。できたことを数えると、心があたたかくなります。</p>
-          <img class="word__mascot" src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095239_6c616294-4c27-4662-8fd9-425e6a6435e1.png" alt="" loading="lazy" decoding="async">
-        </div>
-
-        <div class="card next" data-next>
-          <div>
-            <span class="card__label">つぎの行事まで</span>
-            <p class="next__d"><span class="next__num" data-next-num>—</span><span class="next__unit" data-next-unit></span></p>
-            <p class="next__ttl" data-next-title></p>
-            <p class="next__meta" data-next-meta></p>
+  <!-- ============ 大カラム：注目のイベント ============ -->
+  <section class="hero" id="hero">
+    <div class="wrap hero__in">
+      <div class="hero__card">
+        <div class="ph hero__ph" style="--ar:16/9"><p class="ph__t"><b>📷</b>写真が入ります<br>16 : 9</p></div>
+        <div class="hero__b">
+          <span class="hero__label">注目のイベント</span>
+          <h1 class="hero__t">キズナ式 才能診断 体験会</h1>
+          <div class="hero__meta"><span class="chip chip--blue">🗓 10月26日（月）</span><span class="chip chip--green">🕐 13:00 - 15:00</span><span class="chip chip--purple">📍 オンライン</span></div>
+          <p class="hero__x">心理分析「ビッグ5」をつかって、自分の強みを活かせる進路を見つける企画です。スマホで2分。中学生から35才まで、どなたでも参加できます。</p>
+          <div class="hero__btns">
+            <a class="btn btn--primary" href="#">くわしく見る・申し込む</a>
+            <span class="hero__count" data-count="2026-10-26" hidden></span>
           </div>
-          <a class="next__link" href="#event" data-next-link>くわしく見る <span aria-hidden="true">→</span></a>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============ つぎの行事 ============ -->
+  <!-- ============ キズナとは ============ -->
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="sh">
+        <div>
+          <span class="sh__en">ABOUT</span>
+          <h2 class="sh__t">キズナとは</h2>
+          
+        </div>
+      </div>
+      <div class="about__grid">
+        <div class="ph about__ph" style="--ar:4/5"><p class="ph__t"><b>📷</b>写真が入ります<br>4 : 5</p></div>
+        <div>
+          <h3 class="about__t">ひとりで抱えこまずに、<br>いっしょに考えていく。</h3>
+          <p class="about__p">キズナは、全国の子どもたちが仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。</p>
+          <p class="about__p">学校のこと、進路のこと、毎日のこと。子どもたち一人ひとりの状況に合わせて、無理のないかたちで参加できます。保護者の方のご相談も、いつでもお受けしています。</p>
+          <div class="pts">
+            <div class="pt"><span class="pt__i" aria-hidden="true">🍃</span><div><p class="pt__t">仏教の教えをもとに</p><p class="pt__x">毎日をステキに過ごすための考え方を、子どもたちの言葉で伝えています。</p></div></div>
+            <div class="pt"><span class="pt__i" aria-hidden="true">🧭</span><div><p class="pt__t">一人ひとりに合わせて</p><p class="pt__x">年齢や状況に応じたコースをご用意。無料体験からはじめられます。</p></div></div>
+            <div class="pt"><span class="pt__i" aria-hidden="true">🤝</span><div><p class="pt__t">全国に、仲間がいる</p><p class="pt__x">行事や文化祭を通じて、同じ年ごろの仲間と出会うことができます。</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 直近のイベント ============ -->
   <section class="sec" id="event">
     <div class="wrap">
-      <div class="sh">
-        <span class="sh__ic" aria-hidden="true">🗓</span>
+      <div class="sh sh--row">
         <div>
-          <h2 class="sh__t">つぎの行事</h2>
-          <p class="sh__en">EVENT</p>
-        </div>
+          <span class="sh__en">EVENT</span>
+          <h2 class="sh__t">直近のイベント</h2>
+          
+        </div><a class="link" href="#">すべて見る <span aria-hidden="true">→</span></a>
       </div>
-      <div class="ev">
-        <a class="ev__item" href="#" data-ev-date="2026-10-26">
-          <span class="ev__date">
-            <span class="ev__m">10月</span>
-            <span class="ev__d">26</span>
-            <span class="ev__w">月</span>
-          </span>
-          <span>
-            <span class="ev__tag">体験</span>
-            <span class="ev__ttl mr">キズナ式 才能診断 体験会</span>
-            <span class="ev__meta">13:00 - 15:00　オンライン</span>
-            <span class="ev__body">心理分析「ビッグ5」をつかって、自分の強みを活かせる進路を見つける企画です。スマホで2分。中学生から35才まで、どなたでも参加できます。</span>
-          </span>
+      <div class="evs">
+        <a class="ev" href="#" data-ev-date="2026-10-26">
+          <div class="ph ev__ph" style="--ar:4/3"><p class="ph__t"><b>📷</b>写真が入ります<br>4 : 3</p></div>
+          <div class="ev__b">
+            <div class="ev__top">
+              <span class="ev__date">10月26日（月）</span>
+              <span class="chip chip--purple" data-soon hidden></span>
+            </div>
+            <h3 class="ev__t">キズナ式 才能診断 体験会</h3>
+            <p class="ev__x">心理分析「ビッグ5」をつかって、自分の強みを活かせる進路を見つける企画です。スマホで2分。中学生から35才まで、どなたでも参加できます。</p>
+            <p class="ev__meta">13:00 - 15:00　オンライン</p>
+          </div>
         </a>
-        <a class="ev__item" href="#" data-ev-date="2026-11-03">
-          <span class="ev__date">
-            <span class="ev__m">11月</span>
-            <span class="ev__d">3</span>
-            <span class="ev__w">火</span>
-          </span>
-          <span>
-            <span class="ev__tag">交流会</span>
-            <span class="ev__ttl mr">ジュニアクラブ 秋の交流会</span>
-            <span class="ev__meta">10:00 - 15:00　キズナ会館</span>
-            <span class="ev__body">小学生のみんなで、ゲームとおやつの時間。はじめての子も大歓迎です。保護者の方の見学もできます。</span>
-          </span>
+        <a class="ev" href="#" data-ev-date="2026-11-03">
+          <div class="ph ev__ph" style="--ar:4/3"><p class="ph__t"><b>📷</b>写真が入ります<br>4 : 3</p></div>
+          <div class="ev__b">
+            <div class="ev__top">
+              <span class="ev__date">11月3日（火）</span>
+              <span class="chip chip--purple" data-soon hidden></span>
+            </div>
+            <h3 class="ev__t">ジュニアクラブ 秋の交流会</h3>
+            <p class="ev__x">小学生のみんなで、ゲームとおやつの時間。はじめての子も大歓迎です。保護者の方の見学もできます。</p>
+            <p class="ev__meta">10:00 - 15:00　キズナ会館</p>
+          </div>
         </a>
-        <a class="ev__item" href="#" data-ev-date="2026-11-23">
-          <span class="ev__date">
-            <span class="ev__m">11月</span>
-            <span class="ev__d">23</span>
-            <span class="ev__w">月</span>
-          </span>
-          <span>
-            <span class="ev__tag">キズナ塾</span>
-            <span class="ev__ttl mr">キズナ塾 オンライン体験会</span>
-            <span class="ev__meta">19:00 - 20:00　オンライン</span>
-            <span class="ev__body">勉強のはじめかたを、いっしょに考える時間です。教えてくださるサポーターの方の見学参加も受け付けています。</span>
-          </span>
-        </a>
-        <a class="ev__item" href="#" data-ev-date="2026-12-13">
-          <span class="ev__date">
-            <span class="ev__m">12月</span>
-            <span class="ev__d">13</span>
-            <span class="ev__w">日</span>
-          </span>
-          <span>
-            <span class="ev__tag">行事</span>
-            <span class="ev__ttl mr">キズナ もちつき大会</span>
-            <span class="ev__meta">10:00 - 14:00　キズナ会館</span>
-            <span class="ev__body">年の終わりに、みんなでおもちをつきます。ついたおもちは、その場で食べられます。</span>
-          </span>
-        </a>
-        <a class="ev__item" href="#" data-ev-date="2027-01-11">
-          <span class="ev__date">
-            <span class="ev__m">1月</span>
-            <span class="ev__d">11</span>
-            <span class="ev__w">月</span>
-          </span>
-          <span>
-            <span class="ev__tag">行事</span>
-            <span class="ev__ttl mr">新年のつどい</span>
-            <span class="ev__meta">11:00 - 14:00　キズナ会館</span>
-            <span class="ev__body">一年のはじまりを、みんなで迎えます。書きぞめコーナーもあります。</span>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ できること ============ -->
-  <section class="sec" id="menu">
-    <div class="wrap">
-      <div class="sh">
-        <span class="sh__ic" aria-hidden="true">🌱</span>
-        <div>
-          <h2 class="sh__t">キズナでできること</h2>
-          <p class="sh__en">SERVICE</p>
-        </div>
-      </div>
-      <div class="menu">
-        <a class="mi" href="#">
-          <span class="mi__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095119_babc18dc-b582-4dc3-b145-2242d0586c03.png" alt="輪になって話す子どもたちと大人のイラスト" loading="lazy" decoding="async"></span>
-          <span class="mi__b">
-            <span class="mi__en">01　CLUB</span>
-            <span class="mi__t mr">キズナクラブ・ジュニアクラブ</span>
-            <span class="mi__x">入会・登録内容の変更・会費のご案内。まずはお気軽にお申し込みください。</span>
-          </span>
-        </a>
-        <a class="mi" href="#">
-          <span class="mi__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095448_a7a6ad19-6d58-4a17-ae4e-0764bf62eae9.png" alt="机で勉強する中学生と、教える年上の学生のイラスト" loading="lazy" decoding="async"></span>
-          <span class="mi__b">
-            <span class="mi__en">02　STUDY</span>
-            <span class="mi__t mr">キズナ塾</span>
-            <span class="mi__x">学びたい子と、教えたい大人をつなぐ取り組み。サポーターも募集中です。</span>
-          </span>
-        </a>
-        <a class="mi" href="#">
-          <span class="mi__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095448_d4eb8e1f-7201-44b7-bf25-d768044e29ff.png" alt="自分の強みを見つける中高生のイラスト" loading="lazy" decoding="async"></span>
-          <span class="mi__b">
-            <span class="mi__en">03　DIAGNOSIS</span>
-            <span class="mi__t mr">キズナ式 才能診断</span>
-            <span class="mi__x">心理分析「ビッグ5」で、自分の強みを活かせる進路が分かります。</span>
-          </span>
-        </a>
-        <a class="mi" data-for="kid" href="#">
-          <span class="mi__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095119_c529bebd-ed27-4b92-919b-52f0a20d5c41.png" alt="プレゼントを受け取る子どもたちのイラスト" loading="lazy" decoding="async"></span>
-          <span class="mi__b">
-            <span class="mi__en">04　POINT</span>
-            <span class="mi__t mr">キズナカード・キズナポイント</span>
-            <span class="mi__x">行事やお手伝いでポイントがたまり、プレゼントと交換できます。</span>
-          </span>
-        </a>
-        <a class="mi" data-for="adult" href="#">
-          <span class="mi__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095119_f2461224-6d44-49ef-a808-8f5ea15892c5.png" alt="ちょうちんと出店でにぎわう文化祭のイラスト" loading="lazy" decoding="async"></span>
-          <span class="mi__b">
-            <span class="mi__en">05　BENEFITS</span>
-            <span class="mi__t mr">キズナクラブ特典</span>
-            <span class="mi__x">会員のみなさまが受けられる特典をご案内しています。</span>
-          </span>
-        </a>
-        <a class="mi" href="#">
-          <span class="mi__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095449_7907ecb8-ddd4-42c9-bd8a-4bf9dd5353a5.png" alt="受付で迎えるスタッフのイラスト" loading="lazy" decoding="async"></span>
-          <span class="mi__b">
-            <span class="mi__en">06　MEMBER</span>
-            <span class="mi__t mr">スタッフ・サポーター紹介</span>
-            <span class="mi__x">キズナを支えている人たちをご紹介します。</span>
-          </span>
+        <a class="ev" href="#" data-ev-date="2026-11-23">
+          <div class="ph ev__ph" style="--ar:4/3"><p class="ph__t"><b>📷</b>写真が入ります<br>4 : 3</p></div>
+          <div class="ev__b">
+            <div class="ev__top">
+              <span class="ev__date">11月23日（月）</span>
+              <span class="chip chip--purple" data-soon hidden></span>
+            </div>
+            <h3 class="ev__t">キズナ塾 オンライン体験会</h3>
+            <p class="ev__x">勉強のはじめかたを、いっしょに考える時間です。教えてくださるサポーターの方の見学参加も受け付けています。</p>
+            <p class="ev__meta">19:00 - 20:00　オンライン</p>
+          </div>
         </a>
       </div>
     </div>
@@ -226,124 +150,116 @@
   <!-- ============ お知らせ ============ -->
   <section class="sec" id="news">
     <div class="wrap wrap--n">
-      <div class="sh">
-        <span class="sh__ic" aria-hidden="true">📣</span>
+      <div class="sh sh--row">
         <div>
+          <span class="sh__en">NEWS</span>
           <h2 class="sh__t">お知らせ</h2>
-          <p class="sh__en">NEWS</p>
-        </div><a class="sh__more" href="#">すべて見る</a>
+          
+        </div><a class="link" href="#">すべて見る <span aria-hidden="true">→</span></a>
       </div>
       <div class="news">
-        <a class="news__item" href="#">
-          <span class="news__meta">
-            <time class="news__date" datetime="2026-10-10">2026.10.10</time>
-            <span class="news__cat">受付</span>
+        <a class="news__i" href="#">
+          <span class="news__m">
+            <time class="news__d" datetime="2026-10-10">2026.10.10</time>
+            <span class="chip chip--blue">受付</span>
           </span>
-          <span class="news__ttl mr">キズナポイントプレゼントの提供品を受け付けています</span>
-          <span class="news__body">高校生までの子供達が喜ぶもの（おもちゃ・漫画・ゲームなど）を、二千畳行事日にキズナコーナーにて受け付けております。場所は正本堂2階、サンキュー売店のすぐそばです。</span>
+          <span class="news__t">キズナポイントプレゼントの提供品を受け付けています</span>
+          <span class="news__x">高校生までの子供達が喜ぶもの（おもちゃ・漫画・ゲームなど）を、二千畳行事日にキズナコーナーにて受け付けております。場所は正本堂2階、サンキュー売店のすぐそばです。</span>
         </a>
-        <a class="news__item" href="#">
-          <span class="news__meta">
-            <time class="news__date" datetime="2026-10-02">2026.10.02</time>
-            <span class="news__cat">特別企画</span>
+        <a class="news__i" href="#">
+          <span class="news__m">
+            <time class="news__d" datetime="2026-10-02">2026.10.02</time>
+            <span class="chip chip--blue">特別企画</span>
           </span>
-          <span class="news__ttl mr">キズナ式才能診断、受付中です</span>
-          <span class="news__body">GoogleやFacebookなど世界で最も活用されていると言われる心理分析「ビッグ5」をもとに、自分の強みを活かせる進路が分かる診断です。スマホで2分、費用はかかりません。</span>
+          <span class="news__t">キズナ式才能診断、受付中です</span>
+          <span class="news__x">GoogleやFacebookなど世界で最も活用されていると言われる心理分析「ビッグ5」をもとに、自分の強みを活かせる進路が分かる診断です。スマホで2分、費用はかかりません。</span>
         </a>
-        <a class="news__item" href="#">
-          <span class="news__meta">
-            <time class="news__date" datetime="2026-09-20">2026.09.20</time>
-            <span class="news__cat">キズナ塾</span>
+        <a class="news__i" href="#">
+          <span class="news__m">
+            <time class="news__d" datetime="2026-09-20">2026.09.20</time>
+            <span class="chip chip--blue">キズナ塾</span>
           </span>
-          <span class="news__ttl mr">勉強サポーターを募集しています</span>
-          <span class="news__body">キズナ塾は、学びたい子と教えたい大人をつなぐ取り組みです。得意な教科がひとつでも大丈夫。オンラインでの参加もできますので、まずはお気軽にご相談ください。</span>
+          <span class="news__t">勉強サポーターを募集しています</span>
+          <span class="news__x">キズナ塾は、学びたい子と教えたい大人をつなぐ取り組みです。得意な教科がひとつでも大丈夫。オンラインでの参加もできますので、まずはお気軽にご相談ください。</span>
         </a>
-        <a class="news__item" href="#">
-          <span class="news__meta">
-            <time class="news__date" datetime="2026-09-14">2026.09.14</time>
-            <span class="news__cat">報告</span>
+        <a class="news__i" href="#">
+          <span class="news__m">
+            <time class="news__d" datetime="2026-09-14">2026.09.14</time>
+            <span class="chip chip--blue">報告</span>
           </span>
-          <span class="news__ttl mr">キズナ文化祭、ありがとうございました</span>
-          <span class="news__body">東京ビッグサイトでのキズナ文化祭に、たくさんの方にお越しいただきました。子どもたちが準備してきた出しものも、無事にやりきることができました。</span>
+          <span class="news__t">キズナ文化祭、ありがとうございました</span>
+          <span class="news__x">東京ビッグサイトでのキズナ文化祭に、たくさんの方にお越しいただきました。子どもたちが準備してきた出しものも、無事にやりきることができました。</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ============ キズナのこと ============ -->
-  <section class="sec about" id="about">
+  <!-- ============ キズナ塾 ============ -->
+  <section class="sec juku" id="juku">
+    <div class="wrap">
+      <div class="juku__grid">
+        <div>
+          <p class="juku__sub">学びたい子と、教えたい大人をつなぐ</p>
+          <h2 class="juku__t">キズナ塾</h2>
+          <p class="juku__x">得意な教科がひとつでもあれば大丈夫。オンラインでも参加できます。勉強のことだけでなく、進路の相談にものっています。</p>
+          <ul class="juku__list">
+            <li>お子さんの申し込みを受け付けています</li>
+            <li>勉強サポーターになってくださる方も募集中です</li>
+            <li>オンライン参加もできます</li>
+          </ul>
+          <div class="juku__btns">
+            <a class="btn btn--primary" href="#">キズナ塾に申し込む</a>
+            <a class="btn btn--ghost" href="#">サポーターに応募する</a>
+          </div>
+        </div>
+        <div class="ph juku__ph" style="--ar:3/2"><p class="ph__t"><b>📷</b>写真が入ります<br>3 : 2</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 会員メニュー ============ -->
+  <section class="sec mem" id="member">
     <div class="wrap">
       <div class="sh">
-        <span class="sh__ic" aria-hidden="true">🌳</span>
         <div>
-          <h2 class="sh__t">キズナのこと</h2>
-          <p class="sh__en">ABOUT</p>
+          <span class="sh__en">MEMBER</span>
+          <h2 class="sh__t">会員メニュー</h2>
+          <p class="sh__x">キズナクラブ会員の方はこちらから</p>
         </div>
       </div>
-      <div class="about__grid">
-        <div class="about__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095239_75cb36b0-df3b-4872-8144-f2085ed75304.png" alt="木のそばに集まる子どもたちと大人のイラスト" loading="lazy" decoding="async"></div>
-        <div>
-          <h3 class="about__t">ひとりじゃないよ。<br>きょうも、いってらっしゃい。</h3>
-          <p class="about__p">キズナは、全国の子どもたちが仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。</p>
-          <p class="about__p">学校のこと、進路のこと、毎日のこと。子どもたち一人ひとりの状況に合わせて、無理のないかたちで参加できます。保護者の方のご相談も、いつでもお受けしています。</p>
-          <div class="pts">
-            <div class="pt"><span class="pt__i" aria-hidden="true">🍃</span><div>
-              <p class="pt__t">仏教の教えをもとに</p>
-              <p class="pt__x">毎日をステキに過ごすための考え方を、子どもたちの言葉で伝えています。</p></div></div>
-            <div class="pt"><span class="pt__i" aria-hidden="true">🧭</span><div>
-              <p class="pt__t">一人ひとりに合わせて</p>
-              <p class="pt__x">年齢や状況に応じたコースをご用意。無料体験からはじめられます。</p></div></div>
-            <div class="pt"><span class="pt__i" aria-hidden="true">🤝</span><div>
-              <p class="pt__t">全国に、仲間がいる</p>
-              <p class="pt__x">行事や文化祭を通じて、同じ年ごろの仲間と出会うことができます。</p></div></div>
-          </div>
-        </div>
+      <div class="mem__grid">
+        <a class="mi mi--purple" href="#">
+          <span class="mi__i" aria-hidden="true">🎁</span>
+          <span class="mi__t">プレゼントページ</span>
+          <span class="mi__x">キズナポイントと交換できる品物を見る</span>
+        </a>
+        <a class="mi mi--blue" href="#">
+          <span class="mi__i" aria-hidden="true">⭐</span>
+          <span class="mi__t">ポイント確認</span>
+          <span class="mi__x">いまのキズナポイントを確かめる</span>
+        </a>
+        <a class="mi mi--green" href="#">
+          <span class="mi__i" aria-hidden="true">💳</span>
+          <span class="mi__t">キズナカード</span>
+          <span class="mi__x">カードの使い方・再発行について</span>
+        </a>
+        <a class="mi mi--purple" href="#">
+          <span class="mi__i" aria-hidden="true">🎀</span>
+          <span class="mi__t">会員特典</span>
+          <span class="mi__x">会員のみなさまが受けられる特典</span>
+        </a>
+        <a class="mi mi--blue" href="#">
+          <span class="mi__i" aria-hidden="true">✏️</span>
+          <span class="mi__t">登録内容の変更</span>
+          <span class="mi__x">住所・連絡先などの変更はこちら</span>
+        </a>
+        <a class="mi mi--green" href="#">
+          <span class="mi__i" aria-hidden="true">📮</span>
+          <span class="mi__t">会費の納め方</span>
+          <span class="mi__x">月200円／オンラインコース月2000円</span>
+        </a>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ 全幅の帯 ============ -->
-  <div class="band"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_100000_59345236-4f50-4cc0-9308-24610142a079.png" alt="" loading="lazy" decoding="async"></div>
-
-  <!-- ============ モード別パネル ============ -->
-  <section class="sec" id="for-you" style="padding-top:0">
-    <div class="wrap">
-
-      <div class="panel" data-for="kid">
-        <div class="panel__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095119_f2461224-6d44-49ef-a808-8f5ea15892c5.png" alt="ちょうちんと出店でにぎわう文化祭のイラスト" loading="lazy" decoding="async"></div>
-        <div class="panel__b">
-          <h2 class="panel__t">はじめての子へ</h2>
-          <p class="panel__x">ひとりで来ても大丈夫。はじめての子には、かならずスタッフが声をかけます。ずっといなくてもいいし、見ているだけでもかまいません。</p>
-          <ul class="panel__list">
-            <li>とちゅうで帰ってもいいよ</li>
-            <li>話したくないときは、話さなくていいよ</li>
-            <li>行事に出ると、キズナポイントがたまるよ</li>
-            <li>こまったことは、スタッフに言ってね</li>
-          </ul>
-          <div class="panel__btns">
-            <a class="btn btn--f" href="#event">つぎの行事を見る</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel" data-for="adult">
-        <div class="panel__img"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_095717_0d5bfa02-541e-489c-9a38-b7d5d15d68ea.png" alt="家で子どもの話を聞く保護者のイラスト" loading="lazy" decoding="async"></div>
-        <div class="panel__b">
-          <h2 class="panel__t">保護者の方へ</h2>
-          <p class="panel__x">お子さんの年齢や状況に合わせて、無理のないかたちで参加していただけます。ご不明な点は、キズナ担当がお話をうかがいます。</p>
-          <ul class="panel__list">
-            <li>会費はキズナクラブが月200円、オンラインコースが月2000円です</li>
-            <li>自動引き落としは行っておりません。規定の納め方でご納入ください</li>
-            <li>個別コースのご案内は、キズナ担当との打ち合わせ後を推奨しております</li>
-            <li>無料体験からはじめていただけます</li>
-          </ul>
-          <div class="panel__btns">
-            <a class="btn btn--f" href="#">相談フォームを開く</a>
-            <a class="btn" style="border:1.5px solid var(--line)" href="#">会費の納め方</a>
-          </div>
-        </div>
-      </div>
-
+      <p class="mem__note">会員証やポイントのことでお困りのときは、キズナ担当までご連絡ください。</p>
     </div>
   </section>
 
@@ -351,43 +267,75 @@
   <section class="sec" id="faq">
     <div class="wrap wrap--n">
       <div class="sh">
-        <span class="sh__ic" aria-hidden="true">💬</span>
         <div>
+          <span class="sh__en">Q &amp; A</span>
           <h2 class="sh__t">よくある質問</h2>
-          <p class="sh__en">Q &amp; A</p>
+          
         </div>
       </div>
-        <details class="q" data-for="adult">
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>キズナクラブの登録内容の変更はどうすればいいでしょうか？</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div><p>申し込みフォームの「登録情報の変更・修正はこちら」から変更していただけます。</p><a class="q__link" href="#">登録内容の変更はこちら <span aria-hidden="true">→</span></a></div></div>
+        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>キズナクラブの登録内容の変更はどうすればいいでしょうか？</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div><p>申し込みフォームの「登録情報の変更・修正はこちら」から変更していただけます。</p><a class="link q__link" href="#">登録内容の変更はこちら <span aria-hidden="true">→</span></a></div></div>
         </details>
-        <details class="q" data-for="adult">
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>キズナ会費の納め方はどのようにすればいいでしょうか？</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div><p>以下のページからご確認ください。会費はキズナクラブが月200円、オンラインコースが月2000円です。</p><a class="q__link" href="#">キズナ会費の納め方はこちら <span aria-hidden="true">→</span></a></div></div>
+        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>キズナ会費の納め方はどのようにすればいいでしょうか？</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div><p>以下のページからご確認ください。会費はキズナクラブが月200円、オンラインコースが月2000円です。</p><a class="link q__link" href="#">キズナ会費の納め方はこちら <span aria-hidden="true">→</span></a></div></div>
         </details>
-        <details class="q" data-for="adult">
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>キズナクラブ会費の自動引き落としはされていますか？</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div><p>キズナクラブ会費の自動引き落としは行っておりません。規定の納め方で納入をお願いいたします。</p></div></div>
+        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>キズナクラブ会費の自動引き落としはされていますか？</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div><p>キズナクラブ会費の自動引き落としは行っておりません。規定の納め方で納入をお願いいたします。</p></div></div>
         </details>
-        <details class="q" data-for="adult">
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>会費をまとめて納めていますが、途中からオンラインコース（2000円）に切り替わった時の会費はどうなりますか？</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div><p>オンラインコースに登録された月の翌月から、2000円の会費に切り替わります。すでに納入済みの額は、オンラインコース2000円分に含めていただけたらと思います。</p><p class="q__ex"><b>例）</b>現在4月。月200円の会費を、昨年12月に1年分（2400円）納入済み。5月からオンラインコース（2000円）の場合。<br>→ 5月分として、あと600円ご納入ください。6月分以降は2000円として納めます。</p></div></div>
+        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>会費をまとめて納めていますが、途中からオンラインコース（2000円）に切り替わった時の会費はどうなりますか？</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div><p>オンラインコースに登録された月の翌月から、2000円の会費に切り替わります。すでに納入済みの額は、オンラインコース2000円分に含めていただけたらと思います。</p><p class="q__ex"><b>例）</b>現在4月。月200円の会費を、昨年12月に1年分（2400円）納入済み。5月からオンラインコース（2000円）の場合。<br>→ 5月分として、あと600円ご納入ください。6月分以降は2000円として納めます。</p></div></div>
         </details>
-        <details class="q" data-for="adult">
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>子どもへの個別コースの案内は、いつすればよいですか？</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div><p>キズナ担当との打ち合わせ後にしていただけたらと思います。お子さんの年齢や状況に応じた伝え方がありますので、打ち合わせ後のご案内を推奨しております。</p></div></div>
+        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>子どもへの個別コースの案内は、いつすればよいですか？</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div><p>キズナ担当との打ち合わせ後にしていただけたらと思います。お子さんの年齢や状況に応じた伝え方がありますので、打ち合わせ後のご案内を推奨しております。</p></div></div>
         </details>
-        <details class="q" data-for="kid">
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>キズナって、なにをするところ？</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div><p>おなじくらいの年の仲間と会ったり、行事に参加したり、勉強をみてもらったりできるところです。やりたいことだけ、やりたいときに参加して大丈夫です。</p></div></div>
+        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>キズナって、なにをするところ？</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div><p>おなじくらいの年の仲間と会ったり、行事に参加したり、勉強をみてもらったりできるところです。やりたいことだけ、やりたいときに参加して大丈夫です。</p></div></div>
         </details>
-        <details class="q" data-for="kid">
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>ひとりで行っても大丈夫？</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div><p>大丈夫です。はじめての子には、スタッフが声をかけます。友だちができるまで、そばにいます。</p></div></div>
+        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>ひとりで行っても大丈夫？</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div><p>大丈夫です。はじめての子には、スタッフが声をかけます。友だちができるまで、そばにいます。</p></div></div>
         </details>
-        <details class="q" data-for="kid">
-          <summary><span class="q__q" aria-hidden="true">Q</span><span>キズナポイントって、なに？</span></summary>
-          <div class="q__a"><b aria-hidden="true">A</b><div><p>行事に参加したり、お手伝いをしたりするとたまるポイントです。たまったポイントは、キズナコーナーでプレゼントと交換できます。</p></div></div>
+        <details class="q">
+          <summary>
+            <span class="q__q mr" aria-hidden="true">Q</span>
+            <span>キズナポイントって、なに？</span>
+            <span class="q__mk" aria-hidden="true"></span>
+          </summary>
+          <div class="q__a"><span class="mr" aria-hidden="true">A</span><div><p>行事に参加したり、お手伝いをしたりするとたまるポイントです。たまったポイントは、キズナコーナーでプレゼントと交換できます。</p></div></div>
         </details>
     </div>
   </section>
@@ -400,15 +348,14 @@
           <h2 class="ct__t">まずは、お話を<br>聞かせてください。</h2>
           <p class="ct__x">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談を承っています。どんな小さなことでも、お気軽にご連絡ください。</p>
           <div class="ct__btns">
-            <a class="btn btn--w" href="#">相談フォームを開く</a>
-            <a class="btn btn--o" href="#">キズナクラブに申し込む</a>
+            <a class="btn btn--primary" href="#">相談フォームを開く</a>
+            <a class="btn btn--ghost" href="#">入会のご案内</a>
           </div>
           <div class="ct__tel">
             <a class="ct__num" href="tel:07041717569">070-4171-7569</a>
-            <span class="ct__sub">タップで電話がかけられます</span>
-            <p class="ct__sub" style="margin-top:10px">主催：キズナクラブ ／ 担当：宮部 成美</p>
+            <span class="ct__s">タップで電話がかけられます</span>
+            <span class="ct__s" style="margin-top:8px">主催：キズナクラブ ／ 担当：宮部 成美</span>
           </div>
-          <p class="ct__note"><b>お返事について</b><br>フォーム入力後のお返事は、目安として3日後です。お急ぎの場合は、キズナ担当に直接ご連絡ください。お子さんへの個別コースのご案内は、打ち合わせ後を推奨しております。</p>
         </div>
       </div>
     </div>
@@ -420,17 +367,12 @@
   <div class="wrap">
     <div class="ft__top">
       <div>
-        <p class="ft__logo">キズナ</p>
-        <p class="ft__x">キズナは、全国の子どもたちが仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。</p>
-        <a class="ft__back" href="#">学徒サイトに戻る →</a>
+        <p class="ft__logo mr"><span class="logo__mark" aria-hidden="true"><span></span></span>キズナ</p>
+        <p class="ft__x">全国の子どもたちが、仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。</p>
       </div>
       <nav class="ft__nav" aria-label="フッターメニュー">
-        <a href="#event">つぎの行事</a>
-        <a href="#menu">できること</a>
-        <a href="#news">お知らせ</a>
-        <a href="#about">キズナのこと</a>
-        <a href="#faq">よくある質問</a>
-        <a href="#contact">お問い合わせ</a>
+        <a href="#about">キズナとは</a><a href="#event">イベント</a><a href="#news">お知らせ</a><a href="#juku">キズナ塾</a><a href="#member">会員メニュー</a><a href="#faq">よくある質問</a><a href="#contact">お問い合わせ</a>
+        <a href="#">学徒サイトに戻る</a>
       </nav>
     </div>
     <div class="ft__btm">
@@ -441,12 +383,10 @@
 </footer>
 
 <div class="fx">
-  <a href="tel:07041717569">電話する</a>
-  <a href="#">相談・申し込み</a>
+  <a class="btn btn--ghost" href="tel:07041717569">電話する</a>
+  <a class="btn btn--primary" href="#">相談する</a>
 </div>
 
-<script type="application/json" id="kizuna-words">[{"text": "きょう できたことを、ひとつ思い出してみよう。", "note": "小さなことでいいのです。できたことを数えると、心があたたかくなります。"}, {"text": "「ありがとう」は、言った人の心もあたたかくする。", "note": "感謝のことばは、相手だけでなく自分にも返ってきます。"}, {"text": "うまくいかない日は、よくがんばった日。", "note": "うまくいかなかったのは、挑戦したからです。"}, {"text": "だれかの話を、さいごまで聞いてみよう。", "note": "聞いてもらえた人は、安心します。それがキズナのはじまりです。"}, {"text": "つづけたことは、ちゃんと自分の中に残る。", "note": "毎日少しずつでも、積み重ねたものは消えません。"}, {"text": "こまったときは、こまったと言っていい。", "note": "ひとりで抱えこまないこと。それも大事な力です。"}, {"text": "きょうの自分を、きのうの自分とくらべてみよう。", "note": "くらべる相手は、ほかの誰かではありません。"}, {"text": "小さな親切は、見ていなくてもちゃんと育つ。", "note": "だれも見ていなくても、自分は見ています。"}, {"text": "あいさつは、いちばん短い思いやり。", "note": "ひとこと交わすだけで、その日の空気が変わります。"}, {"text": "きらいなことの中に、得意が隠れていることがある。", "note": "苦手だと思っていたことが、強みに変わることもあります。"}, {"text": "休むことも、前に進むことのうち。", "note": "疲れたら休んでいいのです。"}, {"text": "だれかを笑顔にした日は、いい日。", "note": "自分のためだけでない一日は、長く心に残ります。"}, {"text": "わからないことは、恥ずかしいことじゃない。", "note": "わからないと言えた人から、わかるようになります。"}, {"text": "やさしさは、強さのひとつのかたち。", "note": "やさしくいられるのは、心に余裕を育てたからです。"}, {"text": "きょう会う人は、きょうしか会えない人。", "note": "同じ一日は、二度ときません。"}, {"text": "自分で決めたことは、自分を支えてくれる。", "note": "小さなことでも、自分で決める練習をしてみましょう。"}, {"text": "まちがえた分だけ、まっすぐになれる。", "note": "まちがいは、進んでいる証拠です。"}, {"text": "だれかのために動くと、自分の足が強くなる。", "note": "人のためにしたことは、めぐって自分を支えます。"}, {"text": "今いる場所を、少しだけきれいにしてみよう。", "note": "まわりが整うと、心も整います。"}, {"text": "きみがいること自体が、だれかの支えになっている。", "note": "何かをしていなくても、そこにいることに意味があります。"}, {"text": "焦らなくていい。種は、土の中でも育っている。", "note": "見えないところでも、ちゃんと進んでいます。"}, {"text": "ことばは、贈りものにもなるし、刃にもなる。", "note": "どちらにするかは、いつも自分で選べます。"}]</script>
-<script type="application/json" id="kizuna-events">[{"date": "2026-10-26", "title": "キズナ式 才能診断 体験会", "time": "13:00 - 15:00", "place": "オンライン", "link": "#"}, {"date": "2026-11-03", "title": "ジュニアクラブ 秋の交流会", "time": "10:00 - 15:00", "place": "キズナ会館", "link": "#"}, {"date": "2026-11-23", "title": "キズナ塾 オンライン体験会", "time": "19:00 - 20:00", "place": "オンライン", "link": "#"}, {"date": "2026-12-13", "title": "キズナ もちつき大会", "time": "10:00 - 14:00", "place": "キズナ会館", "link": "#"}, {"date": "2027-01-11", "title": "新年のつどい", "time": "11:00 - 14:00", "place": "キズナ会館", "link": "#"}]</script>
 <script src="assets/app.js" defer></script>
 </body>
 </html>
