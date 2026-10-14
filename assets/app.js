@@ -1,8 +1,9 @@
 /* =========================================================
    キズナ ポータル — 動きのあるところだけ
    ・ハンバーガーメニューの開閉
-   ・注目イベントまでの残り日数
-   ・近い行事に「もうすぐ」の印
+   ・ヘッダーの地色（写真の上では透過、スクロールすると出る）
+   ・注目イベントのスライド
+   ・残り日数と「もうすぐ」の印
    内容そのものは data/*.json から build.py が書き出しています
    ========================================================= */
 (function () {
@@ -11,9 +12,16 @@
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+  /* ---------- ヘッダーの地色 ---------- */
+  var hd = $('.hd');
+  if (hd) {
+    var onScroll = function () { hd.classList.toggle('is-solid', window.scrollY > 40); };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
   /* ---------- ハンバーガーメニュー ---------- */
-  var burger = $('.burger');
-  var ovl = $('.ovl');
+  var burger = $('.burger'), ovl = $('.ovl');
   if (burger && ovl) {
     var setNav = function (open) {
       document.body.classList.toggle('nav-open', open);
@@ -36,59 +44,24 @@
   /* ---------- 日付まわり ---------- */
   var now = new Date();
   var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-  var daysFrom = function (ymd) {
-    var p = String(ymd).split('-');
+  var daysFrom = function (s) {
+    var p = String(s).split('-');
     if (p.length !== 3) return null;
     var t = new Date(+p[0], p[1] - 1, +p[2]).getTime();
-    if (isNaN(t)) return null;
-    return Math.round((t - midnight) / 86400000);
+    return isNaN(t) ? null : Math.round((t - midnight) / 86400000);
   };
 
-  /* 注目イベントの残り日数（スライドごとに計算する） */
-  $$('[data-count]').forEach(function (countEl) {
-    var d = daysFrom(countEl.dataset.count);
-    if (d === null || d < 0) {
-      countEl.hidden = true;                 // 終わった行事なら出さない
-    } else {
-      countEl.innerHTML = d === 0 ? '<b>きょう</b> 開催'
-                        : d === 1 ? '<b>あした</b> 開催'
-                        : 'あと <b>' + d + '</b> 日';
-      countEl.hidden = false;                // ここで初めて表示する
-    }
+  /* 残り日数（スライドごとに計算する） */
+  $$('[data-count]').forEach(function (el) {
+    var d = daysFrom(el.dataset.count);
+    if (d === null || d < 0) { el.hidden = true; return; }
+    el.innerHTML = d === 0 ? 'きょう開催'
+                 : d === 1 ? 'あした開催'
+                 : 'あと<b>' + d + '</b>日';
+    el.hidden = false;
   });
 
-  /* ---------- 注目イベントのスライド ---------- */
-  var track = $('[data-track]');
-  if (track) {
-    var slides = $$('.hero__slide', track);
-    var dots = $$('.hero__dot');
-    var at = function () { return Math.round(track.scrollLeft / track.clientWidth); };
-    var goTo = function (i) {
-      i = Math.max(0, Math.min(slides.length - 1, i));
-      track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
-    };
-    $$('[data-go]').forEach(function (b) {
-      if (b.classList.contains('hero__dot')) return;
-      b.addEventListener('click', function () {
-        goTo(at() + (b.dataset.go === 'next' ? 1 : -1));
-      });
-    });
-    dots.forEach(function (d) {
-      d.addEventListener('click', function () { goTo(parseInt(d.dataset.go, 10)); });
-    });
-    var sync = function () {
-      var i = at();
-      dots.forEach(function (d, n) {
-        if (n === i) { d.setAttribute('aria-current', 'true'); }
-        else { d.removeAttribute('aria-current'); }
-      });
-    };
-    track.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync);
-    sync();
-  }
-
-  /* 2週間以内の行事に印をつける */
+  /* 2週間以内のイベントに印をつける */
   $$('[data-ev-date]').forEach(function (el) {
     var d = daysFrom(el.dataset.evDate);
     if (d === null || d < 0 || d > 14) return;
@@ -97,4 +70,32 @@
     slot.textContent = d === 0 ? 'きょう' : d === 1 ? 'あした' : 'もうすぐ';
     slot.hidden = false;
   });
+
+  /* ---------- 注目イベントのスライド ---------- */
+  var track = $('[data-track]');
+  if (track) {
+    var slides = $$('.stage__slide', track);
+    var dots = $$('.stage__dot');
+    var at = function () { return Math.round(track.scrollLeft / track.clientWidth); };
+    var goTo = function (i) {
+      if (i >= slides.length) i = 0;          // 最後まで行ったら先頭に戻る
+      if (i < 0) i = slides.length - 1;
+      track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+    };
+    var next = $('[data-go="next"]');
+    if (next) next.addEventListener('click', function () { goTo(at() + 1); });
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { goTo(parseInt(d.dataset.go, 10)); });
+    });
+    var sync = function () {
+      var i = at();
+      dots.forEach(function (d, n) {
+        if (n === i) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
+      });
+    };
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  }
 })();

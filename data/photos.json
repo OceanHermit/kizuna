@@ -1,0 +1,49 @@
+{
+  "_comment": "写真の差し込み口。url を入れると <img> になり、空のままだと下地（グラデーション）が出ます。assets/img/<key>.jpg があればそれを最優先で使います。",
+  "_howto": "Unsplash の写真を使う場合は、写真ページの画像URL（https://images.unsplash.com/photo-... で始まるもの）を url に貼ってください。Unsplash License は商用利用可・クレジット表記は任意です。",
+  "photos": {
+    "hero1": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114114_1618d1a9-7b7b-43f4-95d7-ae87cd6aced0.png",
+      "alt": "机の上のスマートフォンとノート"
+    },
+    "hero2": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114144_38c7b5d6-e10c-49cf-9ca7-e4174c9b3746.png",
+      "alt": "ラグの上でゲームをする子どもたちの手元"
+    },
+    "hero3": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114318_19ab3a68-2a02-4c9c-8b36-c3d6818db440.png",
+      "alt": "夕方の机に置かれたノートパソコンとノート"
+    },
+    "about": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114223_34bb7809-17fd-403b-ae2e-fff279e3a118.png",
+      "alt": "並木道を歩く子どもたちの後ろ姿"
+    },
+    "ev1": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114114_225021a3-da42-4b38-a8d7-a1b1eb9a30e2.png",
+      "alt": "テーブルに並んだ折り紙の鶴"
+    },
+    "ev2": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114144_c3cdea39-93b2-43b1-9203-352c41352372.png",
+      "alt": "玄関に並んだ子どもの靴と落ち葉"
+    },
+    "ev3": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114249_73e23ed5-7f3b-4ac2-a257-da3fc7d45ff0.png",
+      "alt": "机に積まれたノートと鉛筆"
+    },
+    "juku": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114114_fa04d69d-7a2f-43c9-a595-0b6a08dbb09e.png",
+      "alt": "ノートに書きこむ子どもの手元"
+    },
+    "contact": {
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114114_20a8efc9-8527-41fd-861e-13dca1124777.png",
+      "alt": "朝の光のなかの参道"
+    }
+  },
+  "illust": {
+    "faq": {
+      "url": "",
+      "alt": "キズナのキャラクター"
+    }
+  },
+  "_source": "Higgsfield (z_image) で生成した仮の写真。顔が写らない構図で統一しています。Unsplash の写真に差し替える場合は url を貼り替えてください。"
+}

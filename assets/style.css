@@ -1,371 +1,389 @@
 @charset "utf-8";
 /* =========================================================
    キズナ ポータル
-   基調：パステルブルー ＋ ベージュ
-   差し色：ライトグリーン ＋ パープル
-   角丸とやわらかい影で「ふんわり」、余白と細い線で「すっきり」
+   基調：パステルブルー ＋ ベージュ／差し色：ライトグリーン ＋ パープル
+   方針：文字の大小差を大きく取り、写真は断ち落としで使う。
+         角丸は「ボタン・タイル・吹き出し」だけに残し、
+         写真や一覧は直線で締める。
    ========================================================= */
 
 :root{
-  /* ベージュ（地） */
   --beige:#F5EFE4;
-  --beige-2:#EDE4D4;
+  --beige-2:#EBE1CF;
   --paper:#FFFCF6;
-
-  /* パステルブルー（基調） */
   --blue:#A8C9E5;
   --blue-l:#DCEAF6;
   --blue-ll:#EFF6FC;
-  --blue-d:#44739E;
-
-  /* ライトグリーン（差し色） */
+  --blue-d:#3D6B96;
+  --blue-dd:#22405C;
   --green:#BFE3C4;
   --green-l:#E6F4E8;
-  --green-d:#55946A;
-
-  /* パープル（差し色） */
+  --green-d:#4E8A63;
   --purple:#C5B4E2;
   --purple-l:#EEE8F8;
-  --purple-d:#72599F;
+  --purple-d:#6C5398;
+  --ink:#1E2430;
+  --ink-2:#4E5668;
+  --sub:#8089A0;
+  --line:#DDD3C0;
+  --hair:#CFC5B2;
 
-  --ink:#353842;
-  --ink-2:#5C6070;
-  --sub:#8C909E;
-  --line:#E6DCCB;
-  --line-2:#D9E4EE;
+  /* 文字の階段（下は 0.68rem、上は 7rem。約10倍の差をつける） */
+  --t-cap:.68rem;
+  --t-small:.8rem;
+  --t-body:.94rem;
+  --t-h3:clamp(1.05rem,2.7vw,1.38rem);
+  --t-h2:clamp(1.65rem,4.8vw,2.7rem);
+  --t-lead:clamp(1.5rem,5.4vw,3rem);
+  --t-hero:clamp(2.3rem,8.4vw,5.1rem);
+  --t-num:clamp(3.2rem,10vw,6.6rem);
 
-  --r-s:16px; --r:26px; --r-l:36px; --r-xl:44px;
-  --sh:0 6px 22px rgba(68,115,158,.08);
-  --sh-h:0 16px 40px rgba(68,115,158,.16);
-  --sh-in:inset 0 1px 0 rgba(255,255,255,.7);
-
-  --gut:clamp(18px,4.5vw,56px);
-  --sec:clamp(60px,9vw,120px);
+  --gut:clamp(20px,5vw,72px);
+  /* .wrap の内側から画面の端までの距離。写真の断ち落としに使う */
+  --edge:calc(max(0px,(100vw - 1240px) / 2) + var(--gut));
+  --sec:clamp(72px,11vw,160px);
+  --sh:0 10px 34px rgba(34,64,92,.10);
+  --sh-h:0 20px 50px rgba(34,64,92,.18);
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--beige);color:var(--ink);
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{margin:0;background:var(--beige);color:var(--ink);
   font-family:"Zen Kaku Gothic New",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;
-  font-size:16px;line-height:1.95;letter-spacing:.035em;
-  -webkit-font-smoothing:antialiased;
-}
+  font-size:16px;line-height:1.95;letter-spacing:.035em;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
 p{margin:0}
-h1,h2,h3,h4{margin:0;line-height:1.6;font-weight:700;letter-spacing:.045em}
+h1,h2,h3,h4{margin:0;font-weight:700;letter-spacing:.02em}
 ul,ol{margin:0;padding:0;list-style:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 ::selection{background:var(--purple-l)}
-:focus-visible{outline:3px solid var(--blue-d);outline-offset:3px;border-radius:10px}
-
-/* 丸ゴシックは「ふんわり」担当（ボタン・ラベル・数字） */
+:focus-visible{outline:3px solid var(--blue-d);outline-offset:3px}
 .mr{font-family:"Zen Maru Gothic","Zen Kaku Gothic New",sans-serif}
 
-.wrap{max-width:1140px;margin:0 auto;padding-inline:var(--gut)}
-.wrap--n{max-width:880px}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:var(--gut)}
+.wrap--n{max-width:860px}
 .sec{padding-block:var(--sec)}
-[id]{scroll-margin-top:96px}
+[id]{scroll-margin-top:84px}
+
+/* 小さい見出しラベル（一番小さい文字） */
+.cap{display:inline-block;font-size:var(--t-cap);font-weight:700;letter-spacing:.26em;
+  color:var(--blue-d);text-transform:uppercase}
+.cap--light{color:rgba(255,255,255,.72)}
+
+/* 大きな連番（一番大きい文字） */
+.num{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--t-num);font-weight:500;
+  line-height:.78;color:var(--blue);opacity:.42;letter-spacing:-.02em;pointer-events:none}
+
+/* 縦組みのラベル */
+.vt{writing-mode:vertical-rl;font-size:var(--t-cap);letter-spacing:.42em;color:var(--sub)}
+
+/* 細い罫 */
+.rule{height:1px;background:var(--hair);border:0;margin:0}
 
 /* ---------- 準備中バナー ---------- */
-.draft{background:var(--purple-l);color:var(--purple-d);text-align:center;
-  padding:11px var(--gut);font-size:.79rem;letter-spacing:.06em;line-height:1.7}
+.draft{background:var(--ink);color:var(--beige);text-align:center;
+  padding:9px var(--gut);font-size:var(--t-cap);letter-spacing:.1em;line-height:1.8}
 
-/* ---------- ヘッダー ---------- */
-.hd{position:sticky;top:0;z-index:70;background:rgba(245,239,228,.88);
-  backdrop-filter:blur(14px);border-bottom:1px solid rgba(230,220,203,.8)}
-.hd__in{display:flex;align-items:center;gap:16px;min-height:72px}
-.logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:700;
-  letter-spacing:.22em;color:var(--blue-d)}
-.logo__mark{width:34px;height:34px;border-radius:50%;flex:0 0 auto;
+/* ---------- ヘッダー（最初は透過、スクロールで地が出る） ---------- */
+.hd{position:fixed;inset:0 0 auto;z-index:70;transition:background-color .45s,box-shadow .45s}
+.hd.is-solid{background:rgba(245,239,228,.92);backdrop-filter:blur(16px);
+  box-shadow:0 1px 0 rgba(221,211,192,.9)}
+.hd__in{display:flex;align-items:center;gap:18px;height:76px}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.1rem;font-weight:700;letter-spacing:.26em}
+.logo__mark{width:30px;height:30px;border-radius:50%;flex:0 0 auto;
   background:linear-gradient(140deg,var(--blue) 0%,var(--green) 100%);
-  display:grid;place-content:center;box-shadow:var(--sh-in)}
-.logo__mark span{width:11px;height:11px;border-radius:50%;background:var(--paper)}
-.hd__nav{margin-left:auto;display:none;gap:26px}
-.hd__nav a{font-size:.85rem;font-weight:500;padding:8px 0;position:relative}
-.hd__nav a::after{content:"";position:absolute;left:50%;right:50%;bottom:2px;height:2px;
-  border-radius:2px;background:var(--blue);transition:left .3s,right .3s}
-.hd__nav a:hover::after{left:0;right:0}
+  display:grid;place-content:center}
+.logo__mark span{width:9px;height:9px;border-radius:50%;background:var(--paper)}
+.hd__nav{margin-left:auto;display:none;gap:30px}
+.hd__nav a{font-size:var(--t-small);font-weight:500;padding:8px 0;position:relative}
+.hd__nav a::after{content:"";position:absolute;left:0;right:100%;bottom:4px;height:1px;
+  background:currentColor;transition:right .35s}
+.hd__nav a:hover::after{right:0}
 .hd .hd__cta{display:none}
+/* 透過時は白文字 */
+.hd:not(.is-solid){color:#fff}
+.hd:not(.is-solid) .logo,.hd:not(.is-solid) .hd__nav a{color:#fff;text-shadow:0 1px 14px rgba(0,0,0,.4)}
+.hd:not(.is-solid) .burger{background:rgba(255,255,255,.18);backdrop-filter:blur(8px)}
+.hd:not(.is-solid) .burger i{background:#fff}
 
-/* ハンバーガー */
-.burger{margin-left:auto;width:48px;height:48px;border-radius:50%;background:var(--paper);
-  box-shadow:var(--sh);display:grid;place-content:center;gap:5px;flex:0 0 auto;
-  transition:transform .3s,background-color .3s}
-.burger:hover{transform:scale(1.06)}
-.burger i{display:block;width:19px;height:2px;border-radius:2px;background:var(--blue-d);
+.burger{margin-left:auto;width:46px;height:46px;border-radius:50%;background:var(--paper);
+  box-shadow:var(--sh);display:grid;place-content:center;gap:5px;flex:0 0 auto;transition:transform .3s}
+.burger:hover{transform:scale(1.07)}
+.burger i{display:block;width:18px;height:2px;border-radius:2px;background:var(--ink);
   transition:transform .35s cubic-bezier(.2,.9,.3,1.2),opacity .25s}
 body.nav-open .burger i:nth-child(1){transform:translateY(7px) rotate(45deg)}
 body.nav-open .burger i:nth-child(2){opacity:0}
 body.nav-open .burger i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-/* 全画面メニュー */
-.ovl{position:fixed;inset:0;z-index:65;background:var(--blue-ll);
-  display:grid;align-content:safe center;padding:104px var(--gut) 44px;
-  opacity:0;visibility:hidden;transform:translateY(-10px);
-  transition:opacity .4s,transform .4s,visibility .4s;overflow-y:auto}
-body.nav-open .ovl{opacity:1;visibility:visible;transform:none}
-.ovl::before,.ovl::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
-.ovl::before{width:280px;height:280px;background:var(--green-l);top:-80px;right:-70px}
-.ovl::after{width:220px;height:220px;background:var(--purple-l);bottom:-70px;left:-60px}
-.ovl__in{position:relative;z-index:1;max-width:560px;margin:0 auto;width:100%}
-.ovl__nav{display:grid;gap:9px}
-.ovl__nav a{display:flex;align-items:center;justify-content:space-between;gap:14px;
-  background:var(--paper);border-radius:var(--r);padding:15px 24px;font-weight:700;
-  font-size:1.02rem;box-shadow:var(--sh);transition:transform .25s,box-shadow .25s}
-.ovl__nav a:hover{transform:translateX(5px);box-shadow:var(--sh-h)}
-.ovl__nav small{display:block;font-size:.66rem;letter-spacing:.18em;color:var(--sub);font-weight:500}
-.ovl__nav i{font-style:normal;color:var(--blue-d)}
-.ovl__foot{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.ovl{position:fixed;inset:0;z-index:65;background:var(--ink);color:var(--beige);
+  display:grid;align-content:safe center;padding:100px var(--gut) 44px;
+  opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;overflow-y:auto}
+body.nav-open .ovl{opacity:1;visibility:visible}
+.ovl__in{max-width:620px;margin:0 auto;width:100%}
+.ovl__nav a{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:16px 0;border-bottom:1px solid rgba(245,239,228,.16);transition:padding-left .3s}
+.ovl__nav a:hover{padding-left:12px}
+.ovl__nav b{font-size:clamp(1.2rem,5vw,1.7rem);font-weight:700}
+.ovl__nav small{font-size:var(--t-cap);letter-spacing:.24em;color:var(--blue)}
+.ovl__foot{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px}
 
-/* ---------- ボタン ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;
-  min-height:58px;padding:15px 34px;border-radius:999px;font-weight:700;font-size:.95rem;
+/* ---------- ボタン（角丸はここに残す） ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:56px;
+  padding:14px 32px;border-radius:999px;font-weight:700;font-size:var(--t-body);
   font-family:"Zen Maru Gothic","Zen Kaku Gothic New",sans-serif;
-  transition:transform .28s cubic-bezier(.2,.9,.3,1.2),box-shadow .28s,background-color .28s,color .28s}
-.btn--primary{background:var(--blue-d);color:#fff;box-shadow:0 6px 18px rgba(68,115,158,.3)}
-.btn--primary:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(68,115,158,.38)}
-.btn--ghost{background:var(--paper);color:var(--blue-d);box-shadow:var(--sh)}
+  transition:transform .3s cubic-bezier(.2,.9,.3,1.2),box-shadow .3s,background-color .3s,color .3s}
+.btn--primary{background:var(--ink);color:#fff}
+.btn--primary:hover{transform:translateY(-3px);box-shadow:var(--sh-h)}
+.btn--ghost{background:var(--paper);color:var(--ink);box-shadow:var(--sh)}
 .btn--ghost:hover{transform:translateY(-3px);box-shadow:var(--sh-h)}
-.btn--green{background:var(--green);color:var(--green-d);box-shadow:0 6px 18px rgba(85,148,106,.22)}
-.btn--green:hover{transform:translateY(-3px)}
-.btn--sm{min-height:46px;padding:10px 24px;font-size:.84rem}
-.link{display:inline-flex;align-items:center;gap:.5em;font-weight:700;font-size:.86rem;
-  color:var(--blue-d);padding-bottom:4px;border-bottom:1.5px solid var(--blue);
-  transition:gap .25s,border-color .25s}
-.link:hover{gap:.9em;border-bottom-color:var(--blue-d)}
+.btn--light{border:1.5px solid rgba(255,255,255,.6);color:#fff}
+.btn--light:hover{background:#fff;color:var(--ink)}
+.btn--sm{min-height:44px;padding:9px 24px;font-size:var(--t-small)}
+.link{display:inline-flex;align-items:center;gap:.6em;font-size:var(--t-small);font-weight:700;
+  padding-bottom:5px;border-bottom:1px solid var(--ink);transition:gap .3s}
+.link:hover{gap:1.1em}
+.link--light{color:#fff;border-bottom-color:rgba(255,255,255,.7)}
 
-/* ---------- 写真の枠（今は画像なし） ---------- */
-.ph{position:relative;aspect-ratio:var(--ar,16/9);border-radius:var(--r-l);overflow:hidden;
-  background:linear-gradient(140deg,var(--blue-l) 0%,var(--beige-2) 55%,var(--green-l) 100%);
-  border:2px dashed rgba(68,115,158,.28);
-  display:grid;place-content:center;text-align:center;color:var(--blue-d)}
-.ph::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;
-  background:rgba(255,255,255,.4);top:-30px;right:-30px}
-.ph__t{position:relative;font-family:"Zen Maru Gothic",sans-serif;font-size:.82rem;
-  letter-spacing:.1em;opacity:.85;line-height:1.9}
-.ph__t b{display:block;font-size:1.3rem;margin-bottom:2px}
-.ph--r{border-radius:var(--r)}
+/* ---------- 写真 ---------- */
+.pic{position:relative;overflow:hidden;background:var(--beige-2)}
+.pic img{width:100%;height:100%;object-fit:cover}
+.pic--r{border-radius:6px}
+.pic__none{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:4px;
+  background:
+    radial-gradient(90% 70% at 22% 18%,rgba(168,201,229,.75) 0%,rgba(168,201,229,0) 60%),
+    radial-gradient(80% 70% at 85% 80%,rgba(191,227,196,.7) 0%,rgba(191,227,196,0) 62%),
+    linear-gradient(160deg,var(--blue-ll) 0%,var(--beige-2) 100%);
+  color:var(--blue-d)}
+.pic__none span{font-size:var(--t-cap);letter-spacing:.2em;opacity:.8}
+.pic__none b{font-size:1.4rem}
+.ill .pic__none{background:
+    radial-gradient(90% 70% at 25% 20%,rgba(197,180,226,.8) 0%,rgba(197,180,226,0) 62%),
+    linear-gradient(160deg,var(--purple-l) 0%,var(--blue-ll) 100%);color:var(--purple-d)}
 
-/* ---------- イラストの枠 ---------- */
-.ill{position:relative;aspect-ratio:var(--ar,1/1);border-radius:var(--r-l);overflow:hidden;
-  background:radial-gradient(circle at 32% 28%,var(--purple-l) 0%,var(--blue-ll) 55%,var(--green-l) 100%);
-  border:2px dashed rgba(114,89,159,.3);
-  display:grid;place-content:center;text-align:center;color:var(--purple-d)}
+/* ================= ヒーロー（全幅写真＋重ね文字） ================= */
+.stage{position:relative;background:var(--ink)}
+.stage__track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-ms-overflow-style:none}
+.stage__track::-webkit-scrollbar{display:none}
+.stage__slide{position:relative;flex:0 0 100%;scroll-snap-align:center;
+  min-height:min(86vh,760px);display:flex;align-items:flex-end}
+.stage__pic{position:absolute;inset:0}
+.stage__pic::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(190deg,rgba(14,22,34,.5) 0%,rgba(14,22,34,.1) 34%,rgba(14,22,34,.82) 100%)}
+.stage__b{position:relative;width:100%;max-width:1240px;margin:0 auto;
+  padding:0 var(--gut) clamp(64px,10vw,110px);color:#fff}
+.stage__ttl{font-size:var(--t-hero);line-height:1.18;letter-spacing:.005em;margin:14px 0 0;
+  text-shadow:0 2px 40px rgba(0,0,0,.35);word-break:auto-phrase}
+.stage__meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:22px;
+  font-size:var(--t-small);color:rgba(255,255,255,.88)}
+.stage__meta span{display:inline-flex;align-items:center;gap:.5em}
+.stage__meta span + span::before{content:"";width:1px;height:12px;background:rgba(255,255,255,.4);
+  margin-right:18px}
+.stage__x{margin-top:16px;max-width:38em;font-size:var(--t-body);line-height:2.05;
+  color:rgba(255,255,255,.86)}
+.stage__btns{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:30px}
+.stage__count{font-family:"Zen Maru Gothic",sans-serif;color:#fff;font-size:var(--t-small)}
+.stage__count b{font-size:1.6rem;font-weight:700;margin-inline:.15em}
+.stage__nav{position:absolute;right:var(--gut);bottom:clamp(26px,5vw,44px);z-index:2;
+  display:flex;align-items:center;gap:12px}
+.stage__dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.45);
+  transition:width .35s,background-color .35s}
+.stage__dot[aria-current="true"]{width:30px;border-radius:999px;background:#fff}
+.stage__arw{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.45);
+  color:#fff;display:grid;place-content:center;transition:background-color .3s,color .3s}
+.stage__arw:hover{background:#fff;color:var(--ink)}
 
-/* ---------- セクション見出し ---------- */
-.sh{margin-bottom:clamp(26px,4vw,48px)}
-.sh__en{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.24em;
-  color:var(--purple-d);background:var(--purple-l);border-radius:999px;padding:6px 16px;
-  margin-bottom:12px;font-family:"Zen Maru Gothic",sans-serif}
-.sh__t{font-size:clamp(1.3rem,4.6vw,1.95rem);word-break:auto-phrase}
-.sh__x{margin-top:10px;font-size:.88rem;color:var(--sub)}
-.sh--row{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+/* ================= 導入のひとこと（大きい文字だけ） ================= */
+.intro{padding-block:clamp(56px,9vw,120px)}
+.intro__t{font-size:var(--t-lead);line-height:1.68;font-weight:700;letter-spacing:.01em;
+  max-width:18em;word-break:auto-phrase}
+.intro__x{margin-top:26px;max-width:34em;font-size:var(--t-body);line-height:2.25;color:var(--ink-2)}
 
-/* ---------- 大カラム（イベント告知） ---------- */
-.hero{padding-block:clamp(26px,4.5vw,52px) var(--sec);position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;
-  background:var(--blue-l);opacity:.5;top:-180px;right:-140px;pointer-events:none}
-.hero::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;
-  background:var(--green-l);opacity:.55;bottom:-120px;left:-110px;pointer-events:none}
-.hero__in{position:relative}
-.hero__car{position:relative}
-.hero__track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding-block:10px 18px;scrollbar-width:none;-ms-overflow-style:none}
-.hero__track::-webkit-scrollbar{display:none}
-.hero__slide{flex:0 0 100%;scroll-snap-align:center;padding-inline:3px}
-.hero__ctrl{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:6px}
-.hero__arw{width:46px;height:46px;border-radius:50%;background:var(--paper);box-shadow:var(--sh);
-  display:grid;place-content:center;color:var(--blue-d);
-  transition:transform .25s,box-shadow .25s,background-color .25s}
-.hero__arw:hover{transform:scale(1.08);box-shadow:var(--sh-h)}
-.hero__dots{display:flex;align-items:center;gap:9px}
-.hero__dot{width:10px;height:10px;border-radius:50%;background:var(--blue);opacity:.42;
-  transition:opacity .3s,width .3s,background-color .3s}
-.hero__dot[aria-current="true"]{opacity:1;width:28px;border-radius:999px;background:var(--blue-d)}
-.hero__card{background:var(--paper);border-radius:var(--r-xl);box-shadow:var(--sh);
-  overflow:hidden;display:grid;height:100%}
-.hero__card .hero__ph{border-radius:0;border:0;border-bottom:2px dashed rgba(68,115,158,.22)}
-.hero__b{padding:clamp(26px,4.5vw,48px)}
-.hero__label{display:inline-flex;align-self:flex-start;align-items:center;gap:.5em;font-size:.72rem;font-weight:700;
-  letter-spacing:.16em;color:#fff;background:var(--blue-d);border-radius:999px;padding:7px 18px;
-  font-family:"Zen Maru Gothic",sans-serif}
-.hero__t{font-size:clamp(1.45rem,5.4vw,2.4rem);line-height:1.5;margin:18px 0 14px;
-  word-break:auto-phrase;text-wrap:balance}
-.hero__meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.chip{display:inline-flex;align-items:center;gap:.4em;font-size:.79rem;font-weight:700;
-  border-radius:999px;padding:7px 16px;font-family:"Zen Maru Gothic",sans-serif}
-.chip--blue{background:var(--blue-l);color:var(--blue-d)}
-.chip--green{background:var(--green-l);color:var(--green-d)}
-.chip--purple{background:var(--purple-l);color:var(--purple-d)}
-.hero__x{font-size:.91rem;line-height:2.1;color:var(--ink-2);max-width:40em}
-.hero__btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.hero__count{display:inline-flex;align-items:baseline;gap:.35em;
-  font-family:"Zen Maru Gothic",sans-serif;color:var(--blue-d);font-weight:700}
-.hero__count b{font-size:1.5rem}
+/* ================= キズナとは（断ち落とし＋ずらし） ================= */
+.ab{position:relative}
+.ab__grid{display:grid;gap:clamp(28px,5vw,0)}
+.ab__pic{position:relative;aspect-ratio:4/5}
+.ab__num{position:absolute;right:16px;top:-.1em;z-index:2}
+.ab__b{position:relative}
+.ab__t{font-size:var(--t-h2);line-height:1.6;margin:14px 0 22px;word-break:auto-phrase}
+.ab__p{font-size:var(--t-body);line-height:2.3;color:var(--ink-2)}
+.ab__p + .ab__p{margin-top:1.4em}
+.pts{margin-top:36px;border-top:1px solid var(--hair)}
+.pt{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:20px 0;
+  border-bottom:1px solid var(--hair)}
+.pt__n{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--t-small);color:var(--blue-d);
+  letter-spacing:.14em;padding-top:.25em}
+.pt__t{font-size:var(--t-h3);line-height:1.6}
+.pt__x{font-size:var(--t-small);line-height:1.95;color:var(--sub);margin-top:4px}
 
-/* ---------- キズナとは ---------- */
-.about__grid{display:grid;gap:clamp(26px,4.5vw,56px);align-items:center}
-.about__t{font-size:clamp(1.3rem,4.8vw,2.05rem);line-height:1.75;margin-bottom:22px;word-break:auto-phrase}
-.about__p{font-size:.93rem;line-height:2.25;color:var(--ink-2)}
-.about__p + .about__p{margin-top:1.3em}
-.pts{display:grid;gap:12px;margin-top:30px}
-.pt{display:flex;gap:14px;align-items:flex-start;background:var(--paper);
-  border-radius:var(--r);padding:16px 20px;box-shadow:var(--sh)}
-.pt__i{flex:0 0 auto;width:40px;height:40px;border-radius:50%;background:var(--blue-ll);
-  display:grid;place-content:center;font-size:1.1rem}
-.pt__t{font-size:.95rem;font-family:"Zen Maru Gothic",sans-serif;font-weight:700}
-.pt__x{font-size:.8rem;line-height:1.9;color:var(--sub);margin-top:2px}
+/* ================= イベント（1件大きく、残りは行で） ================= */
+.ev__head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
+  flex-wrap:wrap;margin-bottom:clamp(26px,4vw,44px)}
+.ev__ttl{font-size:var(--t-h2);line-height:1.4;margin-top:8px}
+.ev__hl{display:flex;align-items:flex-end;gap:clamp(12px,2.4vw,24px)}
+.big{display:grid;gap:clamp(20px,3vw,42px);margin-bottom:clamp(30px,5vw,56px)}
+.big__pic{aspect-ratio:16/10}
+.big__b{display:flex;flex-direction:column;justify-content:center}
+.big__d{font-family:"Zen Maru Gothic",sans-serif;font-size:clamp(2rem,6vw,3.2rem);
+  line-height:1;color:var(--blue-d);letter-spacing:-.01em}
+.big__w{font-size:var(--t-cap);letter-spacing:.2em;color:var(--sub);margin-left:.6em}
+.big__t{font-size:var(--t-h2);line-height:1.5;margin:16px 0 12px;word-break:auto-phrase}
+.big__x{font-size:var(--t-body);line-height:2.1;color:var(--ink-2);max-width:34em}
+.big__m{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px;font-size:var(--t-small);color:var(--sub)}
+.rows{border-top:1px solid var(--hair)}
+.row{display:grid;grid-template-columns:84px 1fr;gap:18px;align-items:center;
+  padding:18px 0;border-bottom:1px solid var(--hair);transition:padding-left .35s}
+.row:hover{padding-left:10px}
+.row__pic{aspect-ratio:1/1}
+.row__d{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--t-small);color:var(--blue-d);
+  letter-spacing:.1em}
+.row__t{font-size:var(--t-h3);line-height:1.6;margin-top:2px}
+.row__m{font-size:var(--t-cap);color:var(--sub);margin-top:4px;letter-spacing:.06em}
+.tag{display:inline-block;font-size:var(--t-cap);font-weight:700;letter-spacing:.12em;
+  border-radius:999px;padding:4px 12px;margin-left:10px;vertical-align:middle}
+.tag--p{background:var(--purple-l);color:var(--purple-d)}
+.tag--g{background:var(--green-l);color:var(--green-d)}
 
-/* ---------- イベント ---------- */
-.evs{display:grid;gap:clamp(16px,2.6vw,26px)}
-.ev{background:var(--paper);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;
-  display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
-.ev:hover{transform:translateY(-5px);box-shadow:var(--sh-h)}
-.ev .ev__ph{aspect-ratio:4/3;border-radius:0;border:0;border-bottom:2px dashed rgba(68,115,158,.2)}
-.ev__b{padding:20px 22px 24px;display:flex;flex-direction:column;gap:9px;flex:1}
-.ev__top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.ev__date{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.04rem;
-  color:var(--blue-d);letter-spacing:.04em}
-.ev__t{font-size:1.02rem;line-height:1.65;word-break:auto-phrase}
-.ev__x{font-size:.8rem;line-height:1.9;color:var(--sub)}
-.ev__meta{font-size:.76rem;color:var(--blue-d);margin-top:auto;padding-top:6px}
+/* ================= お知らせ（罫線だけ） ================= */
+.nw{border-top:1px solid var(--hair)}
+.nw__i{display:grid;gap:4px;padding:22px 0;border-bottom:1px solid var(--hair);
+  transition:padding-left .35s}
+.nw__i:hover{padding-left:10px}
+.nw__m{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nw__d{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--t-small);color:var(--sub);
+  letter-spacing:.12em}
+.nw__c{font-size:var(--t-cap);letter-spacing:.14em;color:var(--blue-d)}
+.nw__t{font-size:var(--t-h3);line-height:1.65}
+.nw__x{font-size:var(--t-small);line-height:1.95;color:var(--sub);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-/* ---------- お知らせ ---------- */
-.news{background:var(--paper);border-radius:var(--r-l);box-shadow:var(--sh);
-  padding:clamp(8px,2vw,20px) clamp(18px,3vw,34px)}
-.news__i{display:block;padding:20px 0;border-bottom:1px solid var(--line-2)}
-.news__i:last-child{border-bottom:0}
-.news__m{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-.news__d{font-size:.79rem;color:var(--sub);letter-spacing:.08em;
-  font-family:"Zen Maru Gothic",sans-serif}
-.news__t{display:block;font-size:1rem;line-height:1.7;transition:color .25s}
-.news__i:hover .news__t{color:var(--blue-d)}
-.news__x{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  font-size:.82rem;line-height:1.9;color:var(--sub);margin-top:6px}
+/* ================= キズナ塾（全幅写真に白い面を重ねる） ================= */
+.jk{position:relative}
+.jk__pic{position:relative;aspect-ratio:16/9;max-height:560px}
+.jk__pic::after{content:"";position:absolute;inset:0;background:rgba(20,32,48,.26)}
+.jk__panel{position:relative;background:var(--paper);padding:clamp(28px,5vw,56px);
+  margin-top:-40px;border-radius:18px;box-shadow:var(--sh)}
+.jk__num{color:var(--green);opacity:.5}
+.jk__t{font-size:var(--t-h2);line-height:1.45;margin:10px 0 16px}
+.jk__x{font-size:var(--t-body);line-height:2.2;color:var(--ink-2);max-width:36em}
+.jk__list{margin:24px 0 30px;border-top:1px solid var(--hair)}
+.jk__list li{padding:13px 0;border-bottom:1px solid var(--hair);font-size:var(--t-small);
+  line-height:1.9;display:grid;grid-template-columns:auto 1fr;gap:12px}
+.jk__list li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green-d);
+  margin-top:.72em}
+.jk__btns{display:flex;flex-wrap:wrap;gap:12px}
 
-/* ---------- キズナ塾 ---------- */
-.juku{background:linear-gradient(170deg,var(--green-l) 0%,var(--beige) 70%)}
-.juku__grid{display:grid;gap:clamp(26px,4.5vw,56px);align-items:center}
-.juku__sub{font-size:.8rem;font-weight:700;letter-spacing:.14em;color:var(--green-d)}
-.juku__t{font-size:clamp(1.5rem,5.4vw,2.3rem);margin:8px 0 16px}
-.juku__x{font-size:.92rem;line-height:2.15;color:var(--ink-2)}
-.juku__list{display:grid;gap:9px;margin:22px 0 28px}
-.juku__list li{display:flex;gap:11px;align-items:flex-start;font-size:.86rem;line-height:1.95}
-.juku__list li::before{content:"";flex:0 0 auto;width:18px;height:18px;border-radius:50%;
-  background:var(--green);margin-top:.5em;
-  box-shadow:inset 0 0 0 5px var(--paper)}
-.juku__btns{display:flex;flex-wrap:wrap;gap:12px}
-
-/* ---------- 会員メニュー ---------- */
-.mem{background:var(--blue-ll)}
-.mem__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.2vw,22px)}
-.mi{background:var(--paper);border-radius:var(--r);box-shadow:var(--sh);
-  padding:clamp(18px,3vw,26px);display:flex;flex-direction:column;gap:7px;
-  transition:transform .3s,box-shadow .3s}
-.mi:hover{transform:translateY(-5px);box-shadow:var(--sh-h)}
-.mi__i{width:50px;height:50px;border-radius:50%;display:grid;place-content:center;
-  font-size:1.28rem;margin-bottom:5px;box-shadow:var(--sh-in)}
-.mi--blue   .mi__i{background:var(--blue-l)}
-.mi--green  .mi__i{background:var(--green-l)}
+/* ================= 会員メニュー（濃い面で締める） ================= */
+.mem{background:var(--ink);color:var(--beige)}
+.mem .cap{color:var(--blue)}
+.mem__t{font-size:var(--t-h2);line-height:1.45;margin:10px 0 8px;color:#fff}
+.mem__x{font-size:var(--t-small);color:rgba(245,239,228,.62);margin-bottom:clamp(26px,4vw,44px)}
+.mem__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.6vw,16px)}
+.mi{background:rgba(255,255,255,.06);border-radius:20px;padding:clamp(18px,3vw,26px);
+  display:flex;flex-direction:column;gap:6px;transition:background-color .3s,transform .3s}
+.mi:hover{background:rgba(255,255,255,.12);transform:translateY(-4px)}
+.mi__i{width:46px;height:46px;border-radius:50%;display:grid;place-content:center;
+  font-size:1.2rem;margin-bottom:6px}
+.mi--blue .mi__i{background:var(--blue-l)}
+.mi--green .mi__i{background:var(--green-l)}
 .mi--purple .mi__i{background:var(--purple-l)}
-.mi__t{font-size:.98rem;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;line-height:1.6}
-.mi__x{font-size:.77rem;line-height:1.85;color:var(--sub)}
-.mem__note{margin-top:26px;text-align:center;font-size:.82rem;color:var(--sub)}
+.mi__t{font-size:var(--t-h3);line-height:1.5;color:#fff}
+.mi__x{font-size:var(--t-cap);line-height:1.85;color:rgba(245,239,228,.6);letter-spacing:.04em}
+.mem__note{margin-top:26px;font-size:var(--t-cap);color:rgba(245,239,228,.5);letter-spacing:.08em}
 
-/* ---------- よくある質問のキャラクター ---------- */
-.faq__ch{display:flex;align-items:center;gap:16px;margin-bottom:26px}
-.faq__ill{flex:0 0 auto;width:clamp(78px,20vw,108px);border-radius:50%}
-.faq__ill .ph__t{font-size:.6rem;line-height:1.6}
-.faq__bub{position:relative;background:var(--paper);border-radius:var(--r);box-shadow:var(--sh);
-  padding:16px 20px;font-size:.87rem;line-height:1.95}
-.faq__bub::before{content:"";position:absolute;left:-9px;top:50%;width:18px;height:18px;
-  background:var(--paper);transform:translateY(-50%) rotate(45deg);border-radius:4px}
-
-/* ---------- よくある質問 ---------- */
-.q{background:var(--paper);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:12px;
-  overflow:hidden;transition:box-shadow .3s}
-.q[open]{box-shadow:var(--sh-h)}
-.q summary{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
-  list-style:none;cursor:pointer;padding:20px 24px;font-size:.95rem;line-height:1.75;
-  font-weight:700;transition:background-color .25s}
+/* ================= よくある質問 ================= */
+.ch{display:flex;align-items:center;gap:16px;margin-bottom:clamp(22px,4vw,38px)}
+.ch__ill{flex:0 0 auto;width:clamp(76px,19vw,104px);aspect-ratio:1/1;border-radius:50%}
+.ch__bub{position:relative;background:var(--paper);border-radius:20px;box-shadow:var(--sh);
+  padding:16px 20px;font-size:var(--t-small);line-height:1.95}
+.ch__bub::before{content:"";position:absolute;left:-8px;top:50%;width:16px;height:16px;
+  background:var(--paper);transform:translateY(-50%) rotate(45deg);border-radius:3px}
+.q{border-bottom:1px solid var(--hair)}
+.q:first-of-type{border-top:1px solid var(--hair)}
+.q summary{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;
+  list-style:none;cursor:pointer;padding:22px 2px;font-size:var(--t-h3);line-height:1.7;
+  font-weight:700;transition:color .25s}
 .q summary::-webkit-details-marker{display:none}
-.q summary:hover{background:var(--blue-ll)}
-.q__q{width:30px;height:30px;border-radius:50%;background:var(--blue-l);color:var(--blue-d);
-  display:grid;place-content:center;font-size:.82rem;flex:0 0 auto;
-  font-family:"Zen Maru Gothic",sans-serif}
-.q__mk{width:13px;height:13px;flex:0 0 auto;position:relative}
-.q__mk::before,.q__mk::after{content:"";position:absolute;inset:50% 0 auto;height:2px;
-  border-radius:2px;background:var(--blue-d);transform:translateY(-50%);transition:transform .3s}
+.q summary:hover{color:var(--blue-d)}
+.q__q{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--t-small);color:var(--blue-d);
+  letter-spacing:.1em;padding-top:.3em}
+.q__mk{width:13px;height:13px;flex:0 0 auto;position:relative;margin-top:.6em}
+.q__mk::before,.q__mk::after{content:"";position:absolute;inset:50% 0 auto;height:1.5px;
+  background:var(--ink);transform:translateY(-50%);transition:transform .3s}
 .q__mk::after{transform:translateY(-50%) rotate(90deg)}
 .q[open] .q__mk::after{transform:translateY(-50%) rotate(0)}
-.q__a{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:0 24px 24px;
-  font-size:.87rem;line-height:2.1;color:var(--ink-2)}
-.q__a > span{width:30px;height:30px;border-radius:50%;background:var(--green-l);color:var(--green-d);
-  display:grid;place-content:center;font-size:.82rem;flex:0 0 auto;
-  font-family:"Zen Maru Gothic",sans-serif}
-.q__ex{background:var(--beige);border-radius:var(--r-s);padding:14px 18px;
-  font-size:.81rem;line-height:1.95;margin-top:12px}
-.q__link{margin-top:12px;display:inline-flex}
+.q__a{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:0 2px 26px;
+  font-size:var(--t-small);line-height:2.1;color:var(--ink-2)}
+.q__a > span{font-family:"Zen Maru Gothic",sans-serif;color:var(--green-d);letter-spacing:.1em}
+.q__ex{background:var(--blue-ll);border-radius:12px;padding:14px 18px;font-size:var(--t-cap);
+  line-height:2;margin-top:12px;letter-spacing:.04em}
+.q__link{margin-top:14px}
 
-/* ---------- 連絡先 ---------- */
-.ct{background:var(--paper);border-radius:var(--r-xl);box-shadow:var(--sh);
-  padding:clamp(28px,5vw,56px);text-align:center;position:relative;overflow:hidden}
-.ct::before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;
-  background:var(--purple-l);top:-100px;right:-80px;opacity:.7}
-.ct__in{position:relative}
-.ct__t{font-size:clamp(1.25rem,4.6vw,1.8rem);line-height:1.7;margin-bottom:12px}
-.ct__x{font-size:.88rem;line-height:2.05;color:var(--ink-2);max-width:32em;margin:0 auto}
-.ct__btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:26px}
-.ct__tel{display:inline-block;margin-top:28px;padding-top:24px;border-top:1px solid var(--line-2)}
+/* ================= お問い合わせ（全幅写真） ================= */
+.ct{position:relative;color:#fff;overflow:hidden}
+.ct__pic{position:absolute;inset:0}
+.ct__pic::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(18,28,42,.76) 0%,rgba(18,28,42,.58) 50%,rgba(18,28,42,.8) 100%)}
+.ct__in{position:relative;text-align:center;padding-block:clamp(72px,11vw,150px)}
+.ct__t{font-size:var(--t-lead);line-height:1.55;margin:14px 0 18px;word-break:auto-phrase}
+.ct__x{font-size:var(--t-body);line-height:2.1;color:rgba(255,255,255,.82);max-width:32em;margin:0 auto}
+.ct__btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:32px}
+.ct__tel{margin-top:40px;padding-top:32px;border-top:1px solid rgba(255,255,255,.22);
+  display:inline-block}
 .ct__num{display:block;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;
-  font-size:clamp(1.6rem,6.6vw,2.2rem);color:var(--blue-d);letter-spacing:.04em;line-height:1.35}
-.ct__s{display:block;font-size:.76rem;color:var(--sub)}
+  font-size:clamp(1.9rem,8vw,3rem);letter-spacing:.03em;line-height:1.25}
+.ct__s{display:block;font-size:var(--t-cap);color:rgba(255,255,255,.6);letter-spacing:.14em;margin-top:6px}
 
-/* ---------- フッター ---------- */
-.ft{background:var(--blue-d);color:rgba(255,255,255,.82);padding-block:clamp(44px,7vw,72px) 28px;
-  margin-top:var(--sec)}
-.ft__top{display:grid;gap:32px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,.18)}
-.ft__logo{display:flex;align-items:center;gap:10px;font-size:1.26rem;font-weight:700;
-  letter-spacing:.24em;color:#fff}
-.ft__x{font-size:.8rem;line-height:2.05;margin-top:14px;max-width:24em}
+/* ================= フッター ================= */
+.ft{background:var(--ink);color:rgba(245,239,228,.72);padding-block:clamp(50px,8vw,80px) 28px}
+.ft__top{display:grid;gap:34px;padding-bottom:36px;border-bottom:1px solid rgba(245,239,228,.14)}
+.ft__logo{display:flex;align-items:center;gap:10px;font-size:1.15rem;font-weight:700;
+  letter-spacing:.26em;color:#fff}
+.ft__x{font-size:var(--t-small);line-height:2.05;margin-top:14px;max-width:24em}
 .ft__nav{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
-.ft__nav a{display:block;padding:8px 0;font-size:.82rem;transition:color .25s}
-.ft__nav a:hover{color:var(--green)}
+.ft__nav a{display:block;padding:8px 0;font-size:var(--t-small);transition:color .25s}
+.ft__nav a:hover{color:var(--blue)}
 .ft__btm{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:24px;
-  font-size:.7rem;letter-spacing:.1em;opacity:.65}
+  font-size:var(--t-cap);letter-spacing:.14em;opacity:.55}
 
-/* ---------- スマホ用 追従ボタン ---------- */
+/* ================= スマホの追従ボタン ================= */
 .fx{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:10px;
   padding:10px var(--gut) calc(10px + env(safe-area-inset-bottom));
-  background:rgba(255,252,246,.94);backdrop-filter:blur(10px);
-  border-top:1px solid var(--line-2)}
-.fx a{flex:1;min-height:52px;padding:12px;font-size:.86rem}
+  background:rgba(255,252,246,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+.fx a{flex:1;min-height:50px;padding:11px;font-size:var(--t-small)}
 body.nav-open .fx{display:none}
-body{padding-bottom:84px}
+body{padding-bottom:82px}
 
-/* ---------- 広い画面 ---------- */
+/* ================= 広い画面 ================= */
 @media (min-width:600px){
-  .evs{grid-template-columns:1fr 1fr}
   .mem__grid{grid-template-columns:repeat(3,1fr)}
+  .row{grid-template-columns:110px 1fr}
 }
 @media (min-width:900px){
   .hd__nav{display:flex}
-  .burger{display:none}        /* PC はナビだけ */
+  .hd .hd__cta{display:inline-flex;margin-left:4px}
+  .burger{display:none}
   .ovl{display:none}
-  .hd .hd__cta{display:inline-flex;margin-left:6px}
-  .hero__card{grid-template-columns:1.05fr 1fr;align-items:stretch}
-  .hero__card .hero__ph{aspect-ratio:auto;height:100%;min-height:380px;
-    border-bottom:0;border-right:2px dashed rgba(68,115,158,.22)}
-  .hero__b{display:flex;flex-direction:column;justify-content:center}
-  .about__grid{grid-template-columns:.85fr 1.15fr}
-  .juku__grid{grid-template-columns:1fr 1fr}
-  .evs{grid-template-columns:repeat(3,1fr)}
-  .ft__top{grid-template-columns:1fr 1fr}
-  .ft__nav{grid-template-columns:1fr 1fr 1fr}
   .fx{display:none}
   body{padding-bottom:0}
+
+  /* キズナとは：写真を左端まで断ち落とし、本文はずらして重ねる */
+  .ab__grid{grid-template-columns:minmax(0,46%) minmax(0,54%);align-items:center}
+  .ab__pic{margin-left:calc(var(--edge) * -1);width:calc(100% + var(--edge));aspect-ratio:4/5}
+  .ab__b{padding-left:clamp(32px,5vw,72px);margin-top:clamp(20px,4vw,56px)}
+  .ab__num{right:auto;left:calc(var(--edge) * -1 + 16px);top:auto;bottom:-.08em}
+
+  /* イベント：大きい1件は写真と本文を7:5で */
+  .big{grid-template-columns:minmax(0,58%) minmax(0,42%);align-items:center;
+    gap:clamp(26px,4vw,56px)}
+
+  /* キズナ塾：写真の上に白い面を左から重ねる */
+  .jk__panel{position:absolute;left:var(--gut);bottom:clamp(36px,6vw,72px);
+    width:min(560px,52%);margin-top:0}
+
+  .ft__top{grid-template-columns:1fr 1fr}
+  .ft__nav{grid-template-columns:1fr 1fr 1fr}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
