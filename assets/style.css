@@ -390,3 +390,93 @@ body{padding-bottom:82px}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* =========================================================
+   下層ページ（イベント一覧・詳細 / お知らせ一覧・詳細）
+   ========================================================= */
+
+/* 下層には写真の帯が無いので、ヘッダーは常に地色を敷く */
+body.sub .hd{background:rgba(245,239,228,.92);backdrop-filter:blur(16px);
+  box-shadow:0 1px 0 rgba(221,211,192,.9)}
+body.sub .hd .logo,body.sub .hd .hd__nav a{color:var(--ink);text-shadow:none}
+body.sub .hd .burger{background:var(--paper);backdrop-filter:none}
+body.sub .hd .burger i{background:var(--ink)}
+
+/* 固定ヘッダーのぶんだけ上を空ける */
+.page{padding-top:clamp(160px,20vw,196px);padding-bottom:var(--sec)}
+
+/* ---------- パンくず ---------- */
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:.6em;
+  font-size:var(--t-cap);letter-spacing:.1em;color:var(--sub);margin-bottom:clamp(26px,4vw,44px)}
+.crumb a{border-bottom:1px solid transparent;transition:border-color .25s,color .25s}
+.crumb a:hover{color:var(--ink);border-bottom-color:var(--hair)}
+.crumb span[aria-hidden]{opacity:.5}
+
+/* ---------- ページ見出し ---------- */
+.phead{padding-bottom:clamp(22px,3.5vw,34px);border-bottom:1px solid var(--hair);
+  margin-bottom:clamp(30px,5vw,56px)}
+.phead__t{font-size:var(--t-h2);line-height:1.35;margin-top:10px;word-break:auto-phrase}
+.phead__x{margin-top:14px;font-size:var(--t-body);line-height:2.1;color:var(--ink-2);max-width:34em}
+
+/* ---------- 並びの見出し ---------- */
+.group{font-size:var(--t-h3);line-height:1.6;margin:0 0 18px;
+  display:flex;align-items:center;gap:14px}
+.group::after{content:"";flex:1;height:1px;background:var(--hair)}
+.group--past{margin-top:clamp(44px,7vw,80px);color:var(--sub)}
+.empty{font-size:var(--t-body);line-height:2.1;color:var(--sub);
+  padding:34px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+
+/* ---------- イベント一覧 ---------- */
+.els{display:grid;gap:clamp(18px,2.6vw,26px)}
+.el{display:grid;gap:16px;background:var(--paper);overflow:hidden;border-radius:4px;
+  box-shadow:var(--sh);transition:transform .3s,box-shadow .3s}
+.el:hover{transform:translateY(-4px);box-shadow:var(--sh-h)}
+.el__pic{aspect-ratio:16/10}
+.el__b{padding:0 clamp(18px,3vw,28px) clamp(22px,3vw,28px)}
+.el__d{display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+.el__d b{font-family:"Zen Maru Gothic",sans-serif;font-size:clamp(1.5rem,5vw,2rem);
+  line-height:1;color:var(--blue-d);font-weight:700}
+.el__d span{font-size:var(--t-cap);letter-spacing:.18em;color:var(--sub)}
+.el__t{font-size:var(--t-h3);line-height:1.6;word-break:auto-phrase}
+.el__x{font-size:var(--t-small);line-height:1.95;color:var(--ink-2);margin-top:8px}
+.el__m{font-size:var(--t-cap);letter-spacing:.06em;color:var(--sub);margin-top:10px}
+.el--past{box-shadow:none;background:transparent}
+.el--past:hover{transform:none;box-shadow:none}
+.el--past .pic{filter:grayscale(.55) opacity(.75)}
+.el--past .el__d b,.el--past .el__t{color:var(--sub)}
+
+/* ---------- 詳細ページ ---------- */
+.detail__pic{aspect-ratio:16/9;max-height:520px;border-radius:4px;
+  margin-bottom:clamp(26px,4vw,48px)}
+.detail__d{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+.detail__d b{font-family:"Zen Maru Gothic",sans-serif;font-size:clamp(1.7rem,5.6vw,2.4rem);
+  line-height:1;color:var(--blue-d);font-weight:700}
+.detail__d span{font-size:var(--t-cap);letter-spacing:.18em;color:var(--sub)}
+.detail__d time{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--t-small);
+  letter-spacing:.12em;color:var(--sub)}
+.detail__t{font-size:var(--t-h2);line-height:1.4;margin-bottom:clamp(24px,4vw,40px);
+  word-break:auto-phrase}
+.detail--news .detail__t{font-size:clamp(1.45rem,4.4vw,2.2rem)}
+.detail__past{background:var(--blue-ll);border-radius:12px;padding:14px 18px;
+  font-size:var(--t-small);line-height:1.9;margin-bottom:28px;color:var(--ink-2)}
+.detail__past a{border-bottom:1px solid var(--blue-d);color:var(--blue-d);font-weight:700}
+
+.spec{margin:0 0 clamp(28px,4.5vw,44px);border-top:1px solid var(--hair)}
+.spec__r{display:grid;grid-template-columns:6.5em 1fr;gap:16px;padding:14px 0;
+  border-bottom:1px solid var(--hair)}
+.spec dt{font-size:var(--t-cap);letter-spacing:.14em;color:var(--blue-d);
+  font-weight:700;padding-top:.45em}
+.spec dd{margin:0;font-size:var(--t-small);line-height:1.95}
+
+.detail__b{font-size:var(--t-body);line-height:2.3;color:var(--ink-2)}
+.detail__b p + p{margin-top:1.5em}
+.detail__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(34px,5vw,52px);
+  padding-top:clamp(28px,4vw,40px);border-top:1px solid var(--hair)}
+.detail__back{margin-top:clamp(34px,5vw,52px)}
+
+@media (min-width:700px){
+  .el{grid-template-columns:minmax(0,42%) minmax(0,58%);align-items:center;gap:0}
+  .el__pic{aspect-ratio:4/3;height:100%}
+  .el__b{padding:clamp(22px,3vw,34px)}
+  .spec__r{grid-template-columns:8em 1fr}
+}

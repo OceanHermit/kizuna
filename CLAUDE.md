@@ -1,7 +1,20 @@
 # キズナ ポータル — 運用メモ（Claude 向け）
 
-子どもと保護者のための、キズナクラブのトップページです。
-**内容は `data/*.json` だけに入っています。** `index.html` を直接編集しないでください。
+子どもと保護者のための、キズナクラブのポータルサイトです。
+**内容は `data/*.json` だけに入っています。** 書き出された HTML を直接編集しないでください。
+
+## いまあるページ
+
+| URL | ファイル | 元データ |
+|---|---|---|
+| `/` | `index.html` | 全部 |
+| `/events/` | `events/index.html` | `data/events.json` |
+| `/events/<slug>/` | `events/<slug>/index.html` | `data/events.json` の1件 |
+| `/news/` | `news/index.html` | `data/news.json` |
+| `/news/<slug>/` | `news/<slug>/index.html` | `data/news.json` の1件 |
+
+`events/` と `news/` のフォルダは **ビルドのたびに作り直されます**（消して再生成）。
+中に手で置いたファイルは消えるので注意してください。
 
 ## 更新のしかた（必ずこの順番）
 
@@ -43,6 +56,25 @@ git add -A && git commit -m "..." && git push
   そのキー名（`join` `present` など）を書きます。URL を直接書くこともできます。
 - `faq.json` の `example` だけは HTML タグが使えます。それ以外は文字として扱われます。
 - `member.json` の `tone` は `blue` / `green` / `purple` のどれか。アイコンの背景色です。
+- **`slug` は URL になります。** 半角小文字・数字・ハイフンのみ。一度公開したら変えないこと
+  （変えると前のURLが消え、共有済みのリンクが切れます）。
+- イベントの `detail` とお知らせの `detail` は**段落の配列**です。詳細ページの本文になります。
+  省略すると `body` が1段落として使われます。
+- イベントの `apply` は申し込みフォームのキー名（`site.json` の `links`）。
+  過ぎたイベントでは申し込みボタンが自動的に消え、「終了しました」の案内に変わります。
+
+## ページを増やすとき
+
+`build.py` の下のほうに `build_xxx()` という関数が並んでいます。
+新しいページは「`build_xxx()` を書く」→「最後の `write(...)` に1行足す」の2手順です。
+
+```python
+made.append(write("club", 1, build_club))   # → club/index.html
+```
+
+`write(パス, 深さ, 関数)` の**深さ**は `../` をいくつ付けるかです。
+`club/` なら 1、`events/<slug>/` なら 2。ここを間違えると CSS と画像が読めなくなります。
+ページ内のリンクは必ず `u("events/")` のように `u()` を通してください。
 
 ## 写真の差し替え
 

@@ -3,9 +3,16 @@
 """
 キズナ ポータル ビルダー
 ========================
-data/*.json を読んで index.html を書き出します。
+data/*.json を読んで、サイトのページを一式書き出します。
 
     python3 build.py
+
+書き出されるページ
+    index.html                      トップ
+    events/index.html               イベント一覧
+    events/<slug>/index.html        イベント詳細（1件ずつ）
+    news/index.html                 お知らせ一覧
+    news/<slug>/index.html          お知らせ詳細（1件ずつ）
 
 内容を直すときは data/ の JSON を編集して、このスクリプトを実行し、
 git にコミットするだけです。見た目は assets/style.css が持っています。
@@ -15,12 +22,14 @@ import datetime
 import html
 import json
 import pathlib
+import shutil
 
 ROOT = pathlib.Path(__file__).parent
 DATA = ROOT / "data"
 IMGDIR = ROOT / "assets" / "img"
 WD = "日月火水木金土"
 EN_WD = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+TODAY = datetime.date.today()
 
 
 def load(name):
@@ -39,27 +48,71 @@ faq, faq_intro, photos = load("faq"), load("faq_intro"), load("photos")
 
 L = site["links"]
 
+# いま書き出しているページの深さ（../ をいくつ付けるか）
+PRE = ""
+
+
+def u(path=""):
+    """サイト内のリンクを、いまのページから見た相対パスにする"""
+    if path.startswith(("http://", "https://", "tel:", "mailto:")):
+        return path
+    return (PRE + path) or "./"
+
 
 def link(key):
     """data の link はキー名。site.json の links に無ければそのまま URL として扱う"""
     return L.get(key, key) if key else "#"
 
 
+# ---------------------------------------------------------------- 日付
+def ymd(s):
+    return (int(v) for v in s.split("-"))
+
+
+def as_date(s):
+    y, m, d = ymd(s)
+    return datetime.date(y, m, d)
+
+
+def jp_date(s):
+    d = as_date(s)
+    return f"{d.month}月{d.day}日（{WD[d.weekday() - 6]}）"
+
+
+def jp_full(s):
+    d = as_date(s)
+    return f"{d.year}年{d.month}月{d.day}日（{WD[d.weekday() - 6]}）"
+
+
+def md(s):
+    d = as_date(s)
+    return f"{d.month:02d}.{d.day:02d}"
+
+
+def en_wd(s):
+    return EN_WD[as_date(s).weekday()]
+
+
+def is_past(s):
+    return as_date(s) < TODAY
+
+
+# ---------------------------------------------------------------- 画像
 def pic(key, cls="", ratio=None, kind="photos"):
-    """写真（またはイラスト）の枠。
+    """写真（またはイラスト）。
     assets/img/<key>.(jpg|png|webp) があれば最優先。
     無ければ photos.json の url。それも空なら下地のグラデーションを出す。"""
     meta = photos.get(kind, {}).get(key, {})
-    url = ""
+    src = ""
     for ext in (".jpg", ".jpeg", ".png", ".webp"):
         if (IMGDIR / f"{key}{ext}").exists():
-            url = f"assets/img/{key}{ext}"
+            src = u(f"assets/img/{key}{ext}")
             break
-    if not url:
-        url = meta.get("url", "")
+    if not src:
+        src = meta.get("url", "")
     style = f' style="aspect-ratio:{ratio}"' if ratio else ""
-    if url:
-        inner = (f'<img src="{e(url)}" alt="{e(meta.get("alt", ""))}" '
+    if src:
+        inner = (f'<img src="{e(src)}" alt="{e(meta.get("alt", ""))}" '
                  f'loading="lazy" decoding="async">')
     else:
         label = "イラストが入ります" if kind == "illust" else "写真が入ります"
@@ -69,32 +122,120 @@ def pic(key, cls="", ratio=None, kind="photos"):
     return f'<div class="pic{c}"{style}>{inner}</div>'
 
 
-def ymd(s):
-    return (int(v) for v in s.split("-"))
-
-
-def jp_date(s):
-    y, m, d = ymd(s)
-    return f"{m}月{d}日（{WD[datetime.date(y, m, d).weekday() - 6]}）"
-
-
-def md(s):
-    y, m, d = ymd(s)
-    return f"{m:02d}.{d:02d}"
-
-
-def en_wd(s):
-    y, m, d = ymd(s)
-    return EN_WD[datetime.date(y, m, d).weekday()]
-
-
-NAV = [("キズナとは", "#about", "ABOUT"), ("イベント", "#event", "EVENT"),
-       ("お知らせ", "#news", "NEWS"), ("キズナ塾", "#juku", "STUDY"),
+# ---------------------------------------------------------------- 共通の枠
+NAV = [("キズナとは", "#about", "ABOUT"), ("イベント", "events/", "EVENT"),
+       ("お知らせ", "news/", "NEWS"), ("キズナ塾", "#juku", "STUDY"),
        ("会員メニュー", "#member", "MEMBER"), ("よくある質問", "#faq", "Q&A"),
        ("お問い合わせ", "#contact", "CONTACT")]
 
 
-# ---------------------------------------------------------------- 部品
+def nav_href(h):
+    """# で始まるものはトップページ内のアンカー"""
+    return u("") + h if h.startswith("#") else u(h)
+
+
+def shell(title, desc, body, extra_class=""):
+    """ヘッダー・フッター・追従ボタンを含む、ページの外側"""
+    draft = f'{"  "}<p class="draft">{e(site["draft_note"])}</p>\n' if site.get("draft") else ""
+    nav_bar = "".join(f'<a href="{nav_href(h)}">{e(t)}</a>' for t, h, _ in NAV[:6])
+    nav_ovl = "\n".join(
+        f'        <a href="{nav_href(h)}"><b>{e(t)}</b><small>{e(en)}</small></a>'
+        for t, h, en in NAV)
+    ft_nav = "".join(f'<a href="{nav_href(h)}">{e(t)}</a>' for t, h, _ in NAV)
+    cls = f' class="{extra_class}"' if extra_class else ""
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(title)}</title>
+<meta name="description" content="{e(desc)}">
+<meta property="og:title" content="{e(title)}">
+<meta property="og:description" content="{e(desc)}">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1E2430">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23A8C9E5'/><circle cx='16' cy='16' r='5' fill='%23FFFCF6'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{u('assets/style.css')}">
+</head>
+<body{cls}>
+<header class="hd">
+{draft}  <div class="wrap hd__in">
+    <a class="logo" href="{u('')}">
+      <span class="logo__mark" aria-hidden="true"><span></span></span>
+      <span>{e(site['name'])}</span>
+    </a>
+    <nav class="hd__nav" aria-label="メインメニュー">{nav_bar}</nav>
+    <a class="btn btn--primary btn--sm hd__cta" href="{e(L['join'])}">入会のご案内</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="kzn-menu"
+            aria-label="メニューを開閉する"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="ovl" id="kzn-menu" aria-hidden="true">
+  <div class="ovl__in">
+    <nav class="ovl__nav" aria-label="メニュー">
+{nav_ovl}
+    </nav>
+    <div class="ovl__foot">
+      <a class="btn btn--ghost" href="{e(L['join'])}">入会のご案内</a>
+      <a class="btn btn--light" href="{e(site['tel_href'])}">電話する</a>
+    </div>
+  </div>
+</div>
+
+{body}
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft__top">
+      <div>
+        <p class="ft__logo"><span class="logo__mark" aria-hidden="true"><span></span></span>{e(site['name'])}</p>
+        <p class="ft__x">{e(site['lead'])}</p>
+      </div>
+      <nav class="ft__nav" aria-label="フッターメニュー">
+        {ft_nav}<a href="{e(L['gakuto'])}">学徒サイトに戻る</a>
+      </nav>
+    </div>
+    <div class="ft__btm">
+      <span>&copy; {e(site['organizer'])}</span>
+      <span>{e(site['name_en'])}</span>
+    </div>
+  </div>
+</footer>
+
+<div class="fx">
+  <a class="btn btn--ghost" href="{e(site['tel_href'])}">電話する</a>
+  <a class="btn btn--primary" href="{e(L['consult'])}">相談する</a>
+</div>
+
+<script src="{u('assets/app.js')}" defer></script>
+</body>
+</html>
+"""
+
+
+def crumb(*parts):
+    """パンくず。parts は (表示名, リンク or None)"""
+    out = [f'<a href="{u("")}">ホーム</a>']
+    for label, href in parts:
+        out.append('<span aria-hidden="true">/</span>')
+        out.append(f'<a href="{href}">{e(label)}</a>' if href else f"<span>{e(label)}</span>")
+    return f'<nav class="crumb" aria-label="現在位置">{"".join(out)}</nav>'
+
+
+def page_head(cap, title, lead=""):
+    x = f'<p class="phead__x">{e(lead)}</p>' if lead else ""
+    return f"""      <div class="phead">
+        <span class="cap">{cap}</span>
+        <h1 class="phead__t">{e(title)}</h1>
+        {x}
+      </div>"""
+
+
+# ================================================================ トップページ
 def stage_slides():
     out = []
     for h in hero["slides"]:
@@ -141,26 +282,31 @@ def stage_nav():
 
 
 def about_points():
-    out = []
-    for i, p in enumerate(about["points"], 1):
-        out.append(f"""        <div class="pt">
+    return "\n".join(f"""        <div class="pt">
           <span class="pt__n">0{i}</span>
           <div>
             <h3 class="pt__t">{e(p['title'])}</h3>
             <p class="pt__x">{e(p['text'])}</p>
           </div>
-        </div>""")
-    return "\n".join(out)
+        </div>""" for i, p in enumerate(about["points"], 1))
+
+
+def ev_url(ev):
+    return u(f"events/{ev['slug']}/")
+
+
+def nw_url(n):
+    return u(f"news/{n['slug']}/")
 
 
 def event_blocks():
-    evs = sorted(events, key=lambda x: x["date"])[:3]
+    evs = [x for x in sorted(events, key=lambda x: x["date"]) if not is_past(x["date"])][:3]
     if not evs:
-        return ""
+        evs = sorted(events, key=lambda x: x["date"], reverse=True)[:3]
     f = evs[0]
     meta = "".join(f"<span>{e(x)}</span>" for x in (f.get("time", ""), f.get("place", "")) if x)
-    big = f"""      <a class="big" href="{e(f.get('link', '#'))}" data-ev-date="{e(f['date'])}">
-        {pic('ev1', 'big__pic')}
+    big = f"""      <a class="big" href="{ev_url(f)}" data-ev-date="{e(f['date'])}">
+        {pic(f.get('pic', 'ev1'), 'big__pic')}
         <div class="big__b">
           <p><span class="big__d">{md(f['date'])}</span><span class="big__w">{en_wd(f['date'])}</span><span class="tag tag--p" data-soon hidden></span></p>
           <h3 class="big__t">{e(f['title'])}</h3>
@@ -169,24 +315,26 @@ def event_blocks():
         </div>
       </a>"""
     rows = []
-    for i, ev in enumerate(evs[1:], 2):
+    for ev in evs[1:]:
         m = "　".join(x for x in (ev.get("time", ""), ev.get("place", "")) if x)
-        rows.append(f"""        <a class="row" href="{e(ev.get('link', '#'))}" data-ev-date="{e(ev['date'])}">
-          {pic(f'ev{i}', 'row__pic')}
+        rows.append(f"""        <a class="row" href="{ev_url(ev)}" data-ev-date="{e(ev['date'])}">
+          {pic(ev.get('pic', 'ev2'), 'row__pic')}
           <div>
             <p class="row__d">{md(ev['date'])}　{en_wd(ev['date'])}<span class="tag tag--g" data-soon hidden></span></p>
             <h3 class="row__t">{e(ev['title'])}</h3>
             <p class="row__m">{e(m)}</p>
           </div>
         </a>""")
+    if not rows:
+        return big
     return big + '\n      <div class="rows">\n' + "\n".join(rows) + "\n      </div>"
 
 
-def news_list():
+def news_items(limit=5):
     out = []
-    for n in sorted(news, key=lambda x: x["date"], reverse=True)[:5]:
+    for n in sorted(news, key=lambda x: x["date"], reverse=True)[:limit]:
         y, m, d = n["date"].split("-")
-        out.append(f"""        <a class="nw__i" href="{e(n.get('link', '#'))}">
+        out.append(f"""        <a class="nw__i" href="{nw_url(n)}">
           <span class="nw__m">
             <time class="nw__d" datetime="{e(n['date'])}">{y}.{m}.{d}</time>
             <span class="nw__c">{e(n.get('cat', 'お知らせ'))}</span>
@@ -244,57 +392,28 @@ def faq_items():
     return "\n".join(out)
 
 
-# ---------------------------------------------------------------- 組み立て
-draft = f'<p class="draft">{e(site["draft_note"])}</p>\n' if site.get("draft") else ""
-nav_bar = "".join(f'<a href="{h}">{e(t)}</a>' for t, h, _ in NAV[:6])
-nav_ovl = "\n".join(
-    f'        <a href="{h}"><b>{e(t)}</b><small>{e(en)}</small></a>' for t, h, en in NAV)
-ft_nav = "".join(f'<a href="{h}">{e(t)}</a>' for t, h, _ in NAV)
-
-doc = f"""<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(site['title'])}</title>
-<meta name="description" content="{e(site['description'])}">
-<meta property="og:title" content="{e(site['title'])}">
-<meta property="og:description" content="{e(site['description'])}">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#1E2430">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23A8C9E5'/><circle cx='16' cy='16' r='5' fill='%23FFFCF6'/></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-<header class="hd">
-{draft}  <div class="wrap hd__in">
-    <a class="logo" href="#top">
-      <span class="logo__mark" aria-hidden="true"><span></span></span>
-      <span>{e(site['name'])}</span>
-    </a>
-    <nav class="hd__nav" aria-label="メインメニュー">{nav_bar}</nav>
-    <a class="btn btn--primary btn--sm hd__cta" href="{e(L['join'])}">入会のご案内</a>
-    <button class="burger" type="button" aria-expanded="false" aria-controls="kzn-menu"
-            aria-label="メニューを開閉する"><i></i><i></i><i></i></button>
-  </div>
-</header>
-
-<div class="ovl" id="kzn-menu" aria-hidden="true">
-  <div class="ovl__in">
-    <nav class="ovl__nav" aria-label="メニュー">
-{nav_ovl}
-    </nav>
-    <div class="ovl__foot">
-      <a class="btn btn--ghost" href="{e(L['join'])}">入会のご案内</a>
-      <a class="btn btn--light" href="{e(site['tel_href'])}">電話する</a>
+def contact_section():
+    return f"""  <section class="ct" id="contact">
+    {pic('contact', 'ct__pic')}
+    <div class="wrap wrap--n ct__in">
+      <span class="cap cap--light">Contact</span>
+      <h2 class="ct__t">まずは、お話を<br>聞かせてください。</h2>
+      <p class="ct__x">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談を承っています。どんな小さなことでも、お気軽にご連絡ください。</p>
+      <div class="ct__btns">
+        <a class="btn btn--ghost" href="{e(L['consult'])}">相談フォームを開く</a>
+        <a class="btn btn--light" href="{e(L['join'])}">入会のご案内</a>
+      </div>
+      <div class="ct__tel">
+        <a class="ct__num" href="{e(site['tel_href'])}">{e(site['tel'])}</a>
+        <span class="ct__s">タップで電話がかけられます</span>
+        <span class="ct__s">主催：{e(site['organizer'])} ／ 担当：{e(site['staff'])}</span>
+      </div>
     </div>
-  </div>
-</div>
+  </section>"""
 
-<main id="top">
+
+def build_index():
+    body = f"""<main id="top">
 
   <!-- ============ 注目のイベント（全幅写真） ============ -->
   <section class="stage" id="hero">
@@ -345,7 +464,7 @@ doc = f"""<!DOCTYPE html>
             <h2 class="ev__ttl">直近のイベント</h2>
           </div>
         </div>
-        <a class="link" href="#">すべて見る <span aria-hidden="true">→</span></a>
+        <a class="link" href="{u('events/')}">すべて見る <span aria-hidden="true">→</span></a>
       </div>
 {event_blocks()}
     </div>
@@ -359,10 +478,10 @@ doc = f"""<!DOCTYPE html>
           <span class="cap">News</span>
           <h2 class="ev__ttl">お知らせ</h2>
         </div>
-        <a class="link" href="#">すべて見る <span aria-hidden="true">→</span></a>
+        <a class="link" href="{u('news/')}">すべて見る <span aria-hidden="true">→</span></a>
       </div>
       <div class="nw">
-{news_list()}
+{news_items(5)}
       </div>
     </div>
   </section>
@@ -405,60 +524,169 @@ doc = f"""<!DOCTYPE html>
     </div>
   </section>
 
-  <!-- ============ お問い合わせ ============ -->
-  <section class="ct" id="contact">
-    {pic('contact', 'ct__pic')}
-    <div class="wrap wrap--n ct__in">
-      <span class="cap cap--light">Contact</span>
-      <h2 class="ct__t">まずは、お話を<br>聞かせてください。</h2>
-      <p class="ct__x">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談を承っています。どんな小さなことでも、お気軽にご連絡ください。</p>
-      <div class="ct__btns">
-        <a class="btn btn--ghost" href="{e(L['consult'])}">相談フォームを開く</a>
-        <a class="btn btn--light" href="{e(L['join'])}">入会のご案内</a>
-      </div>
-      <div class="ct__tel">
-        <a class="ct__num" href="{e(site['tel_href'])}">{e(site['tel'])}</a>
-        <span class="ct__s">タップで電話がかけられます</span>
-        <span class="ct__s">主催：{e(site['organizer'])} ／ 担当：{e(site['staff'])}</span>
-      </div>
-    </div>
-  </section>
+{contact_section()}
 
-</main>
+</main>"""
+    return shell(site["title"], site["description"], body)
 
-<footer class="ft">
+
+# ================================================================ イベント
+def ev_card(ev, past=False):
+    m = "　".join(x for x in (ev.get("time", ""), ev.get("place", "")) if x)
+    soon = '' if past else '<span class="tag tag--g" data-soon hidden></span>'
+    cls = " el--past" if past else ""
+    return f"""        <a class="el{cls}" href="{ev_url(ev)}" data-ev-date="{e(ev['date'])}">
+          {pic(ev.get('pic', 'ev1'), 'el__pic')}
+          <div class="el__b">
+            <p class="el__d"><b>{md(ev['date'])}</b><span>{as_date(ev['date']).year}　{en_wd(ev['date'])}</span>{soon}</p>
+            <h2 class="el__t">{e(ev['title'])}</h2>
+            <p class="el__x">{e(ev.get('body', ''))}</p>
+            <p class="el__m">{e(m)}</p>
+          </div>
+        </a>"""
+
+
+def build_events():
+    upcoming = [x for x in sorted(events, key=lambda x: x["date"]) if not is_past(x["date"])]
+    past = [x for x in sorted(events, key=lambda x: x["date"], reverse=True) if is_past(x["date"])]
+    blocks = []
+    if upcoming:
+        blocks.append('      <h2 class="group">これからのイベント</h2>\n'
+                      '      <div class="els">\n' +
+                      "\n".join(ev_card(x) for x in upcoming) + "\n      </div>")
+    else:
+        blocks.append('      <p class="empty">いま予定しているイベントはありません。'
+                      '決まりしだい、このページでお知らせします。</p>')
+    if past:
+        blocks.append('      <h2 class="group group--past">終わったイベント</h2>\n'
+                      '      <div class="els">\n' +
+                      "\n".join(ev_card(x, past=True) for x in past) + "\n      </div>")
+    body = f"""<main class="page">
+  <div class="wrap wrap--n">
+{crumb(("イベント", None))}
+{page_head('Event', 'イベント', '参加したいものが見つかったら、申し込みのご案内をご覧ください。')}
+{chr(10).join(blocks)}
+  </div>
+</main>"""
+    return shell(f"イベント｜{site['name']}",
+                 "キズナのイベント一覧です。これからの予定と、終わったイベントの記録をご覧いただけます。",
+                 body, "sub")
+
+
+def build_event(ev):
+    rows = [("日時", f"{jp_full(ev['date'])}　{ev.get('time', '')}".strip()),
+            ("場所", ev.get("place", "")),
+            ("対象", ev.get("target", "")),
+            ("参加費", ev.get("fee", "")),
+            ("持ちもの", ev.get("bring", ""))]
+    if ev.get("deadline"):
+        rows.append(("申込しめきり", jp_full(ev["deadline"])))
+    spec = "\n".join(
+        f'          <div class="spec__r"><dt>{e(k)}</dt><dd>{e(v)}</dd></div>'
+        for k, v in rows if v)
+    paras = "\n".join(f'        <p>{e(p)}</p>' for p in ev.get("detail", [ev.get("body", "")]))
+    past = is_past(ev["date"])
+    cta = ("" if past else f"""      <div class="detail__cta">
+        <a class="btn btn--primary" href="{e(link(ev.get('apply')))}">このイベントに申し込む</a>
+        <a class="btn btn--ghost" href="{e(L['consult'])}">まず相談する</a>
+      </div>""")
+    note = ('      <p class="detail__past">このイベントは終了しました。'
+            '次の予定は<a href="' + u("events/") + '">イベント一覧</a>をご覧ください。</p>'
+            if past else "")
+    tag = f'<span class="tag tag--p">{e(ev["tag"])}</span>' if ev.get("tag") else ""
+    body = f"""<main class="page">
+  <div class="wrap wrap--n">
+{crumb(("イベント", u("events/")), (ev["title"], None))}
+  </div>
   <div class="wrap">
-    <div class="ft__top">
-      <div>
-        <p class="ft__logo"><span class="logo__mark" aria-hidden="true"><span></span></span>{e(site['name'])}</p>
-        <p class="ft__x">{e(site['lead'])}</p>
+    {pic(ev.get('pic', 'ev1'), 'detail__pic')}
+  </div>
+  <div class="wrap wrap--n">
+    <article class="detail">
+      <p class="detail__d"><b>{md(ev['date'])}</b><span>{as_date(ev['date']).year}　{en_wd(ev['date'])}</span>{tag}</p>
+      <h1 class="detail__t">{e(ev['title'])}</h1>
+{note}
+      <dl class="spec">
+{spec}
+      </dl>
+      <div class="detail__b">
+{paras}
       </div>
-      <nav class="ft__nav" aria-label="フッターメニュー">
-        {ft_nav}<a href="{e(L['gakuto'])}">学徒サイトに戻る</a>
-      </nav>
-    </div>
-    <div class="ft__btm">
-      <span>&copy; {e(site['organizer'])}</span>
-      <span>{e(site['name_en'])}</span>
+{cta}
+      <p class="detail__back"><a class="link" href="{u('events/')}">
+        <span aria-hidden="true">←</span> イベント一覧にもどる</a></p>
+    </article>
+  </div>
+</main>"""
+    return shell(f"{ev['title']}｜{site['name']}", ev.get("body", ""), body, "sub")
+
+
+# ================================================================ お知らせ
+def build_news():
+    body = f"""<main class="page">
+  <div class="wrap wrap--n">
+{crumb(("お知らせ", None))}
+{page_head('News', 'お知らせ', 'キズナからのご案内です。')}
+    <div class="nw">
+{news_items(100)}
     </div>
   </div>
-</footer>
+</main>"""
+    return shell(f"お知らせ｜{site['name']}",
+                 "キズナからのお知らせ一覧です。", body, "sub")
 
-<div class="fx">
-  <a class="btn btn--ghost" href="{e(site['tel_href'])}">電話する</a>
-  <a class="btn btn--primary" href="{e(L['consult'])}">相談する</a>
-</div>
 
-<script src="assets/app.js" defer></script>
-</body>
-</html>
-"""
+def build_news_item(n):
+    paras = "\n".join(f'        <p>{e(p)}</p>' for p in n.get("detail", [n.get("body", "")]))
+    y, m, d = n["date"].split("-")
+    body = f"""<main class="page">
+  <div class="wrap wrap--n">
+{crumb(("お知らせ", u("news/")), (n["title"], None))}
+    <article class="detail detail--news">
+      <p class="detail__d"><time datetime="{e(n['date'])}">{y}.{m}.{d}</time>
+        <span class="tag tag--g">{e(n.get('cat', 'お知らせ'))}</span></p>
+      <h1 class="detail__t">{e(n['title'])}</h1>
+      <div class="detail__b">
+{paras}
+      </div>
+      <div class="detail__cta">
+        <a class="btn btn--ghost" href="{e(L['consult'])}">このことについて相談する</a>
+      </div>
+      <p class="detail__back"><a class="link" href="{u('news/')}">
+        <span aria-hidden="true">←</span> お知らせ一覧にもどる</a></p>
+    </article>
+  </div>
+</main>"""
+    return shell(f"{n['title']}｜{site['name']}", n.get("body", ""), body, "sub")
 
-out = ROOT / "index.html"
-out.write_text(doc, encoding="utf-8")
+
+# ================================================================ 書き出し
+def write(rel_path, depth, fn):
+    """rel_path: '' なら index.html、'events' なら events/index.html"""
+    global PRE
+    PRE = "../" * depth
+    out = ROOT / rel_path / "index.html" if rel_path else ROOT / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(fn(), encoding="utf-8")
+    return out
+
+
+# 前回のビルドで作った詳細ページを掃除する（slug を変えたときの残骸を残さない）
+for d in ("events", "news"):
+    if (ROOT / d).exists():
+        shutil.rmtree(ROOT / d)
+
+made = [write("", 0, build_index),
+        write("events", 1, build_events),
+        write("news", 1, build_news)]
+for ev in events:
+    made.append(write(f"events/{ev['slug']}", 2, lambda ev=ev: build_event(ev)))
+for n in news:
+    made.append(write(f"news/{n['slug']}", 2, lambda n=n: build_news_item(n)))
+
+total = sum(len(p.read_bytes()) for p in made)
+print(f"{len(made)} ページを書き出しました（合計 {total:,} bytes）")
+for p in made:
+    print(f"  {p.relative_to(ROOT)}")
 have = sum(1 for v in photos["photos"].values() if v.get("url"))
-print(f"書き出しました: {out}  ({len(doc.encode()):,} bytes)")
-print(f"  イベント {len(events)} 件 / お知らせ {len(news)} 件 / "
-      f"質問 {len(faq)} 件 / 会員メニュー {len(member['items'])} 件")
-print(f"  写真 {have}/{len(photos['photos'])} 枚が設定済み"
-      f"（未設定のところは下地のグラデーションが出ます）")
+print(f"写真 {have}/{len(photos['photos'])} 枚が設定済み")

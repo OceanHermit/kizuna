@@ -1,10 +1,20 @@
 # キズナ ポータル
 
-子どもと保護者のための、キズナクラブのトップページです。
+子どもと保護者のための、キズナクラブのポータルサイトです。
 
 **公開先 → https://oceanhermit.github.io/kizuna/**
 
-## ページ構成
+## ページ
+
+| URL | 内容 |
+|---|---|
+| `/` | トップ |
+| `/events/` | イベント一覧（これからの予定／終わったイベント） |
+| `/events/<slug>/` | イベント詳細。日時・場所・対象・持ちもの・申し込み |
+| `/news/` | お知らせ一覧 |
+| `/news/<slug>/` | お知らせ詳細 |
+
+## トップページの構成
 
 | # | セクション | 内容 |
 |---|---|---|
@@ -59,7 +69,9 @@ python3 build.py        # data/*.json → index.html
 
 ```
 index.html          ← build.py の出力（手で編集しない）
-build.py            ← data/*.json から index.html を作る
+events/             ← 一覧と詳細。ビルドのたびに作り直されます
+news/               ← 同上
+build.py            ← data/*.json からページ一式を作る
 data/
   site.json         連絡先、各リンクのURL、準備中バナー
   hero.json         一番上のスライド（注目イベント・複数可）
