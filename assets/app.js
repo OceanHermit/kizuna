@@ -44,9 +44,8 @@
     return Math.round((t - midnight) / 86400000);
   };
 
-  /* 注目イベントの残り日数 */
-  var countEl = $('[data-count]');
-  if (countEl) {
+  /* 注目イベントの残り日数（スライドごとに計算する） */
+  $$('[data-count]').forEach(function (countEl) {
     var d = daysFrom(countEl.dataset.count);
     if (d === null || d < 0) {
       countEl.hidden = true;                 // 終わった行事なら出さない
@@ -56,6 +55,37 @@
                         : 'あと <b>' + d + '</b> 日';
       countEl.hidden = false;                // ここで初めて表示する
     }
+  });
+
+  /* ---------- 注目イベントのスライド ---------- */
+  var track = $('[data-track]');
+  if (track) {
+    var slides = $$('.hero__slide', track);
+    var dots = $$('.hero__dot');
+    var at = function () { return Math.round(track.scrollLeft / track.clientWidth); };
+    var goTo = function (i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+    };
+    $$('[data-go]').forEach(function (b) {
+      if (b.classList.contains('hero__dot')) return;
+      b.addEventListener('click', function () {
+        goTo(at() + (b.dataset.go === 'next' ? 1 : -1));
+      });
+    });
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { goTo(parseInt(d.dataset.go, 10)); });
+    });
+    var sync = function () {
+      var i = at();
+      dots.forEach(function (d, n) {
+        if (n === i) { d.setAttribute('aria-current', 'true'); }
+        else { d.removeAttribute('aria-current'); }
+      });
+    };
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
   }
 
   /* 2週間以内の行事に印をつける */

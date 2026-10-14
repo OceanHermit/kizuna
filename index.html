@@ -54,17 +54,62 @@
   <!-- ============ 大カラム：注目のイベント ============ -->
   <section class="hero" id="hero">
     <div class="wrap hero__in">
-      <div class="hero__card">
-        <div class="ph hero__ph" style="--ar:16/9"><p class="ph__t"><b>📷</b>写真が入ります<br>16 : 9</p></div>
-        <div class="hero__b">
-          <span class="hero__label">注目のイベント</span>
-          <h1 class="hero__t">キズナ式 才能診断 体験会</h1>
-          <div class="hero__meta"><span class="chip chip--blue">🗓 10月26日（月）</span><span class="chip chip--green">🕐 13:00 - 15:00</span><span class="chip chip--purple">📍 オンライン</span></div>
-          <p class="hero__x">心理分析「ビッグ5」をつかって、自分の強みを活かせる進路を見つける企画です。スマホで2分。中学生から35才まで、どなたでも参加できます。</p>
-          <div class="hero__btns">
-            <a class="btn btn--primary" href="#">くわしく見る・申し込む</a>
-            <span class="hero__count" data-count="2026-10-26" hidden></span>
+      <div class="hero__car">
+        <div class="hero__track" data-track tabindex="0" aria-label="注目のイベント">
+          <div class="hero__slide">
+            <div class="hero__card">
+              <div class="ph hero__ph" style="--ar:16/9"><p class="ph__t"><b>📷</b>写真が入ります<br>16 : 9</p></div>
+              <div class="hero__b">
+                <span class="hero__label">注目のイベント</span>
+                <h2 class="hero__t">キズナ式 才能診断 体験会</h2>
+                <div class="hero__meta"><span class="chip chip--blue">🗓 10月26日（月）</span><span class="chip chip--green">🕐 13:00 - 15:00</span><span class="chip chip--purple">📍 オンライン</span></div>
+                <p class="hero__x">心理分析「ビッグ5」をつかって、自分の強みを活かせる進路を見つける企画です。スマホで2分。中学生から35才まで、どなたでも参加できます。</p>
+                <div class="hero__btns">
+                  <a class="btn btn--primary" href="#">くわしく見る・申し込む</a>
+                  <span class="hero__count" data-count="2026-10-26" hidden></span>
+                </div>
+              </div>
+            </div>
           </div>
+          <div class="hero__slide">
+            <div class="hero__card">
+              <div class="ph hero__ph" style="--ar:16/9"><p class="ph__t"><b>📷</b>写真が入ります<br>16 : 9</p></div>
+              <div class="hero__b">
+                <span class="hero__label">注目のイベント</span>
+                <h2 class="hero__t">ジュニアクラブ 秋の交流会</h2>
+                <div class="hero__meta"><span class="chip chip--blue">🗓 11月3日（火）</span><span class="chip chip--green">🕐 10:00 - 15:00</span><span class="chip chip--purple">📍 キズナ会館</span></div>
+                <p class="hero__x">小学生のみんなで、ゲームとおやつの時間。はじめての子も大歓迎です。保護者の方の見学もできます。</p>
+                <div class="hero__btns">
+                  <a class="btn btn--primary" href="#">参加を申し込む</a>
+                  <span class="hero__count" data-count="2026-11-03" hidden></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero__slide">
+            <div class="hero__card">
+              <div class="ph hero__ph" style="--ar:16/9"><p class="ph__t"><b>📷</b>写真が入ります<br>16 : 9</p></div>
+              <div class="hero__b">
+                <span class="hero__label">注目のイベント</span>
+                <h2 class="hero__t">キズナ塾 オンライン体験会</h2>
+                <div class="hero__meta"><span class="chip chip--blue">🗓 11月23日（月）</span><span class="chip chip--green">🕐 19:00 - 20:00</span><span class="chip chip--purple">📍 オンライン</span></div>
+                <p class="hero__x">勉強のはじめかたを、いっしょに考える時間です。教えてくださるサポーターの方の見学参加も受け付けています。</p>
+                <div class="hero__btns">
+                  <a class="btn btn--primary" href="#">体験会に申し込む</a>
+                  <span class="hero__count" data-count="2026-11-23" hidden></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero__ctrl">
+          <button class="hero__arw" type="button" data-go="prev" aria-label="前のイベント">
+            <svg width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true"><path d="M6 1L1 6l5 5M1 6h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="hero__dots" data-dots><button type="button" class="hero__dot" data-go="0" aria-label="1枚目を表示" aria-current="true"></button><button type="button" class="hero__dot" data-go="1" aria-label="2枚目を表示"></button><button type="button" class="hero__dot" data-go="2" aria-label="3枚目を表示"></button></div>
+          <button class="hero__arw" type="button" data-go="next" aria-label="次のイベント">
+            <svg width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true"><path d="M9 1l5 5-5 5M14 6H0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>
     </div>
@@ -272,6 +317,10 @@
           <h2 class="sh__t">よくある質問</h2>
           
         </div>
+      </div>
+      <div class="faq__ch">
+        <div class="ill faq__ill" style="--ar:1/1"><p class="ph__t"><b>🎨</b>イラストが入ります</p></div>
+        <p class="faq__bub">わからないことがあったら、まずはここを見てね。<br>のっていないことは、気軽に聞いてください。</p>
       </div>
         <details class="q">
           <summary>

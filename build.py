@@ -39,6 +39,7 @@ member = load("member")
 events = load("events")
 news = load("news")
 faq = load("faq")
+faq_intro = load("faq_intro")
 
 L = site["links"]
 
@@ -50,12 +51,19 @@ def link(key):
     return L.get(key, key)
 
 
-def ph(ratio, label, cls=""):
+def ph(ratio, cls=""):
     """写真が入る枠。写真を入れるときは、この関数の出力を <img> に差し替える"""
     c = f" {cls}" if cls else ""
     # 比率は CSS 変数で渡す。こうするとセクションごとに CSS 側で上書きできる
     return (f'<div class="ph{c}" style="--ar:{ratio}">'
             f'<p class="ph__t"><b>📷</b>写真が入ります<br>{e(ratio.replace("/", " : "))}</p></div>')
+
+
+def ill(ratio, cls=""):
+    """イラストが入る枠。写真の枠とは見た目を分けている"""
+    c = f" {cls}" if cls else ""
+    return (f'<div class="ill{c}" style="--ar:{ratio}">'
+            f'<p class="ph__t"><b>🎨</b>イラストが入ります</p></div>')
 
 
 def jp_date(ymd):
@@ -98,28 +106,55 @@ def section_head(en, title, text="", more=None, row=False):
       </div>"""
 
 
-def hero_block():
+def hero_slide(h):
     chips = []
-    if hero.get("date"):
-        chips.append(f'<span class="chip chip--blue">🗓 {e(jp_date(hero["date"]))}</span>')
-    if hero.get("time"):
-        chips.append(f'<span class="chip chip--green">🕐 {e(hero["time"])}</span>')
-    if hero.get("place"):
-        chips.append(f'<span class="chip chip--purple">📍 {e(hero["place"])}</span>')
-    count = ""
-    if hero.get("date"):
-        count = (f'<span class="hero__count" data-count="{e(hero["date"])}" hidden></span>')
-    return f"""      <div class="hero__card">
-        {ph(hero.get('photo', '16/9'), '', 'hero__ph')}
-        <div class="hero__b">
-          <span class="hero__label">{e(hero['label'])}</span>
-          <h1 class="hero__t">{e(hero['title'])}</h1>
-          <div class="hero__meta">{''.join(chips)}</div>
-          <p class="hero__x">{e(hero['body'])}</p>
-          <div class="hero__btns">
-            <a class="btn btn--primary" href="{e(link(hero.get('cta_link')))}">{e(hero['cta_label'])}</a>
-            {count}
-          </div>
+    if h.get("date"):
+        chips.append(f'<span class="chip chip--blue">🗓 {e(jp_date(h["date"]))}</span>')
+    if h.get("time"):
+        chips.append(f'<span class="chip chip--green">🕐 {e(h["time"])}</span>')
+    if h.get("place"):
+        chips.append(f'<span class="chip chip--purple">📍 {e(h["place"])}</span>')
+    count = f'<span class="hero__count" data-count="{e(h["date"])}" hidden></span>' if h.get("date") else ""
+    return f"""          <div class="hero__slide">
+            <div class="hero__card">
+              {ph(h.get('photo', '16/9'), 'hero__ph')}
+              <div class="hero__b">
+                <span class="hero__label">{e(hero['label'])}</span>
+                <h2 class="hero__t">{e(h['title'])}</h2>
+                <div class="hero__meta">{''.join(chips)}</div>
+                <p class="hero__x">{e(h['body'])}</p>
+                <div class="hero__btns">
+                  <a class="btn btn--primary" href="{e(link(h.get('cta_link')))}">{e(h['cta_label'])}</a>
+                  {count}
+                </div>
+              </div>
+            </div>
+          </div>"""
+
+
+def hero_block():
+    slides = hero["slides"]
+    body = "\n".join(hero_slide(h) for h in slides)
+    if len(slides) == 1:
+        return f'      <div class="hero__car hero__car--one">\n        <div class="hero__track">\n{body}\n        </div>\n      </div>'
+    dot_parts = []
+    for i in range(len(slides)):
+        cur = ' aria-current="true"' if i == 0 else ''
+        dot_parts.append(f'<button type="button" class="hero__dot" data-go="{i}"'
+                         f' aria-label="{i + 1}枚目を表示"{cur}></button>')
+    dots = "".join(dot_parts)
+    return f"""      <div class="hero__car">
+        <div class="hero__track" data-track tabindex="0" aria-label="注目のイベント">
+{body}
+        </div>
+        <div class="hero__ctrl">
+          <button class="hero__arw" type="button" data-go="prev" aria-label="前のイベント">
+            <svg width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true"><path d="M6 1L1 6l5 5M1 6h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="hero__dots" data-dots>{dots}</div>
+          <button class="hero__arw" type="button" data-go="next" aria-label="次のイベント">
+            <svg width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true"><path d="M9 1l5 5-5 5M14 6H0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>"""
 
@@ -131,7 +166,7 @@ def about_block():
         f'<div><p class="pt__t">{e(p["title"])}</p><p class="pt__x">{e(p["text"])}</p></div></div>'
         for p in about["points"])
     return f"""      <div class="about__grid">
-        {ph(about.get('photo', '4/5'), '', 'about__ph')}
+        {ph(about.get('photo', '4/5'), 'about__ph')}
         <div>
           <h3 class="about__t">{about['title']}</h3>
           {body}
@@ -147,7 +182,7 @@ def event_cards():
     for ev in sorted(events, key=lambda x: x["date"])[:3]:   # トップは3件まで
         meta = "　".join(x for x in (ev.get("time", ""), ev.get("place", "")) if x)
         out.append(f"""        <a class="ev" href="{e(ev.get('link', '#'))}" data-ev-date="{e(ev['date'])}">
-          {ph('4/3', '', 'ev__ph')}
+          {ph('4/3', 'ev__ph')}
           <div class="ev__b">
             <div class="ev__top">
               <span class="ev__date">{e(jp_date(ev['date']))}</span>
@@ -194,7 +229,7 @@ def juku_block():
             {btns}
           </div>
         </div>
-        {ph(juku.get('photo', '3/2'), '', 'juku__ph')}
+        {ph(juku.get('photo', '3/2'), 'juku__ph')}
       </div>"""
 
 
@@ -333,6 +368,10 @@ doc = f"""<!DOCTYPE html>
   <section class="sec" id="faq">
     <div class="wrap wrap--n">
 {section_head('Q &amp; A', 'よくある質問')}
+      <div class="faq__ch">
+        {ill(faq_intro.get('illust', '1/1'), 'faq__ill')}
+        <p class="faq__bub">{faq_intro['bubble']}</p>
+      </div>
 {faq_items()}
     </div>
   </section>

@@ -148,6 +148,12 @@ body.nav-open .ovl{opacity:1;visibility:visible;transform:none}
 .ph__t b{display:block;font-size:1.3rem;margin-bottom:2px}
 .ph--r{border-radius:var(--r)}
 
+/* ---------- イラストの枠 ---------- */
+.ill{position:relative;aspect-ratio:var(--ar,1/1);border-radius:var(--r-l);overflow:hidden;
+  background:radial-gradient(circle at 32% 28%,var(--purple-l) 0%,var(--blue-ll) 55%,var(--green-l) 100%);
+  border:2px dashed rgba(114,89,159,.3);
+  display:grid;place-content:center;text-align:center;color:var(--purple-d)}
+
 /* ---------- セクション見出し ---------- */
 .sh{margin-bottom:clamp(26px,4vw,48px)}
 .sh__en{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.24em;
@@ -164,8 +170,22 @@ body.nav-open .ovl{opacity:1;visibility:visible;transform:none}
 .hero::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;
   background:var(--green-l);opacity:.55;bottom:-120px;left:-110px;pointer-events:none}
 .hero__in{position:relative}
+.hero__car{position:relative}
+.hero__track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding-block:10px 18px;scrollbar-width:none;-ms-overflow-style:none}
+.hero__track::-webkit-scrollbar{display:none}
+.hero__slide{flex:0 0 100%;scroll-snap-align:center;padding-inline:3px}
+.hero__ctrl{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:6px}
+.hero__arw{width:46px;height:46px;border-radius:50%;background:var(--paper);box-shadow:var(--sh);
+  display:grid;place-content:center;color:var(--blue-d);
+  transition:transform .25s,box-shadow .25s,background-color .25s}
+.hero__arw:hover{transform:scale(1.08);box-shadow:var(--sh-h)}
+.hero__dots{display:flex;align-items:center;gap:9px}
+.hero__dot{width:10px;height:10px;border-radius:50%;background:var(--blue);opacity:.42;
+  transition:opacity .3s,width .3s,background-color .3s}
+.hero__dot[aria-current="true"]{opacity:1;width:28px;border-radius:999px;background:var(--blue-d)}
 .hero__card{background:var(--paper);border-radius:var(--r-xl);box-shadow:var(--sh);
-  overflow:hidden;display:grid}
+  overflow:hidden;display:grid;height:100%}
 .hero__card .hero__ph{border-radius:0;border:0;border-bottom:2px dashed rgba(68,115,158,.22)}
 .hero__b{padding:clamp(26px,4.5vw,48px)}
 .hero__label{display:inline-flex;align-self:flex-start;align-items:center;gap:.5em;font-size:.72rem;font-weight:700;
@@ -254,6 +274,15 @@ body.nav-open .ovl{opacity:1;visibility:visible;transform:none}
 .mi__x{font-size:.77rem;line-height:1.85;color:var(--sub)}
 .mem__note{margin-top:26px;text-align:center;font-size:.82rem;color:var(--sub)}
 
+/* ---------- よくある質問のキャラクター ---------- */
+.faq__ch{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+.faq__ill{flex:0 0 auto;width:clamp(78px,20vw,108px);border-radius:50%}
+.faq__ill .ph__t{font-size:.6rem;line-height:1.6}
+.faq__bub{position:relative;background:var(--paper);border-radius:var(--r);box-shadow:var(--sh);
+  padding:16px 20px;font-size:.87rem;line-height:1.95}
+.faq__bub::before{content:"";position:absolute;left:-9px;top:50%;width:18px;height:18px;
+  background:var(--paper);transform:translateY(-50%) rotate(45deg);border-radius:4px}
+
 /* ---------- よくある質問 ---------- */
 .q{background:var(--paper);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:12px;
   overflow:hidden;transition:box-shadow .3s}
@@ -323,6 +352,8 @@ body{padding-bottom:84px}
 }
 @media (min-width:900px){
   .hd__nav{display:flex}
+  .burger{display:none}        /* PC はナビだけ */
+  .ovl{display:none}
   .hd .hd__cta{display:inline-flex;margin-left:6px}
   .hero__card{grid-template-columns:1.05fr 1fr;align-items:stretch}
   .hero__card .hero__ph{aspect-ratio:auto;height:100%;min-height:380px;
