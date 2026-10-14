@@ -517,3 +517,52 @@ body.sub .hd .burger i{background:var(--ink)}
 @media (min-width:760px){
   .ccs{grid-template-columns:1fr 1fr;align-items:start}
 }
+
+/* =========================================================
+   ポイント表 / スタッフ紹介
+   ========================================================= */
+.sect__note{font-size:var(--t-small);color:var(--sub);margin-top:14px;line-height:1.9}
+
+.ptts{display:grid;gap:clamp(12px,1.8vw,18px)}
+.ptt{background:var(--paper);border-radius:4px;padding:clamp(18px,3vw,26px);
+  border-left:4px solid var(--blue)}
+.ptt__t{font-size:var(--t-small);line-height:1.65;font-weight:700;margin-bottom:10px;
+  word-break:auto-phrase}
+.ptt__dl{margin:0}
+.ptt__r{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+  padding:7px 0;border-bottom:1px dashed var(--hair)}
+.ptt__r:last-child{border-bottom:0}
+.ptt__r dt{font-size:var(--t-cap);letter-spacing:.06em;color:var(--ink-2)}
+.ptt__r dd{margin:0;font-size:var(--t-cap);color:var(--blue-d);white-space:nowrap}
+.ptt__r dd b{font-family:"Zen Maru Gothic",sans-serif;font-size:1.22rem;font-weight:700;
+  margin-right:.15em}
+.ptt__n{font-size:var(--t-cap);color:var(--sub);line-height:1.85;margin-top:10px}
+
+.prs{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,20px);
+  margin-bottom:clamp(34px,5vw,56px)}
+.pr{display:flex;align-items:center;gap:14px;background:var(--paper);border-radius:4px;
+  padding:14px 16px}
+.pr__ph{flex:0 0 auto;width:clamp(46px,11vw,58px);aspect-ratio:1/1;border-radius:50%}
+.pr__ph .pic__none{background:var(--blue-ll);color:var(--blue-d)}
+.pr__ph .pic__none b{font-size:1.1rem;opacity:.5}
+.pr__ph .pic__none span{display:none}
+.pr__nick{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:var(--t-small);
+  line-height:1.5}
+.pr__name{font-size:var(--t-cap);color:var(--sub);line-height:1.6;margin-top:2px}
+
+.areas{display:grid;gap:clamp(18px,2.6vw,26px)}
+.area{border-top:1px solid var(--hair);padding-top:16px}
+.area__t{font-size:var(--t-small);font-weight:700;color:var(--blue-d);letter-spacing:.14em;
+  margin-bottom:10px}
+.area__l{display:grid;gap:8px}
+.area__l li{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;font-size:var(--t-small);
+  line-height:1.8}
+.area__l b{font-family:"Zen Maru Gothic",sans-serif;font-weight:700}
+.area__l span{font-size:var(--t-cap);color:var(--sub)}
+
+@media (min-width:700px){
+  .ptts{grid-template-columns:1fr 1fr}
+  .prs{grid-template-columns:repeat(4,1fr)}
+  .pr{flex-direction:column;text-align:center;padding:20px 14px}
+  .areas{grid-template-columns:1fr 1fr}
+}

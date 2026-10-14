@@ -18,15 +18,16 @@
     "consult": "https://docs.google.com/forms/d/e/1FAIpQLScac2hbPQQ2HuZD_1s0DjuTsQQwartUsrRzhkP4UwKCP0N5Xg/viewform",
     "juku": "https://kizunajuku.com/",
     "juku_support": "https://kizunajuku.com/",
-    "shindan": "",
+    "shindan": "https://docs.google.com/forms/d/e/1FAIpQLSfSCbDV479iWvHrAMpGC5Rir34JbVHQCgduvfU9_xcU7r-udQ/viewform",
     "shindan_letter": "https://docs.google.com/document/d/1BfKlOoK4qpg1hEvPZUOavtZqDuMG7XtAHHj4365Rgdk/edit",
     "present": "https://kizunaclubsite.wordpress.com/%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%E5%BC%95%E6%8F%9B%E3%83%97%E3%83%AC%E3%82%BC%E3%83%B3%E3%83%88/",
     "point": "https://script.google.com/macros/s/AKfycbx5_sbV_WLrqEkrwOlyR0nCL1qXDX8gJXjnPwL2amxsV2c_vIrokZ9UR7xCKvMA_2ma/exec",
     "point_apply": "https://docs.google.com/forms/d/e/1FAIpQLSfhHnwgqGYLjEOSs3ttp68b7F94XMea7mC9QtXXzFk680tAwQ/viewform",
-    "card": "https://kizuna-0408-point.my.canva.site/dagts-a0ynk",
+    "card": "point/",
     "card_apply": "https://docs.google.com/forms/d/e/1FAIpQLScLrVxLrCk6dM61abyx9i45zyv_m5h2jVxYcIsX22BOVtawoA/viewform",
-    "benefits": "https://kizuna-0408-point.my.canva.site/dafjn4uos0k",
-    "staff": "https://kizuna.my.canva.site/daffyutzudq",
-    "gakuto": ""
-  }
+    "benefits": "club/#benefits",
+    "staff": "staff/",
+    "gakuto": "https://www.gkt.jp/"
+  },
+  "email": "kizunaclub0408@gmail.com"
 }

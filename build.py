@@ -46,6 +46,7 @@ site, hero, about, juku = load("site"), load("hero"), load("about"), load("juku"
 member, events, news = load("member"), load("events"), load("news")
 faq, faq_intro, photos = load("faq"), load("faq_intro"), load("photos")
 club = load("club")
+point_d, staff_d = load("point"), load("staff")
 
 L = site["links"]
 
@@ -129,8 +130,8 @@ def pic(key, cls="", ratio=None, kind="photos"):
         inner = (f'<img src="{e(src)}" alt="{e(meta.get("alt", ""))}" '
                  f'loading="lazy" decoding="async">')
     else:
-        label = "イラストが入ります" if kind == "illust" else "写真が入ります"
-        icon = "🎨" if kind == "illust" else "📷"
+        label, icon = {"illust": ("イラストが入ります", "🎨"),
+                       "person": ("写真", "👤")}.get(kind, ("写真が入ります", "📷"))
         inner = f'<div class="pic__none"><b>{icon}</b><span>{label}</span></div>'
     c = f" {cls}" if cls else ""
     return f'<div class="pic{c}"{style}>{inner}</div>'
@@ -364,7 +365,9 @@ def juku_block():
     lis = "\n          ".join(f"<li><span>{e(p)}</span></li>" for p in juku["points"])
     btns = "\n          ".join(
         f'<a class="btn btn--{"primary" if b.get("style") == "primary" else "ghost"}" '
-        f'href="{e(link(b.get("link")))}">{e(b["label"])}</a>' for b in juku["buttons"])
+        f'href="{e(link(b.get("link")))}"'
+        f'{" target=_blank rel=noopener" if b.get("external") else ""}>{e(b["label"])}'
+        f'{" ↗" if b.get("external") else ""}</a>' for b in juku["buttons"])
     return f"""      <div class="jk__panel">
         <span class="num jk__num">03</span>
         <h2 class="jk__t">{e(juku['title'])}</h2>
@@ -421,6 +424,7 @@ def contact_section():
       <div class="ct__tel">
         <a class="ct__num" href="{e(site['tel_href'])}">{e(site['tel'])}</a>
         <span class="ct__s">タップで電話がかけられます</span>
+        <span class="ct__s">ご意見・ご要望は <a href="mailto:{e(site['email'])}">{e(site['email'])}</a> へ</span>
         <span class="ct__s">主催：{e(site['organizer'])} ／ 担当：{e(site['staff'])}</span>
       </div>
     </div>
@@ -724,11 +728,10 @@ def build_club():
 {club_can()}
     </div>
 
-    <h2 class="group">会員特典</h2>
+    <h2 class="group" id="benefits">会員特典</h2>
     <p class="sect__x">キズナクラブの会員の方は、次の特典を受けられます。</p>
     <div class="chips">{benefits}</div>
-    <p class="sect__more"><a class="link" href="{e(L['benefits'])}">特典のくわしい内容を見る
-      <span aria-hidden="true">→</span></a></p>
+    <p class="sect__note">{e(club['benefits_note'])}</p>
 
     <h2 class="group">申し込み・変更・退会</h2>
     <p class="sect__x">次の手続きは、すべて「キズナ申し込み窓口」からできます。</p>
@@ -752,6 +755,131 @@ def build_club():
                  body, "sub")
 
 
+# ================================================================ キズナカード・ポイント
+def pt_table():
+    out = []
+    for g in point_d["table"]:
+        rows = "".join(
+            f'<div class="ptt__r"><dt>{e(k)}</dt><dd><b>{e(v)}</b>pt</dd></div>' for k, v in g["rows"])
+        note = f'<p class="ptt__n">{e(g["note"])}</p>' if g.get("note") else ""
+        body = f'<dl class="ptt__dl">{rows}</dl>' if rows else ""
+        out.append(f"""        <div class="ptt">
+          <h3 class="ptt__t">{e(g['name'])}</h3>
+          {body}{note}
+        </div>""")
+    return "\n".join(out)
+
+
+def build_point():
+    ways = "\n".join(f"""          <div class="pt">
+            <span class="pt__n">0{i}</span>
+            <div><h3 class="pt__t">{e(w['title'])}</h3><p class="pt__x">{e(w['text'])}</p></div>
+          </div>""" for i, w in enumerate(point_d["make"]["ways"], 1))
+    notes = "".join(f"<li>{e(n)}</li>" for n in point_d["make"]["notes"])
+    uses = "\n".join(f"""          <div class="pt">
+            <span class="pt__n">0{i}</span>
+            <div><h3 class="pt__t">{e(w['title'])}</h3><p class="pt__x">{e(w['text'])}</p></div>
+          </div>""" for i, w in enumerate(point_d["use"], 1))
+    about = "".join(f'<p class="sect__x">{e(x)}</p>' for x in point_d["about"])
+    present = "".join(f'<p class="sect__x">{e(x)}</p>' for x in point_d["present"])
+    donate = "".join(f'<p class="sect__x">{e(x)}</p>' for x in point_d["donate"])
+    body = f"""<main class="page">
+  <div class="wrap wrap--n">
+{crumb(("キズナカード・キズナポイント", None))}
+{page_head('Point', 'キズナカード・キズナポイント', point_d['lead'])}
+
+    <h2 class="group">キズナカードとは</h2>
+    {about}
+
+    <h2 class="group">カードの作り方</h2>
+    <p class="sect__x">作り方は2通りあります。</p>
+    <div class="pts">
+{ways}
+    </div>
+    <div class="detail__cta">
+      <a class="btn btn--primary" href="{e(L['card_apply'])}" target="_blank" rel="noopener">キズナカードを申し込む ↗</a>
+    </div>
+    <ul class="ticks" style="margin-top:26px">{notes}</ul>
+
+    <h2 class="group">カードの使い方</h2>
+    <div class="pts">
+{uses}
+    </div>
+    <div class="detail__cta">
+      <a class="btn btn--primary" href="{e(L['point'])}" target="_blank" rel="noopener">いまのポイントを見る ↗</a>
+      <a class="btn btn--ghost" href="{e(L['point_apply'])}" target="_blank" rel="noopener">ポイントを申請する ↗</a>
+    </div>
+
+    <h2 class="group">キズナポイント表</h2>
+    <div class="ptts">
+{pt_table()}
+    </div>
+
+    <h2 class="group">プレゼントについて</h2>
+    {present}
+    <div class="detail__cta">
+      <a class="btn btn--primary" href="{e(L['present'])}" target="_blank" rel="noopener">プレゼント一覧を見る ↗</a>
+    </div>
+
+    <h2 class="group">プレゼントのご寄付について</h2>
+    {donate}
+
+    <p class="detail__back"><a class="link" href="{u('')}">
+      <span aria-hidden="true">←</span> ホームにもどる</a></p>
+  </div>
+</main>"""
+    return shell(f"キズナカード・キズナポイント｜{site['name']}",
+                 "キズナカードの作り方・使い方と、キズナポイント表、プレゼントの交換についてご案内します。",
+                 body, "sub")
+
+
+# ================================================================ スタッフ紹介
+def build_staff():
+    st = staff_d["staff"]
+    sp = staff_d["supporter"]
+    people = "\n".join(f"""          <div class="pr">
+            {pic('person', 'pr__ph', kind='person')}
+            <div><p class="pr__nick">{e(p['nick'])}</p><p class="pr__name">{e(p['name'])}</p></div>
+          </div>""" for p in st["people"])
+    areas = []
+    for a in sp["areas"]:
+        lis = "".join(f'<li><b>{e(x["nick"])}</b><span>{e(x["job"])}</span></li>' for x in a["people"])
+        areas.append(f"""          <div class="area">
+            <h3 class="area__t">{e(a['area'])}</h3>
+            <ul class="area__l">{lis}</ul>
+          </div>""")
+    body = f"""<main class="page">
+  <div class="wrap wrap--n">
+{crumb(("スタッフ・サポーター紹介", None))}
+{page_head('Member', 'スタッフ・サポーター紹介', staff_d['lead'])}
+
+    <h2 class="group">{e(st['title'])}</h2>
+    <p class="sect__x">{e(st['text'])}</p>
+  </div>
+  <div class="wrap">
+    <div class="prs">
+{people}
+    </div>
+  </div>
+  <div class="wrap wrap--n">
+    <h2 class="group">{e(sp['title'])}</h2>
+    <p class="sect__x">{e(sp['text'])}</p>
+    <div class="areas">
+{chr(10).join(areas)}
+    </div>
+
+    <div class="detail__cta">
+      <a class="btn btn--ghost" href="{e(L['consult'])}" target="_blank" rel="noopener">スタッフに相談する ↗</a>
+    </div>
+    <p class="detail__back"><a class="link" href="{u('')}">
+      <span aria-hidden="true">←</span> ホームにもどる</a></p>
+  </div>
+</main>"""
+    return shell(f"スタッフ・サポーター紹介｜{site['name']}",
+                 "キズナクラブのお子さんたちを支えている、キズナスタッフとキズナサポーターをご紹介します。",
+                 body, "sub")
+
+
 # ================================================================ 書き出し
 def write(rel_path, depth, fn):
     """rel_path: '' なら index.html、'events' なら events/index.html"""
@@ -764,14 +892,16 @@ def write(rel_path, depth, fn):
 
 
 # 前回のビルドで作った詳細ページを掃除する（slug を変えたときの残骸を残さない）
-for d in ("events", "news", "club"):
+for d in ("events", "news", "club", "point", "staff"):
     if (ROOT / d).exists():
         shutil.rmtree(ROOT / d)
 
 made = [write("", 0, build_index),
         write("events", 1, build_events),
         write("news", 1, build_news),
-        write("club", 1, build_club)]
+        write("club", 1, build_club),
+        write("point", 1, build_point),
+        write("staff", 1, build_staff)]
 for ev in events:
     made.append(write(f"events/{ev['slug']}", 2, lambda ev=ev: build_event(ev)))
 for n in news:

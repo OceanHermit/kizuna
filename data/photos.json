@@ -45,5 +45,11 @@
       "alt": "キズナのキャラクター"
     }
   },
-  "_source": "Higgsfield (z_image) で生成した仮の写真。顔が写らない構図で統一しています。Unsplash の写真に差し替える場合は url を貼り替えてください。"
+  "_source": "Higgsfield (z_image) で生成した仮の写真。顔が写らない構図で統一しています。Unsplash の写真に差し替える場合は url を貼り替えてください。",
+  "person": {
+    "person": {
+      "url": "",
+      "alt": ""
+    }
+  }
 }
