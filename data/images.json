@@ -1,0 +1,28 @@
+{
+  "_comment": "Higgsfield (z_image) で生成したイラスト。assets/img/<key>.png があればそちらを優先します。tools/fetch-images.sh で取り込めます。",
+  "base": "https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/",
+  "files": {
+    "hero": "hf_20261014_095239_75cb36b0-df3b-4872-8144-f2085ed75304.png",
+    "mascot": "hf_20261014_095239_6c616294-4c27-4662-8fd9-425e6a6435e1.png",
+    "club": "hf_20261014_095119_babc18dc-b582-4dc3-b145-2242d0586c03.png",
+    "juku": "hf_20261014_095448_a7a6ad19-6d58-4a17-ae4e-0764bf62eae9.png",
+    "shindan": "hf_20261014_095448_d4eb8e1f-7201-44b7-bf25-d768044e29ff.png",
+    "point": "hf_20261014_095119_c529bebd-ed27-4b92-919b-52f0a20d5c41.png",
+    "festival": "hf_20261014_095119_f2461224-6d44-49ef-a808-8f5ea15892c5.png",
+    "staff": "hf_20261014_095449_7907ecb8-ddd4-42c9-bd8a-4bf9dd5353a5.png",
+    "parent": "hf_20261014_095717_0d5bfa02-541e-489c-9a38-b7d5d15d68ea.png",
+    "landscape": "hf_20261014_100000_59345236-4f50-4cc0-9308-24610142a079.png"
+  },
+  "alt": {
+    "hero": "木のそばに集まる子どもたちと大人のイラスト",
+    "mascot": "キズナのマスコット、葉っぱの芽のキャラクター",
+    "club": "輪になって話す子どもたちと大人のイラスト",
+    "juku": "机で勉強する中学生と、教える年上の学生のイラスト",
+    "shindan": "自分の強みを見つける中高生のイラスト",
+    "point": "プレゼントを受け取る子どもたちのイラスト",
+    "festival": "ちょうちんと出店でにぎわう文化祭のイラスト",
+    "staff": "受付で迎えるスタッフのイラスト",
+    "parent": "家で子どもの話を聞く保護者のイラスト",
+    "landscape": "朝の光のなかの寺院の参道のイラスト"
+  }
+}
