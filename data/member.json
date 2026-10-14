@@ -2,11 +2,47 @@
   "title": "会員メニュー",
   "sub": "キズナクラブ会員の方はこちらから",
   "items": [
-    { "icon": "🎁", "title": "プレゼントページ", "text": "キズナポイントと交換できる品物を見る", "link": "present", "tone": "purple" },
-    { "icon": "⭐", "title": "ポイント確認",     "text": "いまのキズナポイントを確かめる",     "link": "point",   "tone": "blue"   },
-    { "icon": "💳", "title": "キズナカード",     "text": "カードの使い方・再発行について",     "link": "card",    "tone": "green"  },
-    { "icon": "🎀", "title": "会員特典",         "text": "会員のみなさまが受けられる特典",     "link": "benefits","tone": "purple" },
-    { "icon": "✏️", "title": "登録内容の変更",   "text": "住所・連絡先などの変更はこちら",     "link": "edit_profile", "tone": "blue" },
-    { "icon": "📮", "title": "会費の納め方",     "text": "月200円／オンラインコース月2000円", "link": "fee",     "tone": "green"  }
+    {
+      "icon": "⭐",
+      "title": "ポイント確認",
+      "text": "カードの番号を入れて、いまのポイントを見る",
+      "link": "point",
+      "tone": "blue"
+    },
+    {
+      "icon": "🎁",
+      "title": "プレゼント",
+      "text": "ポイントと交換できる品物を見る",
+      "link": "present",
+      "tone": "purple"
+    },
+    {
+      "icon": "📝",
+      "title": "ポイントの申請",
+      "text": "行事に参加したら、ここから申請します",
+      "link": "point_apply",
+      "tone": "green"
+    },
+    {
+      "icon": "💳",
+      "title": "キズナカード",
+      "text": "カードの作り方・使い方はこちら",
+      "link": "card",
+      "tone": "blue"
+    },
+    {
+      "icon": "🎀",
+      "title": "会員特典",
+      "text": "勉強サポート、オンラインコースなど",
+      "link": "benefits",
+      "tone": "purple"
+    },
+    {
+      "icon": "✏️",
+      "title": "登録内容の変更",
+      "text": "住所・連絡先の変更、名札の再発行",
+      "link": "edit_profile",
+      "tone": "green"
+    }
   ]
 }

@@ -45,6 +45,7 @@ def e(s):
 site, hero, about, juku = load("site"), load("hero"), load("about"), load("juku")
 member, events, news = load("member"), load("events"), load("news")
 faq, faq_intro, photos = load("faq"), load("faq_intro"), load("photos")
+club = load("club")
 
 L = site["links"]
 
@@ -59,9 +60,22 @@ def u(path=""):
     return (PRE + path) or "./"
 
 
+UNSET = set()
+
+
 def link(key):
-    """data の link はキー名。site.json の links に無ければそのまま URL として扱う"""
-    return L.get(key, key) if key else "#"
+    """data の link はキー名。site.json の links に無ければそのまま URL として扱う。
+    URL が空のままのものは # にして、押しても別の場所へ飛ばないようにする。"""
+    if not key:
+        return "#"
+    v = L.get(key, key)
+    if not v:
+        UNSET.add(key)
+        return "#"
+    # サイト内のページ（club/ など）は相対パスに直す
+    if not v.startswith(("http://", "https://", "tel:", "mailto:", "#")):
+        return u(v)
+    return v
 
 
 # ---------------------------------------------------------------- 日付
@@ -142,6 +156,7 @@ def shell(title, desc, body, extra_class=""):
         f'        <a href="{nav_href(h)}"><b>{e(t)}</b><small>{e(en)}</small></a>'
         for t, h, en in NAV)
     ft_nav = "".join(f'<a href="{nav_href(h)}">{e(t)}</a>' for t, h, _ in NAV)
+    gakuto_link = (f'<a href="{e(L["gakuto"])}">学徒サイトに戻る</a>' if L.get("gakuto") else "")
     cls = f' class="{extra_class}"' if extra_class else ""
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -196,7 +211,7 @@ def shell(title, desc, body, extra_class=""):
         <p class="ft__x">{e(site['lead'])}</p>
       </div>
       <nav class="ft__nav" aria-label="フッターメニュー">
-        {ft_nav}<a href="{e(L['gakuto'])}">学徒サイトに戻る</a>
+        {ft_nav}{gakuto_link}
       </nav>
     </div>
     <div class="ft__btm">
@@ -256,7 +271,7 @@ def stage_slides():
           <div class="stage__meta">{''.join(meta)}</div>
           <p class="stage__x">{e(h['body'])}</p>
           <div class="stage__btns">
-            <a class="btn btn--ghost" href="{e(link(h.get('cta_link')))}">{e(h['cta_label'])}</a>
+            <a class="btn btn--ghost" href="{u("events/" + h["event"] + "/") if h.get("event") else e(link(h.get("cta_link")))}">{e(h['cta_label'])}</a>
             {count}
           </div>
         </div>
@@ -660,6 +675,83 @@ def build_news_item(n):
     return shell(f"{n['title']}｜{site['name']}", n.get("body", ""), body, "sub")
 
 
+# ================================================================ キズナクラブ
+def club_cards():
+    out = []
+    for c in club["courses"]:
+        gifts = "".join(f"<li>{e(g)}</li>" for g in c["gifts"])
+        note = f'<span class="cc__note">{e(c["fee_note"])}</span>' if c.get("fee_note") else ""
+        out.append(f"""        <div class="cc cc--{e(c['tone'])}">
+          <h3 class="cc__n">{e(c['name'])}</h3>
+          <dl class="cc__dl">
+            <div><dt>個別レッスン</dt><dd><b>{e(c['lesson'])}</b></dd></div>
+            <div><dt>対象</dt><dd>{e(c['target'])}</dd></div>
+            <div><dt>会費</dt><dd><b>{e(c['fee'])}</b>{note}</dd></div>
+            <div><dt>配付物</dt><dd><ul class="cc__g">{gifts}</ul></dd></div>
+          </dl>
+        </div>""")
+    return "\n".join(out)
+
+
+def club_can():
+    return "\n".join(f"""        <div class="pt">
+          <span class="pt__n">0{i}</span>
+          <div>
+            <h3 class="pt__t">{e(c['title'])}</h3>
+            <p class="pt__x">{e(c['text'])}</p>
+          </div>
+        </div>""" for i, c in enumerate(club["can"], 1))
+
+
+def build_club():
+    form_can = "".join(f"<li>{e(x)}</li>" for x in club["form_can"])
+    benefits = "".join(f'<span class="chipb">{e(b)}</span>' for b in club["benefits"])
+    body = f"""<main class="page">
+  <div class="wrap wrap--n">
+{crumb(("キズナクラブ", None))}
+{page_head('Club', 'キズナクラブ', club['lead'])}
+  </div>
+
+  <div class="wrap">
+    <div class="ccs">
+{club_cards()}
+    </div>
+  </div>
+
+  <div class="wrap wrap--n">
+    <h2 class="group">クラブでできること</h2>
+    <div class="pts">
+{club_can()}
+    </div>
+
+    <h2 class="group">会員特典</h2>
+    <p class="sect__x">キズナクラブの会員の方は、次の特典を受けられます。</p>
+    <div class="chips">{benefits}</div>
+    <p class="sect__more"><a class="link" href="{e(L['benefits'])}">特典のくわしい内容を見る
+      <span aria-hidden="true">→</span></a></p>
+
+    <h2 class="group">申し込み・変更・退会</h2>
+    <p class="sect__x">次の手続きは、すべて「キズナ申し込み窓口」からできます。</p>
+    <ul class="ticks">{form_can}</ul>
+    <div class="detail__cta">
+      <a class="btn btn--primary" href="{e(L['join'])}">キズナ申し込み窓口をひらく</a>
+      <a class="btn btn--ghost" href="{e(L['consult'])}">まず担当に相談する</a>
+    </div>
+
+    <h2 class="group">会費の納め方</h2>
+    <p class="sect__x">個別コースの会費の納め方は、次のご案内にまとめています。</p>
+    <p class="sect__more"><a class="link" href="{e(L['fee'])}">キズナ会費の納め方を見る
+      <span aria-hidden="true">→</span></a></p>
+
+    <p class="detail__back"><a class="link" href="{u('')}">
+      <span aria-hidden="true">←</span> ホームにもどる</a></p>
+  </div>
+</main>"""
+    return shell(f"キズナクラブ｜{site['name']}",
+                 "キズナクラブは0歳から24歳までどなたでも入れます。会費・コースのちがい・申し込み方法をご案内します。",
+                 body, "sub")
+
+
 # ================================================================ 書き出し
 def write(rel_path, depth, fn):
     """rel_path: '' なら index.html、'events' なら events/index.html"""
@@ -672,13 +764,14 @@ def write(rel_path, depth, fn):
 
 
 # 前回のビルドで作った詳細ページを掃除する（slug を変えたときの残骸を残さない）
-for d in ("events", "news"):
+for d in ("events", "news", "club"):
     if (ROOT / d).exists():
         shutil.rmtree(ROOT / d)
 
 made = [write("", 0, build_index),
         write("events", 1, build_events),
-        write("news", 1, build_news)]
+        write("news", 1, build_news),
+        write("club", 1, build_club)]
 for ev in events:
     made.append(write(f"events/{ev['slug']}", 2, lambda ev=ev: build_event(ev)))
 for n in news:
@@ -690,3 +783,6 @@ for p in made:
     print(f"  {p.relative_to(ROOT)}")
 have = sum(1 for v in photos["photos"].values() if v.get("url"))
 print(f"写真 {have}/{len(photos['photos'])} 枚が設定済み")
+empty = sorted(k for k, v in L.items() if not v)
+if empty:
+    print("URL が未設定のリンク:", ", ".join(empty), "（押しても何も起きません）")

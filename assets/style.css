@@ -480,3 +480,40 @@ body.sub .hd .burger i{background:var(--ink)}
   .el__b{padding:clamp(22px,3vw,34px)}
   .spec__r{grid-template-columns:8em 1fr}
 }
+
+/* =========================================================
+   キズナクラブのページ
+   ========================================================= */
+.ccs{display:grid;gap:clamp(16px,2.4vw,24px);margin-bottom:clamp(40px,6vw,72px)}
+.cc{background:var(--paper);border-radius:4px;box-shadow:var(--sh);
+  padding:clamp(24px,4vw,36px);border-top:5px solid var(--blue)}
+.cc--green{border-top-color:var(--green-d)}
+.cc--apricot{border-top-color:#E0A066}
+.cc__n{font-size:var(--t-h3);line-height:1.5;margin-bottom:18px;word-break:auto-phrase}
+.cc__dl{margin:0;border-top:1px solid var(--hair)}
+.cc__dl > div{display:grid;grid-template-columns:6.5em 1fr;gap:14px;padding:13px 0;
+  border-bottom:1px solid var(--hair)}
+.cc__dl dt{font-size:var(--t-cap);letter-spacing:.14em;color:var(--blue-d);font-weight:700;
+  padding-top:.4em}
+.cc__dl dd{margin:0;font-size:var(--t-small);line-height:1.9}
+.cc__dl dd b{font-family:"Zen Maru Gothic",sans-serif;font-size:1.06rem;font-weight:700}
+.cc__note{display:block;font-size:var(--t-cap);color:var(--sub);margin-top:2px}
+.cc__g{margin:0}
+.cc__g li{position:relative;padding-left:1.1em}
+.cc__g li::before{content:"・";position:absolute;left:0;color:var(--blue-d)}
+
+.sect__x{font-size:var(--t-body);line-height:2.1;color:var(--ink-2);margin-bottom:18px}
+.sect__more{margin:16px 0 clamp(34px,5vw,52px)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chipb{display:inline-flex;align-items:center;background:var(--blue-ll);color:var(--blue-d);
+  border-radius:999px;padding:9px 20px;font-size:var(--t-small);font-weight:700;
+  font-family:"Zen Maru Gothic",sans-serif}
+.ticks{display:grid;gap:10px;margin-bottom:8px}
+.ticks li{display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:var(--t-small);
+  line-height:1.9}
+.ticks li::before{content:"✓";color:var(--green-d);font-weight:700;padding-top:.05em}
+.page .group:not(:first-of-type){margin-top:clamp(44px,7vw,78px)}
+
+@media (min-width:760px){
+  .ccs{grid-template-columns:1fr 1fr;align-items:start}
+}
