@@ -169,6 +169,7 @@ def shell(title, desc, body, extra_class=""):
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:type" content="website">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#1E2430">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23A8C9E5'/><circle cx='16' cy='16' r='5' fill='%23FFFCF6'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
