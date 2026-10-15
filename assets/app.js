@@ -71,6 +71,29 @@
     slot.hidden = false;
   });
 
+  /* ---------- 文章のコピー ---------- */
+  $$('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.copy);
+      if (!el) return;
+      var done = function () {
+        var before = btn.textContent;
+        btn.textContent = 'コピーしました';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = before; btn.classList.remove('done'); }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(el.textContent).then(done, function () {});
+      } else {
+        // 古い環境では、文章を選択状態にして手でコピーしてもらう
+        var r = document.createRange();
+        r.selectNodeContents(el);
+        var sel = window.getSelection();
+        sel.removeAllRanges(); sel.addRange(r);
+      }
+    });
+  });
+
   /* ---------- 注目イベントのスライド ---------- */
   var track = $('[data-track]');
   if (track) {

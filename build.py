@@ -46,7 +46,7 @@ site, hero, about, juku = load("site"), load("hero"), load("about"), load("juku"
 member, events, news = load("member"), load("events"), load("news")
 faq, faq_intro, photos = load("faq"), load("faq_intro"), load("photos")
 club = load("club")
-point_d, staff_d = load("point"), load("staff")
+point_d, staff_d, shindan = load("point"), load("staff"), load("shindan")
 
 L = site["links"]
 
@@ -707,6 +707,31 @@ def club_can():
         </div>""" for i, c in enumerate(club["can"], 1))
 
 
+def fee_ways():
+    out = []
+    for i, w in enumerate(club["fee"]["ways"], 1):
+        steps = "".join(f"<li>{e(x)}</li>" for x in w["steps"])
+        acc = ""
+        if w.get("account"):
+            a = w["account"]
+            acc = f"""      <dl class="acc">
+        <div><dt>金融機関</dt><dd>{e(a['bank'])}</dd></div>
+        <div><dt>記号番号</dt><dd><b>{e(a['no'])}</b></dd></div>
+        <div><dt>加入者名</dt><dd>{e(a['name'])}</dd></div>
+      </dl>"""
+        notes = ""
+        if w.get("notes"):
+            notes = ('<ul class="warn">'
+                     + "".join(f"<li>{e(n)}</li>" for n in w["notes"]) + "</ul>")
+        out.append(f"""      <div class="way">
+        <h3 class="way__t"><span class="way__n">{i}</span>{e(w['title'])}</h3>
+        <ul class="ticks">{steps}</ul>
+{acc}
+        {notes}
+      </div>""")
+    return "\n".join(out)
+
+
 def build_club():
     form_can = "".join(f"<li>{e(x)}</li>" for x in club["form_can"])
     benefits = "".join(f'<span class="chipb">{e(b)}</span>' for b in club["benefits"])
@@ -741,10 +766,9 @@ def build_club():
       <a class="btn btn--ghost" href="{e(L['consult'])}">まず担当に相談する</a>
     </div>
 
-    <h2 class="group">会費の納め方</h2>
-    <p class="sect__x">個別コースの会費の納め方は、次のご案内にまとめています。</p>
-    <p class="sect__more"><a class="link" href="{e(L['fee'])}">キズナ会費の納め方を見る
-      <span aria-hidden="true">→</span></a></p>
+    <h2 class="group" id="fee">会費の納め方</h2>
+    <p class="sect__x">{e(club['fee']['lead'])}</p>
+{fee_ways()}
 
     <p class="detail__back"><a class="link" href="{u('')}">
       <span aria-hidden="true">←</span> ホームにもどる</a></p>
@@ -880,6 +904,68 @@ def build_staff():
                  body, "sub")
 
 
+# ================================================================ 才能診断
+def build_shindan():
+    spec = "".join(f'<div class="spec__r"><dt>{e(k)}</dt><dd>{e(v)}</dd></div>'
+                   for k, v in shindan["spec"])
+    g = shindan["gifts"]
+    gifts = "".join(f"""          <div class="gift gift--{e(x['tone'])}">
+            <span class="gift__m">{e(x['mark'])}</span>
+            <p class="gift__n">{e(x['name'])}</p>
+          </div>""" for x in g["items"])
+    lt = shindan["letter"]
+    body = f"""<main class="page">
+  <div class="wrap wrap--n">
+{crumb(("キズナ式 才能診断", None))}
+    <span class="cap">{e(shindan['label'])}</span>
+    <h1 class="phead__t" style="margin-top:10px">{e(shindan['title'])}</h1>
+    <p class="shin__sub">{e(shindan['sub'])}</p>
+    <p class="phead__x" style="max-width:38em">{e(shindan['lead'])}</p>
+
+    <dl class="spec" style="margin-top:clamp(28px,4vw,44px)">{spec}</dl>
+
+    <div class="detail__cta" style="border-top:0;padding-top:0">
+      <a class="btn btn--primary" href="{e(L['shindan'])}" target="_blank" rel="noopener">診断をはじめる ↗</a>
+      <a class="btn btn--ghost" href="#letter">家族に送る文章を見る</a>
+    </div>
+
+    <h2 class="group">{e(g['title'])}</h2>
+    <p class="sect__x">{e(g['text'])}</p>
+    <div class="gifts">
+{gifts}
+    </div>
+
+    <h2 class="group" id="letter">{e(lt['title'])}</h2>
+    <p class="sect__x">{e(lt['text'])}</p>
+    <p class="sect__x"><b>{e(lt['step'])}</b></p>
+
+    <div class="copy">
+      <div class="copy__h">
+        <span>1. {e(lt['flyer_label'])}</span>
+        <button class="copy__b" type="button" data-copy="kzn-flyer">コピー</button>
+      </div>
+      <pre class="copy__t" id="kzn-flyer">{e(lt['flyer'])}</pre>
+    </div>
+
+    <div class="copy">
+      <div class="copy__h">
+        <span>2. 本文</span>
+        <button class="copy__b" type="button" data-copy="kzn-letter">コピー</button>
+      </div>
+      <pre class="copy__t" id="kzn-letter">{e(lt['body'])}</pre>
+    </div>
+
+    <div class="detail__cta">
+      <a class="btn btn--primary" href="{e(L['shindan'])}" target="_blank" rel="noopener">診断をはじめる ↗</a>
+      <a class="btn btn--ghost" href="{e(L['consult'])}" target="_blank" rel="noopener">担当に相談する ↗</a>
+    </div>
+    <p class="detail__back"><a class="link" href="{u('')}">
+      <span aria-hidden="true">←</span> ホームにもどる</a></p>
+  </div>
+</main>"""
+    return shell(f"キズナ式 才能診断｜{site['name']}", shindan["lead"][:110], body, "sub")
+
+
 # ================================================================ 書き出し
 def write(rel_path, depth, fn):
     """rel_path: '' なら index.html、'events' なら events/index.html"""
@@ -892,7 +978,7 @@ def write(rel_path, depth, fn):
 
 
 # 前回のビルドで作った詳細ページを掃除する（slug を変えたときの残骸を残さない）
-for d in ("events", "news", "club", "point", "staff"):
+for d in ("events", "news", "club", "point", "staff", "shindan"):
     if (ROOT / d).exists():
         shutil.rmtree(ROOT / d)
 
@@ -901,7 +987,8 @@ made = [write("", 0, build_index),
         write("news", 1, build_news),
         write("club", 1, build_club),
         write("point", 1, build_point),
-        write("staff", 1, build_staff)]
+        write("staff", 1, build_staff),
+        write("shindan", 1, build_shindan)]
 for ev in events:
     made.append(write(f"events/{ev['slug']}", 2, lambda ev=ev: build_event(ev)))
 for n in news:
