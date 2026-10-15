@@ -734,7 +734,10 @@ def fee_ways():
 
 def build_club():
     form_can = "".join(f"<li>{e(x)}</li>" for x in club["form_can"])
-    benefits = "".join(f'<span class="chipb">{e(b)}</span>' for b in club["benefits"])
+    benefits = "".join(
+        f'<span class="chipb">{e(b["name"])}'
+        + (f'<small>{e(b["note"])}</small>' if b.get("note") else "")
+        + "</span>" for b in club["benefits"])
     body = f"""<main class="page">
   <div class="wrap wrap--n">
 {crumb(("キズナクラブ", None))}
