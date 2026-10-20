@@ -1,0 +1,62 @@
+# スプレッドシートの内容をサイトに反映する
+#
+#   ・30分おきに自動で動きます
+#   ・すぐ反映したいときは GitHub の Actions タブ →「スプレッドシートから更新」
+#     →「Run workflow」を押してください（スマホのブラウザからでもできます）
+#   ・スプレッドシートの書きかたに問題があるときは、ここで止まります。
+#     サイトは前のままなので、壊れた内容が公開されることはありません。
+name: スプレッドシートから更新
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+# 同時に2つ動かない（お互いの push がぶつからないように）
+concurrency:
+  group: sync-sheet
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: スプレッドシートを読む
+        run: python3 tools/sync_sheet.py
+
+      - name: サイトを書き出す
+        run: python3 build.py
+
+      - name: 変わっていたら公開する
+        run: |
+          set -eu
+          git config user.name  "kizuna-sheet-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "変更はありませんでした。"
+            exit 0
+          fi
+          git add -A
+          git commit -m "スプレッドシートの内容を反映"
+          for i in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "公開しました。"
+              exit 0
+            fi
+            echo "push に失敗。取り込みなおして再挑戦します（$i回目）"
+            git pull --rebase origin main
+            sleep $((i * 3))
+          done
+          echo "4回試しましたが push できませんでした。"
+          exit 1

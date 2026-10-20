@@ -16,6 +16,19 @@
 `events/` と `news/` のフォルダは **ビルドのたびに作り直されます**（消して再生成）。
 中に手で置いたファイルは消えるので注意してください。
 
+## データの原本はどこか（重要）
+
+`data/events.json` `data/news.json` `data/hero.json` の3つは
+**Google スプレッドシートが原本**です。これらを手で編集しても、
+次の同期（30分おき）で上書きされて消えます。
+
+| 直したいもの | 直す場所 |
+|---|---|
+| イベント・お知らせ・トップのスライド | スプレッドシート（`tools/sheet.config.json` にIDあり） |
+| それ以外ぜんぶ | `data/*.json` を直接編集 → `python3 build.py` |
+
+仕組みのくわしい説明は `docs/spreadsheet.md` にあります。
+
 ## 更新のしかた（必ずこの順番）
 
 ```bash
@@ -43,6 +56,8 @@ git add -A && git commit -m "..." && git push
 | `data/photos.json` | 写真・イラストの差し込み口 | 「ヒーローの写真を差し替えて」 |
 | `data/site.json` | 連絡先・各リンクのURL・準備中バナー | 「申込フォームのURLを入れて」 |
 | `assets/style.css` | 見た目（色・余白・角丸） | 「色を変えて」 |
+
+※ `events.json` `news.json` `hero.json` はスプレッドシートが原本です（上を参照）。
 
 ## 気をつけること
 
