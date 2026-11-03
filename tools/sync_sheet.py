@@ -8,15 +8,22 @@
 シートIDは tools/sheet.config.json か、環境変数 SHEET_ID で指定します。
 おかしな入力があったら、何も書かずにエラーで止まります（壊れた内容が公開されない）。
 """
-import csv, io, json, os, re, sys, urllib.parse, urllib.request
+import csv, hashlib, io, json, os, re, sys, tempfile, urllib.parse, urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 CONF = json.loads((ROOT / "tools" / "sheet.config.json").read_text(encoding="utf-8"))
 SHEET_ID = os.environ.get("SHEET_ID") or CONF.get("sheet_id", "")
 
 TAB_EVENTS, TAB_NEWS, TAB_HERO = "イベント", "お知らせ", "トップのスライド"
+LINKS = json.loads((DATA / "site.json").read_text(encoding="utf-8")).get("links", {})
+IMGDIR = ROOT / "assets" / "img"
+HEADERS = {}          # タブ名 → 見出しの並び
+CELL_IMAGES = {}      # (タブ名, 行, 列) → (画像のバイト列, 拡張子)
+PHOTO_URLS = {}       # photos.json に書き戻す { キー: URL }
+SAVED_IMAGES = []     # assets/img に保存したファイル
 
 errors, warnings = [], []
 
@@ -43,7 +50,9 @@ def fetch(tab):
     rows = list(csv.reader(io.StringIO(text)))
     if not rows:
         sys.exit(f"[失敗] シート「{tab}」が空です。")
-    head = [c.strip() for c in rows[0]]
+    # 見出しの「（リンクを貼る）」のような補足は、取り除いてから名前として使う
+    head = [re.sub(r"[（(].*?[)）]", "", c).strip() for c in rows[0]]
+    HEADERS[tab] = head
     out = []
     for i, r in enumerate(rows[1:], start=2):          # 2行目＝最初のデータ行
         rec = {head[j]: (r[j].strip() if j < len(r) else "") for j in range(len(head))}
@@ -85,20 +94,73 @@ def paras(v):
     return [p.strip() for p in re.split(r"\n\s*\n|\n", v.replace("\r\n", "\n")) if p.strip()]
 
 
-SLUG_OK = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+def auto_slug(prefix, d, title, used):
+    """ページのURL（slug）を日付から自動で決める。
+
+    同じ日に2件以上あるときだけ、タイトルから作った短い記号を足す。
+    日付とタイトルが同じなら、いつ作り直しても同じURLになる。
+    ※日付を直すとURLも変わります。
+    """
+    base = f"{prefix}-{d}"
+    cand = base
+    if cand in used:
+        tag = hashlib.sha1(title.encode("utf-8")).hexdigest()[:4]
+        cand = f"{base}-{tag}"
+        i = 2
+        while cand in used:
+            cand = f"{base}-{tag}-{i}"
+            i += 1
+    used.add(cand)
+    return cand
 
 
-def slug(v, fallback, tab, row, used):
-    v = v.strip().lower()
+def form_url(v, tab, row):
+    """申込フォームの欄。URLをそのまま受ける（昔の合言葉も一応受ける）。"""
+    v = v.strip()
     if not v:
-        v = fallback
-    if not SLUG_OK.fullmatch(v):
-        err(tab, row, f"URL名「{v}」は使えません。半角の小文字・数字・ハイフンだけにしてください")
+        return ""
+    if v.startswith(("http://", "https://")):
         return v
-    if v in used:
-        err(tab, row, f"URL名「{v}」が他の行と重なっています")
-    used.add(v)
-    return v
+    if v in LINKS:                                      # join / shindan などの旧表記
+        return v
+    err(tab, row, f"申込フォーム「{v}」が、フォームのURLとして読めません。"
+                  "https:// から始まるURLを貼るか、空にしてください")
+    return ""
+
+
+def photo(cell, key, tab, row):
+    """写真の欄。セルに貼られた画像、または画像のURLを受ける。
+
+    ・セルに写真が貼られていれば assets/img/<key>.<拡張子> に保存する
+      （build.py は assets/img を photos.json より優先して使う）
+    ・URLが書かれていれば photos.json に書き戻す
+    ・空なら "" を返す。呼び出し側はこれまでどおりの既定の写真を使う
+    """
+    cell = cell.strip()
+    head = HEADERS.get(tab, [])
+    col = head.index("写真") if "写真" in head else None
+    img = CELL_IMAGES.get((tab, row, col)) if col is not None else None
+
+    if img:
+        data, ext = img
+        IMGDIR.mkdir(parents=True, exist_ok=True)
+        for old_ext in (".jpg", ".jpeg", ".png", ".webp", ".gif"):
+            stale = IMGDIR / f"{key}{old_ext}"
+            if stale.exists() and old_ext != ext:
+                stale.unlink()                          # 拡張子が変わったときの置きかえ
+        (IMGDIR / f"{key}{ext}").write_bytes(data)
+        SAVED_IMAGES.append(f"assets/img/{key}{ext}")
+        return key
+
+    if cell.startswith(("http://", "https://")):
+        PHOTO_URLS[key] = cell
+        return key
+
+    if cell:
+        err(tab, row, f"写真の欄「{cell[:30]}」が読めません。"
+                      "セルに写真を貼りつけるか、画像のURL（https://…）を入れるか、"
+                      "空にしてください")
+    return ""
 
 
 def put(d, key, val):
@@ -117,13 +179,14 @@ def build_events(rows):
         title = r.get("タイトル", "").strip()
         if not title:
             err(t, n, "タイトルが空です")
-        ev = {"slug": slug(r.get("URL名", ""), f"event-{d}", t, n, used),
-              "date": d, "title": title}
+        ev = {"slug": auto_slug("event", d, title, used), "date": d, "title": title}
         for key, col in (("time", "時間"), ("place", "場所"), ("tag", "タグ"),
                          ("target", "対象"), ("fee", "参加費"), ("bring", "持ちもの"),
-                         ("apply", "申込フォーム"), ("pic", "写真"),
                          ("body", "一覧に出る文章")):
             put(ev, key, r.get(col, "").strip())
+        put(ev, "apply", form_url(r.get("申込フォーム", ""), t, n))
+        put(ev, "pic", photo(r.get("写真", ""), f"ev-{ev['slug']}", t, n))
+        ev["_pic_unset"] = "pic" not in ev
         dl = r.get("申込締切", "").strip()
         if dl:
             put(ev, "deadline", date(dl, t, n, "申込締切", required=False))
@@ -134,6 +197,10 @@ def build_events(rows):
             warnings.append(f"{t} {n}行目：一覧に出る文章が空です（一覧でさみしく見えます）")
         out.append(ev)
     out.sort(key=lambda x: x["date"])                   # 日付の早い順
+    # 写真の欄が空のイベントには、並び順で ev1 / ev2 / ev3 を順番に割り当てる
+    for i, e in enumerate(out):
+        if e.pop("_pic_unset", False):
+            e["pic"] = f"ev{i % 3 + 1}"
     return out
 
 
@@ -147,8 +214,7 @@ def build_news(rows):
         title = r.get("タイトル", "").strip()
         if not title:
             err(t, n, "タイトルが空です")
-        it = {"slug": slug(r.get("URL名", ""), f"news-{d}", t, n, used),
-              "date": d, "title": title}
+        it = {"slug": auto_slug("news", d, title, used), "date": d, "title": title}
         put(it, "cat", r.get("分類", "").strip())
         put(it, "body", r.get("一覧に出る文章", "").strip())
         p = paras(r.get("詳細ページの本文", ""))
@@ -160,20 +226,29 @@ def build_news(rows):
 
 
 def build_hero(rows, events):
-    """空欄のところは、つないだイベントの内容をそのまま使う。"""
-    by_slug = {e["slug"]: e for e in events}
+    """イベント名でイベントとつなぐ。空欄のところはそのイベントの内容をそのまま使う。"""
+    by_title = {}
+    for e in events:
+        by_title.setdefault(e["title"], []).append(e)
     label = json.loads((DATA / "hero.json").read_text(encoding="utf-8")).get("label", "注目のイベント")
     slides = []
     for i, r in enumerate(rows):
         if not on(r.get("表示", "")):
             continue
         n, t = r["_row"], TAB_HERO
-        ref = r.get("つなぐイベントのURL名", "").strip().lower()
-        src = {}
-        if ref:
-            src = by_slug.get(ref, {})
-            if not src:
-                err(t, n, f"「{ref}」というURL名のイベントが、公開中のイベントにありません")
+        ref_title = r.get("つなぐイベント", "").strip()
+        src, ref = {}, ""
+        if ref_title:
+            found = by_title.get(ref_title, [])
+            if not found:
+                err(t, n, f"「{ref_title}」というイベントが、公開中のイベントにありません。"
+                          "イベントのシートのタイトルと同じものを選んでください")
+            elif len(found) > 1:
+                err(t, n, f"「{ref_title}」という名前のイベントが{len(found)}件あります。"
+                          "イベントのシートで、どちらかのタイトルを変えてください")
+            else:
+                src = found[0]
+                ref = src["slug"]
         s = {}
         s["title"] = r.get("タイトル", "").strip() or src.get("title", "")
         raw_date = r.get("日付", "").strip()
@@ -182,11 +257,12 @@ def build_hero(rows, events):
         s["place"] = r.get("場所", "").strip() or src.get("place", "")
         s["body"] = r.get("文章", "").strip() or src.get("body", "")
         s["cta_label"] = r.get("ボタンの文字", "").strip() or "このイベントのくわしい内容"
-        s["pic"] = r.get("写真", "").strip() or f"hero{len(slides) + 1}"
+        slot = f"hero{len(slides) + 1}"                 # hero1 / hero2 / hero3
+        s["pic"] = photo(r.get("写真", ""), slot, t, n) or slot
         if ref:
             s["event"] = ref
-        if not s["title"]:
-            err(t, n, "タイトルが空で、つなぐイベントも指定されていません")
+        if not s["title"] and not ref_title:            # つなぐイベント側のエラーは既に出している
+            err(t, n, "つなぐイベントを選ぶか、タイトルを書いてください")
         slides.append({k: v for k, v in s.items() if v})
     if not slides:
         err(TAB_HERO, 0, "表示する行が1つもありません（トップのスライドが消えてしまいます）")
@@ -204,6 +280,23 @@ elif not SHEET_ID:
     sys.exit(0)
 
 ev_rows, nw_rows, hr_rows = fetch(TAB_EVENTS), fetch(TAB_NEWS), fetch(TAB_HERO)
+
+# セルに貼られた写真を拾う。ここが失敗しても、文字の内容だけで先に進む。
+if not LOCAL:
+    try:
+        import sheet_images
+        url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=xlsx"
+        tmp = Path(tempfile.gettempdir()) / "kizuna_sheet.xlsx"
+        with urllib.request.urlopen(url, timeout=120) as r:
+            tmp.write_bytes(r.read())
+        CELL_IMAGES, notes = sheet_images.extract(tmp)
+        for n in notes:
+            print("  写真:", n)
+        tmp.unlink(missing_ok=True)
+    except Exception as exc:                            # 写真が取れなくても止めない
+        warnings.append(f"セルの写真を読めませんでした（{type(exc).__name__}: {exc}）。"
+                        "写真は今のままにします。")
+
 events = build_events(ev_rows)
 news = build_news(nw_rows)
 hero = build_hero(hr_rows, events)
@@ -224,6 +317,18 @@ for name, obj in (("events", events), ("news", news), ("hero", hero)):
     (DATA / f"{name}.json").write_text(
         json.dumps(obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+if PHOTO_URLS:                                          # URLで指定された写真を登録する
+    pf = DATA / "photos.json"
+    ph = json.loads(pf.read_text(encoding="utf-8"))
+    slot = ph.setdefault("photos", {})
+    for k, v in PHOTO_URLS.items():
+        slot[k] = {**slot.get(k, {}), "url": v}
+    pf.write_text(json.dumps(ph, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
 for m in warnings:
     print("  ! " + m)
 print(f"読み込みました：イベント {len(events)}件 / お知らせ {len(news)}件 / スライド {len(hero['slides'])}枚")
+for f in SAVED_IMAGES:
+    print("  写真を保存:", f)
+for k, v in PHOTO_URLS.items():
+    print(f"  写真のURLを登録: {k} → {v[:60]}")
