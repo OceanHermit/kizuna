@@ -177,6 +177,9 @@ def photo(cell, key, tab, row):
         if dim and dim[0] < dim[1]:
             warnings.append(f"{tab} {row}行目の写真が縦長です。"
                             "このサイトは横長の写真に合わせた作りになっています。")
+        if ext == ".png" and len(data) > 400 * 1024:
+            warnings.append(f"{tab} {row}行目の写真が PNG で{len(data) // 1024}KBあります。"
+                            "写真は JPEG のほうが軽くなります（表示が速くなります）。")
         if len(data) > 3 * 1024 * 1024:
             warnings.append(f"{tab} {row}行目の写真が大きいです（{len(data) // 1024 // 1024}MB）。"
                             "表示が重くなるので、2MB以下に縮めてから貼ると安心です。")

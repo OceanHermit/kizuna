@@ -65,6 +65,90 @@ def _media(z, path):
     return data, ext
 
 
+EMU_PX = 9525              # 1ピクセルあたりのEMU
+EMU_PT = 12700             # 1ポイントあたりのEMU
+
+
+def _px(width_chars):
+    """列幅（文字数）をピクセルに直す。Excel の既定フォントでの目安。"""
+    return round(width_chars * 7) + 5
+
+
+def _geometry(z, sheet_part):
+    """シートの列幅と行の高さを EMU で返す。画像の位置を解くために使う。"""
+    root = ET.fromstring(z.read(sheet_part))
+    fmt = root.find("main:sheetFormatPr", NS)
+    def_col = float((fmt.get("defaultColWidth") if fmt is not None else None) or 8.43)
+    def_row = float((fmt.get("defaultRowHeight") if fmt is not None else None) or 15.0)
+    cols = {}
+    for c in root.iter(f"{{{NS['main']}}}col"):
+        w = float(c.get("width", def_col))
+        for i in range(int(c.get("min", 1)) - 1, int(c.get("max", 1))):
+            cols[i] = _px(w) * EMU_PX
+    rows = {}
+    for r in root.iter(f"{{{NS['main']}}}row"):
+        if r.get("ht"):
+            rows[int(r.get("r"))] = round(float(r.get("ht")) * EMU_PT)
+    return cols, rows, _px(def_col) * EMU_PX, round(def_row * EMU_PT)
+
+
+def _col_emu(geo, i):
+    return geo[0].get(i, geo[2])
+
+
+def _row_emu(geo, r):
+    return geo[1].get(r, geo[3])
+
+
+def _to_emu(geo, col, col_off, row, row_off):
+    """アンカー（列・行＋ずれ）を、シート左上からの絶対位置（EMU）にする。"""
+    x = sum(_col_emu(geo, i) for i in range(col)) + col_off
+    y = sum(_row_emu(geo, r) for r in range(1, row + 1)) + row_off
+    return x, y
+
+
+def _to_cell(geo, x, y):
+    """絶対位置（EMU）が、どのセルの中にあるかを返す。(行は1から, 列は0から)"""
+    col, acc = 0, 0
+    while acc + _col_emu(geo, col) <= x and col < 1000:
+        acc += _col_emu(geo, col)
+        col += 1
+    row, acc = 1, 0
+    while acc + _row_emu(geo, row) <= y and row < 100000:
+        acc += _row_emu(geo, row)
+        row += 1
+    return row, col
+
+
+def _anchor_center(geo, anchor):
+    """画像の中心がどのセルにあるかを返す。
+
+    左上の角で判断すると、セルの境目ぎりぎりに貼られた写真を
+    隣のセルのものと誤って判定してしまうため、中心で見る。
+    """
+    frm = anchor.find("xdr:from", NS)
+    if frm is None:
+        return None
+    x0, y0 = _to_emu(geo,
+                     int(frm.findtext("xdr:col", "0", NS)),
+                     int(frm.findtext("xdr:colOff", "0", NS)),
+                     int(frm.findtext("xdr:row", "0", NS)),
+                     int(frm.findtext("xdr:rowOff", "0", NS)))
+    to = anchor.find("xdr:to", NS)
+    if to is not None:                                  # twoCellAnchor
+        x1, y1 = _to_emu(geo,
+                         int(to.findtext("xdr:col", "0", NS)),
+                         int(to.findtext("xdr:colOff", "0", NS)),
+                         int(to.findtext("xdr:row", "0", NS)),
+                         int(to.findtext("xdr:rowOff", "0", NS)))
+    else:                                               # oneCellAnchor
+        ext = anchor.find("xdr:ext", NS)
+        cx = int(ext.get("cx", 0)) if ext is not None else 0
+        cy = int(ext.get("cy", 0)) if ext is not None else 0
+        x1, y1 = x0 + cx, y0 + cy
+    return _to_cell(geo, (x0 + x1) // 2, (y0 + y1) // 2)
+
+
 def extract(xlsx_path):
     """{(シート名, 行, 列): (画像のバイト列, 拡張子)} を返す。行は1から、列は0から。"""
     found, notes = {}, []
@@ -92,17 +176,16 @@ def extract(xlsx_path):
             if not target or target not in names:
                 continue
             art_rels = _rels(z, target)
+            geo = _geometry(z, part)
             for anchor in ET.fromstring(z.read(target)):
-                frm = anchor.find("xdr:from", NS)
                 blip = anchor.find(".//a:blip", NS)
-                if frm is None or blip is None:
+                if blip is None:
                     continue
-                row = int(frm.findtext("xdr:row", "0", NS)) + 1
-                col = int(frm.findtext("xdr:col", "0", NS))
+                pos = _anchor_center(geo, anchor)
                 media = art_rels.get(blip.get(f"{{{NS['r']}}}embed"))
-                if media and media in names:
-                    found[(name, row, col)] = _media(z, media)
-                    notes.append(f"（セルの上の画像）{name} {row}行 {col + 1}列目")
+                if pos and media and media in names:
+                    found[(name, pos[0], pos[1])] = _media(z, media)
+                    notes.append(f"（セルの上の画像）{name} {pos[0]}行 {pos[1] + 1}列目")
 
         # --- 2) セル内に挿入された画像（richData） -------------------------
         rv_path = "xl/richData/rdrichvalue.xml"
