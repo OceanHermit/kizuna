@@ -149,3 +149,30 @@ if __name__ == "__main__":
         print(" ", n)
     for (sheet, row, col), (data, ext) in sorted(imgs.items()):
         print(f"  {sheet} / {row}行 / {col + 1}列 → {len(data)} bytes {ext}")
+
+
+def dimensions(data):
+    """画像の幅と高さを返す（分からなければ None）。外部ライブラリは使わない。"""
+    if data[:8] == b"\x89PNG\r\n\x1a\n" and data[12:16] == b"IHDR":
+        return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
+    if data[:2] == b"\xff\xd8":                         # JPEG：SOF マーカーを探す
+        i = 2
+        while i + 9 < len(data):
+            if data[i] != 0xFF:
+                i += 1
+                continue
+            m = data[i + 1]
+            if m in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7,
+                     0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                return (int.from_bytes(data[i + 7:i + 9], "big"),
+                        int.from_bytes(data[i + 5:i + 7], "big"))
+            if m in (0xD8, 0xD9) or 0xD0 <= m <= 0xD7:
+                i += 2
+            else:
+                i += 2 + int.from_bytes(data[i + 2:i + 4], "big")
+        return None
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        if data[12:16] == b"VP8X":
+            return (int.from_bytes(data[24:27], "little") + 1,
+                    int.from_bytes(data[27:30], "little") + 1)
+    return None

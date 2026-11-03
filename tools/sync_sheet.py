@@ -12,6 +12,7 @@ import csv, hashlib, io, json, os, re, sys, tempfile, urllib.parse, urllib.reque
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import sheet_images                                     # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 CONF = json.loads((ROOT / "tools" / "sheet.config.json").read_text(encoding="utf-8"))
@@ -27,6 +28,7 @@ CELL_IMAGES = {}      # (タブ名, 行, 列) → (画像のバイト列, 拡張
 PHOTO_URLS = {}       # photos.json に書き戻す { キー: URL }
 SAVED_IMAGES = []     # assets/img に保存したファイル
 LEGACY_SLUGS = {}     # 旧シートの URL名 → イベント（移行中のみ使う）
+USED_IMAGES = set()   # 実際に使ったセルの画像
 
 errors, warnings = [], []
 
@@ -143,8 +145,22 @@ def photo(cell, key, tab, row):
     head = HEADERS.get(tab, [])
     col = head.index("写真") if "写真" in head else None
     img = CELL_IMAGES.get((tab, row, col)) if col is not None else None
+    if img is None:
+        # 写真の列から少しずれて貼られていても拾う（同じ行なら受け付ける）
+        same_row = [(c, v) for (tb, rw, c), v in CELL_IMAGES.items()
+                    if tb == tab and rw == row]
+        if len(same_row) == 1:
+            c, img = same_row[0]
+            col = c
+            warnings.append(f"{tab} {row}行目の写真が、写真の列から{abs(c - (col or 0))}列"
+                            "ずれた場所に貼られていました。この写真を使います。")
+        elif len(same_row) > 1:
+            err(tab, row, f"写真が{len(same_row)}枚貼られています。"
+                          "写真の列のセルに1枚だけ貼ってください")
+            return ""
 
     if img:
+        USED_IMAGES.add((tab, row, col))
         data, ext = img
         IMGDIR.mkdir(parents=True, exist_ok=True)
         for old_ext in (".jpg", ".jpeg", ".png", ".webp", ".gif"):
@@ -152,7 +168,18 @@ def photo(cell, key, tab, row):
             if stale.exists() and old_ext != ext:
                 stale.unlink()                          # 拡張子が変わったときの置きかえ
         (IMGDIR / f"{key}{ext}").write_bytes(data)
-        SAVED_IMAGES.append(f"assets/img/{key}{ext}")
+        dim = sheet_images.dimensions(data)
+        note = f"{dim[0]}×{dim[1]}" if dim else "大きさ不明"
+        SAVED_IMAGES.append(f"assets/img/{key}{ext}（{note}・{len(data) // 1024}KB）")
+        if dim and dim[0] < 1000:
+            warnings.append(f"{tab} {row}行目の写真が小さいです（横{dim[0]}px）。"
+                            "大きく表示するとぼやけます。横1600px以上がおすすめです。")
+        if dim and dim[0] < dim[1]:
+            warnings.append(f"{tab} {row}行目の写真が縦長です。"
+                            "このサイトは横長の写真に合わせた作りになっています。")
+        if len(data) > 3 * 1024 * 1024:
+            warnings.append(f"{tab} {row}行目の写真が大きいです（{len(data) // 1024 // 1024}MB）。"
+                            "表示が重くなるので、2MB以下に縮めてから貼ると安心です。")
         return key
 
     if cell.startswith(("http://", "https://")):
@@ -296,7 +323,6 @@ ev_rows, nw_rows, hr_rows = fetch(TAB_EVENTS), fetch(TAB_NEWS), fetch(TAB_HERO)
 # セルに貼られた写真を拾う。ここが失敗しても、文字の内容だけで先に進む。
 if not LOCAL:
     try:
-        import sheet_images
         url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=xlsx"
         tmp = Path(tempfile.gettempdir()) / "kizuna_sheet.xlsx"
         with urllib.request.urlopen(url, timeout=120) as r:
@@ -344,3 +370,9 @@ for f in SAVED_IMAGES:
     print("  写真を保存:", f)
 for k, v in PHOTO_URLS.items():
     print(f"  写真のURLを登録: {k} → {v[:60]}")
+for tb, rw, c in sorted(set(CELL_IMAGES) - USED_IMAGES):
+    head = HEADERS.get(tb, [])
+    want = head.index("写真") + 1 if "写真" in head else "?"
+    print(f"  ! 使われなかった画像：{tb} {rw}行 {c + 1}列目"
+          f"（写真の列は{want}列目です。公開にチェックが無い行か、"
+          "別の列に貼られている可能性があります）")
