@@ -19,11 +19,14 @@ SHEET_ID = os.environ.get("SHEET_ID") or CONF.get("sheet_id", "")
 
 TAB_EVENTS, TAB_NEWS, TAB_HERO = "イベント", "お知らせ", "トップのスライド"
 LINKS = json.loads((DATA / "site.json").read_text(encoding="utf-8")).get("links", {})
+PHOTO_KEYS = set(json.loads((DATA / "photos.json").read_text(encoding="utf-8"))
+                 .get("photos", {}))
 IMGDIR = ROOT / "assets" / "img"
 HEADERS = {}          # タブ名 → 見出しの並び
 CELL_IMAGES = {}      # (タブ名, 行, 列) → (画像のバイト列, 拡張子)
 PHOTO_URLS = {}       # photos.json に書き戻す { キー: URL }
 SAVED_IMAGES = []     # assets/img に保存したファイル
+LEGACY_SLUGS = {}     # 旧シートの URL名 → イベント（移行中のみ使う）
 
 errors, warnings = [], []
 
@@ -156,6 +159,9 @@ def photo(cell, key, tab, row):
         PHOTO_URLS[key] = cell
         return key
 
+    if cell in PHOTO_KEYS:                              # ev1 / hero2 などの差し込み口を直接指定
+        return cell
+
     if cell:
         err(tab, row, f"写真の欄「{cell[:30]}」が読めません。"
                       "セルに写真を貼りつけるか、画像のURL（https://…）を入れるか、"
@@ -187,6 +193,9 @@ def build_events(rows):
         put(ev, "apply", form_url(r.get("申込フォーム", ""), t, n))
         put(ev, "pic", photo(r.get("写真", ""), f"ev-{ev['slug']}", t, n))
         ev["_pic_unset"] = "pic" not in ev
+        legacy = r.get("URL名", "").strip().lower()     # 旧シートの URL名 列（あれば）
+        if legacy:
+            LEGACY_SLUGS[legacy] = ev
         dl = r.get("申込締切", "").strip()
         if dl:
             put(ev, "deadline", date(dl, t, n, "申込締切", required=False))
@@ -236,10 +245,13 @@ def build_hero(rows, events):
         if not on(r.get("表示", "")):
             continue
         n, t = r["_row"], TAB_HERO
-        ref_title = r.get("つなぐイベント", "").strip()
+        ref_title = (r.get("つなぐイベント", "")
+                     or r.get("つなぐイベントのURL名", "")).strip()
         src, ref = {}, ""
         if ref_title:
             found = by_title.get(ref_title, [])
+            if not found and ref_title.lower() in LEGACY_SLUGS:
+                found = [LEGACY_SLUGS[ref_title.lower()]]   # 旧シートの URL名 でも拾う
             if not found:
                 err(t, n, f"「{ref_title}」というイベントが、公開中のイベントにありません。"
                           "イベントのシートのタイトルと同じものを選んでください")
