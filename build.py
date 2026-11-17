@@ -149,8 +149,9 @@ def nav_href(h):
     return u("") + h if h.startswith("#") else u(h)
 
 
-def shell(title, desc, body, extra_class=""):
-    """ヘッダー・フッター・追従ボタンを含む、ページの外側"""
+def shell(title, desc, body, extra_class="", head_extra=""):
+    """ヘッダー・フッター・追従ボタンを含む、ページの外側。
+    head_extra はトップページだけが使う（home.css の読み込み）。他のページは空のまま。"""
     draft = f'{"  "}<p class="draft">{e(site["draft_note"])}</p>\n' if site.get("draft") else ""
     nav_bar = "".join(f'<a href="{nav_href(h)}">{e(t)}</a>' for t, h, _ in NAV[:6])
     nav_ovl = "\n".join(
@@ -176,7 +177,7 @@ def shell(title, desc, body, extra_class=""):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{u('assets/style.css')}">
-</head>
+{head_extra}</head>
 <body{cls}>
 <header class="hd">
 {draft}  <div class="wrap hd__in">
@@ -253,6 +254,24 @@ def page_head(cap, title, lead=""):
 
 
 # ================================================================ トップページ
+# トップページだけが読み込む見た目（v3「木」のデザイン）。他のページには付けない。
+HOME_HEAD = ('<link rel="stylesheet" href="assets/home.css">\n'
+             '<link rel="icon" href="data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' '
+             'viewBox=\'0 0 24 28\'><circle cx=\'7.5\' cy=\'12.5\' r=\'6.5\' fill=\'%23B7CFA5\'/>'
+             '<circle cx=\'16.5\' cy=\'11.5\' r=\'6.5\' fill=\'%23C7D5B2\'/>'
+             '<circle cx=\'12\' cy=\'7\' r=\'6.5\' fill=\'%23BFD0AA\'/>'
+             '<path d=\'M12 15v12M12 21l-4-3.5M12 19l4-3.5\' stroke=\'%23A88E78\' '
+             'stroke-width=\'1.8\' stroke-linecap=\'round\' fill=\'none\'/></svg>">\n')
+
+
+def hl(text, word, raw=False):
+    """見出しのキーワード1語だけに色を付ける（文言は変えない）。
+    word が見つからなければそのまま返す。raw=True は HTML をそのまま使う箇所（導入のひとこと）用。"""
+    s = text if raw else e(text)
+    w = word if raw else e(word)
+    return s.replace(w, f'<span class="hl">{w}</span>', 1) if w in s else s
+
+
 def stage_slides():
     out = []
     for h in hero["slides"]:
@@ -323,7 +342,7 @@ def event_blocks():
     f = evs[0]
     meta = "".join(f"<span>{e(x)}</span>" for x in (f.get("time", ""), f.get("place", "")) if x)
     big = f"""      <a class="big" href="{ev_url(f)}" data-ev-date="{e(f['date'])}">
-        {pic(f.get('pic', 'ev1'), 'big__pic')}
+        <div class="big__fig">{pic(f.get('pic', 'ev1'), 'big__pic')}</div>
         <div class="big__b">
           <p><span class="big__d">{md(f['date'])}</span><span class="big__w">{en_wd(f['date'])}</span><span class="tag tag--p" data-soon hidden></span></p>
           <h3 class="big__t">{e(f['title'])}</h3>
@@ -335,7 +354,7 @@ def event_blocks():
     for ev in evs[1:]:
         m = "　".join(x for x in (ev.get("time", ""), ev.get("place", "")) if x)
         rows.append(f"""        <a class="row" href="{ev_url(ev)}" data-ev-date="{e(ev['date'])}">
-          {pic(ev.get('pic', 'ev2'), 'row__pic')}
+          <div class="row__fig">{pic(ev.get('pic', 'ev2'), 'row__pic')}</div>
           <div>
             <p class="row__d">{md(ev['date'])}　{en_wd(ev['date'])}<span class="tag tag--g" data-soon hidden></span></p>
             <h3 class="row__t">{e(ev['title'])}</h3>
@@ -371,7 +390,7 @@ def juku_block():
         f'{" ↗" if b.get("external") else ""}</a>' for b in juku["buttons"])
     return f"""      <div class="jk__panel">
         <span class="num jk__num">03</span>
-        <h2 class="jk__t">{e(juku['title'])}</h2>
+        <h2 class="jk__t">{hl(juku['title'], 'キズナ')}</h2>
         <p class="jk__x">{e(juku['body'])}</p>
         <ul class="jk__list">
           {lis}
@@ -416,7 +435,7 @@ def contact_section():
     {pic('contact', 'ct__pic')}
     <div class="wrap wrap--n ct__in">
       <span class="cap cap--light">Contact</span>
-      <h2 class="ct__t">まずは、お話を<br>聞かせてください。</h2>
+      <h2 class="ct__t">まずは、<span class="hl">お話</span>を<br>聞かせてください。</h2>
       <p class="ct__x">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談を承っています。どんな小さなことでも、お気軽にご連絡ください。</p>
       <div class="ct__btns">
         <a class="btn btn--ghost" href="{e(L['consult'])}">相談フォームを開く</a>
@@ -447,7 +466,7 @@ def build_index():
   <section class="intro">
     <div class="wrap">
       <span class="cap">{e(site['name_en'])}</span>
-      <h2 class="intro__t">{about['statement']}</h2>
+      <h2 class="intro__t">{hl(about['statement'], 'いっしょに', raw=True)}</h2>
       <p class="intro__x">{e(about['statement_x'])}</p>
     </div>
   </section>
@@ -456,13 +475,13 @@ def build_index():
   <section class="sec ab" id="about">
     <div class="wrap">
       <div class="ab__grid">
-        <div style="position:relative">
+        <div class="ab__fig" style="position:relative">
           {pic('about', 'ab__pic')}
           <span class="num ab__num">01</span>
         </div>
         <div class="ab__b">
           <span class="cap">About</span>
-          <h2 class="ab__t">{e(about['title'])}</h2>
+          <h2 class="ab__t">{hl(about['title'], 'キズナ')}</h2>
           <p class="ab__p">{e(about['body'][0])}</p>
           <p class="ab__p">{e(about['body'][1])}</p>
           <div class="pts">
@@ -481,7 +500,7 @@ def build_index():
           <span class="num">02</span>
           <div>
             <span class="cap">Event</span>
-            <h2 class="ev__ttl">直近のイベント</h2>
+            <h2 class="ev__ttl">直近の<span class="hl">イベント</span></h2>
           </div>
         </div>
         <a class="link" href="{u('events/')}">すべて見る <span aria-hidden="true">→</span></a>
@@ -496,7 +515,7 @@ def build_index():
       <div class="ev__head">
         <div>
           <span class="cap">News</span>
-          <h2 class="ev__ttl">お知らせ</h2>
+          <h2 class="ev__ttl"><span class="hl">お知らせ</span></h2>
         </div>
         <a class="link" href="{u('news/')}">すべて見る <span aria-hidden="true">→</span></a>
       </div>
@@ -518,7 +537,7 @@ def build_index():
   <section class="sec mem" id="member">
     <div class="wrap">
       <span class="cap">Member</span>
-      <h2 class="mem__t">{e(member['title'])}</h2>
+      <h2 class="mem__t">{hl(member['title'], '会員')}</h2>
       <p class="mem__x">{e(member['sub'])}</p>
       <div class="mem__grid">
 {member_tiles()}
@@ -533,7 +552,7 @@ def build_index():
       <div class="ev__head">
         <div>
           <span class="cap">Q &amp; A</span>
-          <h2 class="ev__ttl">よくある質問</h2>
+          <h2 class="ev__ttl">よくある<span class="hl">質問</span></h2>
         </div>
       </div>
       <div class="ch">
@@ -547,7 +566,7 @@ def build_index():
 {contact_section()}
 
 </main>"""
-    return shell(site["title"], site["description"], body)
+    return shell(site["title"], site["description"], body, "home", HOME_HEAD)
 
 
 # ================================================================ イベント

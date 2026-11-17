@@ -59,6 +59,7 @@ git add -A && git commit -m "..." && git push
 | `data/photos.json` | 写真・イラストの差し込み口 | 「ヒーローの写真を差し替えて」 |
 | `data/site.json` | 連絡先・各リンクのURL・準備中バナー | 「申込フォームのURLを入れて」 |
 | `assets/style.css` | 見た目（色・余白・角丸） | 「色を変えて」 |
+| `assets/home.css` | トップページだけの見た目（ロゴの木・葉の色、波型の帯、葉っぱ型の写真）。`index.html` だけが読み込む | 「トップの緑を変えて」 |
 
 ※ `events.json` `news.json` `hero.json` はスプレッドシートが原本です（上を参照）。
 

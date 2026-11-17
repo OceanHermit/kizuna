@@ -1,0 +1,283 @@
+@charset "utf-8";
+/* =========================================================
+   キズナ ポータル — トップページ専用（v3「木」のデザイン）
+   ---------------------------------------------------------
+   ・index.html だけが読み込みます（他のページには効きません）
+   ・すべて body.home の下に書いてあるので、style.css の値を
+     上書きするだけで、レイアウト（並び・配置）は変えていません
+   ・モチーフはロゴの「木」：丸く重なった樹冠・葉っぱ・幹のライン
+   ・色は assets/img/kizuna-logo.jpg からサンプリング
+       葉   #C7D5B2 / 少し濃い葉 #B7CFA5
+       幹   #A88E78
+       文字 #55413B
+   ・線はステッチ風の点線（dashed）でそろえる
+   ========================================================= */
+
+body.home{
+  /* ---- ロゴ由来の色 ---- */
+  --leaf:#C7D5B2;      /* 葉（メイン） */
+  --leaf-2:#B7CFA5;    /* 葉・少し濃いめ（モチーフの主色） */
+  --leaf-3:#9DB889;    /* 葉・さらに濃いめ（線・ドット） */
+  --leaf-d:#557A42;    /* 読める濃さのグリーン（見出しの色付け・小さな文字） */
+  --leaf-l:#E8EFDD;    /* 淡いグリーンの帯 */
+  --leaf-ll:#F2F6EA;
+  --trunk:#A88E78;     /* 幹（サブ） */
+  --bark:#55413B;      /* 文字の濃いブラウン（サブ） */
+  --bark-2:#6F5B4F;
+  /* ---- 木のまわりの色（アクセント） ---- */
+  --sky:#DCE8EE;  --sky-l:#EEF4F7;     /* 空 */
+  --bud:#DCE8B0;                       /* 若葉 */
+  --sun:#FBF1D2;  --sun-l:#FDF8E9;     /* 陽だまり */
+  --cream:#FBF8F1;                     /* 地色 */
+
+  --dash:1.5px dashed var(--trunk);
+  --r-leaf:clamp(90px,24vw,220px);     /* 葉っぱ型の切り抜きの丸み */
+  --wave-h:clamp(26px,4.5vw,58px);     /* 波型の境界の高さ */
+
+  /* ---- 繰り返すモチーフ（SVG） ---- */
+  --leaf-svg:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 21C3 9 10 3 21 3c0 11-6 18-18 18z' fill='%23B7CFA5'/><path d='M5 19C10 13 14 9 19 5' stroke='%23A88E78' stroke-width='1.5' stroke-linecap='round' fill='none'/></svg>");
+  --leaf-svg-w:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 21C3 9 10 3 21 3c0 11-6 18-18 18z' fill='%23FFFFFF' fill-opacity='.92'/><path d='M5 19C10 13 14 9 19 5' stroke='%23FFFFFF' stroke-opacity='.6' stroke-width='1.5' stroke-linecap='round' fill='none'/></svg>");
+  --tree-svg:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28'><circle cx='7.5' cy='12.5' r='6.5' fill='%23B7CFA5'/><circle cx='16.5' cy='11.5' r='6.5' fill='%23C7D5B2'/><circle cx='12' cy='7' r='6.5' fill='%23BFD0AA'/><circle cx='12' cy='13' r='5' fill='%23C7D5B2'/><path d='M12 15v12M12 21l-4-3.5M12 19l4-3.5' stroke='%23A88E78' stroke-width='1.8' stroke-linecap='round' fill='none'/></svg>");
+  --sprig-svg:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M6 58C14 44 24 32 44 18' stroke='%23A88E78' stroke-width='2' stroke-linecap='round' stroke-dasharray='3 4.5' fill='none'/><path d='M44 18c-8 1-14-4-13-12 8 0 13 4 13 12z' fill='%23B7CFA5'/><path d='M26 36c-8 0-13-6-11-14 8 1 12 6 11 14z' fill='%23C7D5B2'/><path d='M18 46c2-8-2-13-9-13-1 7 2 12 9 13z' fill='%23DCE8B0'/></svg>");
+  --wave:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'><path d='M0 36C120 12 240 4 370 20S560 58 720 40 990 4 1200 30V60H0z' fill='%23000'/></svg>");
+
+  /* ---- style.css の変数を木の色に寄せる（レイアウトはそのまま） ---- */
+  --beige:var(--cream);
+  --beige-2:#F1ECDF;
+  --paper:#FFFFFF;
+  --blue:var(--leaf-2);
+  --blue-l:var(--leaf-l);
+  --blue-ll:var(--leaf-ll);
+  --blue-d:var(--leaf-d);
+  --blue-dd:#3E5C30;
+  --green:var(--bud);
+  --green-l:#EEF3DC;
+  --green-d:var(--leaf-d);
+  --purple:var(--sky);
+  --purple-l:var(--sky-l);
+  --purple-d:#4F6B7A;
+  --ink:var(--bark);
+  --ink-2:var(--bark-2);
+  --sub:#8C7D72;
+  --line:#E3D9CB;
+  --hair:#D9CDBC;
+  --sh:0 10px 34px rgba(85,65,59,.10);
+  --sh-h:0 20px 50px rgba(85,65,59,.18);
+  background:var(--cream);
+}
+body.home ::selection{background:var(--bud)}
+
+/* ---------- 見出しの色付け（キーワード1〜2語だけ） ---------- */
+body.home .hl{color:var(--leaf-d);
+  background:linear-gradient(transparent 70%,rgba(199,213,178,.55) 70%,rgba(199,213,178,.55) 93%,transparent 93%)}
+body.home .ct__t .hl{color:var(--bud);background:none}
+
+/* ---------- 小さい見出しラベル：葉っぱのマーカー ---------- */
+body.home .cap{color:var(--leaf-d);display:inline-flex;align-items:center;gap:.55em}
+body.home .cap::before{content:"";width:1.2em;height:1.2em;flex:0 0 auto;
+  background:var(--leaf-svg) center/contain no-repeat}
+body.home .cap--light{color:rgba(255,255,255,.86)}
+body.home .cap--light::before{background-image:var(--leaf-svg-w)}
+
+/* ---------- 大きな連番 ---------- */
+body.home .num{color:var(--leaf-2);opacity:.6}
+body.home .jk__num{color:var(--leaf-2);opacity:.55}
+
+/* ---------- 準備中バナー・ヘッダー・メニュー ---------- */
+body.home .draft{background:var(--bark);color:var(--cream)}
+body.home .hd.is-solid{background:rgba(251,248,241,.92);box-shadow:0 1px 0 rgba(217,205,188,.9)}
+body.home .logo__mark,body.home .ft__logo .logo__mark{width:30px;height:34px;border-radius:0;
+  background:var(--tree-svg) center/contain no-repeat}
+body.home .logo__mark span{display:none}
+body.home .hd:not(.is-solid) .logo__mark{filter:drop-shadow(0 1px 6px rgba(0,0,0,.35))}
+body.home .hd__nav a::after{height:0;border-bottom:1.5px dashed currentColor}
+body.home .ovl{background:var(--bark);color:var(--cream)}
+body.home .ovl__nav a{border-bottom:1px dashed rgba(251,248,241,.3)}
+body.home .ovl__nav small{color:var(--leaf-2)}
+
+/* ---------- ボタン・リンク ---------- */
+body.home .btn--primary{background:var(--bark);color:#fff}
+body.home .btn--ghost{background:#fff;color:var(--bark);border:1.5px dashed rgba(168,142,120,.6)}
+body.home .link{border-bottom:1.5px dashed var(--trunk)}
+body.home .link--light{border-bottom-color:rgba(255,255,255,.7)}
+
+/* ---------- 写真の下地（外部URLが読めないときもデザインが保てるように） ---------- */
+body.home .pic{background:linear-gradient(160deg,var(--leaf-l) 0%,var(--sun-l) 100%)}
+body.home .pic__none{color:var(--leaf-d);
+  background:
+    radial-gradient(90% 70% at 22% 18%,rgba(183,207,165,.8) 0%,rgba(183,207,165,0) 60%),
+    radial-gradient(80% 70% at 85% 80%,rgba(251,241,210,.9) 0%,rgba(251,241,210,0) 62%),
+    linear-gradient(160deg,var(--leaf-ll) 0%,var(--sun-l) 100%)}
+body.home .ill .pic__none{color:var(--leaf-d);
+  background:radial-gradient(90% 70% at 25% 20%,rgba(220,232,176,.9) 0%,rgba(220,232,176,0) 62%),
+    linear-gradient(160deg,var(--leaf-l) 0%,var(--sky-l) 100%)}
+
+/* ================= ヒーロー ================= */
+body.home .stage{background:linear-gradient(160deg,#B7CFA5 0%,#6F8E5B 100%)}
+body.home .stage__pic::after{
+  background:linear-gradient(190deg,rgba(60,66,48,.42) 0%,rgba(60,66,48,.08) 34%,rgba(52,42,34,.80) 100%)}
+body.home .stage__count b{color:var(--bud)}
+/* スライドのドット：葉っぱの形 */
+body.home .stage__dot{width:13px;height:13px;border-radius:0 70% 0 70%;
+  background:rgba(255,255,255,.35);border:1.5px solid rgba(255,255,255,.75);
+  transform:rotate(-45deg);transition:background-color .35s,transform .35s}
+body.home .stage__dot[aria-current="true"]{width:13px;border-radius:0 70% 0 70%;
+  background:var(--bud);border-color:var(--bud);transform:rotate(-45deg) scale(1.3)}
+/* 矢印ボタン：ステッチの丸 */
+body.home .stage__arw{border:1.5px dashed rgba(255,255,255,.8)}
+body.home .stage__arw:hover{background:var(--bud);color:var(--bark);border-color:var(--bud)}
+/* 下の節の波に重ならないよう、ドットを少し持ち上げる */
+body.home .stage__nav{bottom:calc(clamp(26px,5vw,44px) + var(--wave-h) * .7)}
+/* 狭い幅ではボタンとドット列が同じ行に並ぶので、本文側もドットと同じ分（＋少し）持ち上げて、
+   ドットをボタンの下（ヒーロー下部）に逃がす。ボタン自体の見た目は変えない */
+@media (max-width:699px){
+  body.home .stage__b{padding-bottom:calc(clamp(56px,8vw,104px) + var(--wave-h) * .7 + 10px)}
+}
+
+/* ================= 背景の帯と、波型／アーチ型の境界 ================= */
+/* 波：節の上辺に、その節の色の波を置く（前の節の余白に食い込む） */
+body.home .sec,body.home .intro,body.home .jk{position:relative}
+body.home .intro::before,
+body.home #event::before,
+body.home #news::before,
+body.home .jk::before,
+body.home #faq::before{content:"";position:absolute;left:0;right:0;top:0;height:var(--wave-h);
+  transform:translateY(-99%);pointer-events:none;
+  -webkit-mask:var(--wave) center/100% 100% no-repeat;mask:var(--wave) center/100% 100% no-repeat}
+
+body.home .intro{background:var(--cream)}
+body.home .intro::before{background:var(--cream)}
+body.home #about{background:var(--cream)}
+body.home #event{background:var(--leaf-l)}
+body.home #event::before{background:var(--leaf-l)}
+body.home #news{background:var(--sun-l)}
+body.home #news::before{background:var(--sun-l)}
+body.home .jk{background:var(--sky-l)}
+body.home .jk::before{background:var(--sky-l)}
+/* 会員メニューは大きなアーチで切り替える：
+   節の上の余白の中に、前の節（空色）を楕円でくり抜いた帯を置き、緑がアーチ状に盛り上がって見せる */
+body.home .mem{background:var(--leaf-l);color:var(--bark);position:relative}
+body.home .mem::before{content:"";position:absolute;left:0;right:0;top:0;height:clamp(34px,7vw,110px);
+  background:var(--sky-l);pointer-events:none;
+  -webkit-mask:radial-gradient(ellipse 56% 100% at 50% 100%,transparent 99.5%,#000 100%);
+  mask:radial-gradient(ellipse 56% 100% at 50% 100%,transparent 99.5%,#000 100%)}
+body.home #faq{background:var(--cream);z-index:1}
+body.home #faq::before{background:var(--cream)}
+/* よくある質問 → お問い合わせ：クリームの波を写真の上にかぶせる */
+body.home #faq::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--wave-h);
+  transform:translateY(99%) scaleY(-1);background:var(--cream);pointer-events:none;
+  -webkit-mask:var(--wave) center/100% 100% no-repeat;mask:var(--wave) center/100% 100% no-repeat}
+
+/* ================= 導入 ================= */
+body.home .intro__x{color:var(--bark-2)}
+
+/* ================= キズナとは：葉っぱ型の写真 ================= */
+body.home .ab__fig{isolation:isolate}
+body.home .ab__pic{border-radius:0 var(--r-leaf) 0 var(--r-leaf);z-index:1}
+/* 少しずらした点線の枠 */
+body.home .ab__fig::before{content:"";position:absolute;inset:14px -14px -14px 14px;z-index:0;
+  border:var(--dash);border-radius:0 var(--r-leaf) 0 var(--r-leaf);pointer-events:none}
+/* 枝と葉っぱのあしらい */
+body.home .ab__fig::after{content:"";position:absolute;right:-16px;top:-26px;width:72px;height:72px;z-index:2;
+  background:var(--sprig-svg) center/contain no-repeat;transform:rotate(12deg);pointer-events:none}
+body.home .ab__num{z-index:3}
+body.home .ab__p{color:var(--bark-2)}
+body.home .pts{border-top:var(--dash)}
+body.home .pt{border-bottom:var(--dash)}
+/* 番号バッジ：樹冠（丸い葉のかたまり）＋小さな幹 */
+body.home .pt__n{position:relative;isolation:isolate;width:40px;height:48px;padding:11px 0 0;
+  text-align:center;font-size:var(--t-cap);font-weight:700;color:var(--bark);letter-spacing:.06em;line-height:1}
+body.home .pt__n::before{content:"";position:absolute;inset:0 2px 13px;z-index:-1;
+  border-radius:50% 50% 46% 54% / 58% 58% 42% 42%;background:var(--leaf-2);
+  box-shadow:-9px 7px 0 -6px var(--leaf),10px 6px 0 -6px var(--leaf),0 -7px 0 -5px var(--bud)}
+body.home .pt__n::after{content:"";position:absolute;left:50%;bottom:0;width:3px;height:14px;margin-left:-1.5px;
+  border-radius:2px;background:var(--trunk)}
+body.home .pt__x{color:var(--sub)}
+
+/* ================= イベント ================= */
+body.home .big__fig{position:relative;isolation:isolate}
+body.home .big__pic{border-radius:var(--r-leaf) 26px var(--r-leaf) 26px;z-index:1}
+body.home .big__fig::before{content:"";position:absolute;inset:-12px 12px 12px -12px;z-index:0;
+  border:var(--dash);border-radius:var(--r-leaf) 26px var(--r-leaf) 26px;pointer-events:none}
+body.home .big__fig::after{content:"";position:absolute;left:-18px;bottom:-22px;width:68px;height:68px;z-index:2;
+  background:var(--sprig-svg) center/contain no-repeat;transform:scaleX(-1) rotate(-8deg);pointer-events:none}
+body.home .big__x{color:var(--bark-2)}
+body.home .rows{border-top:var(--dash)}
+body.home .row{border-bottom:var(--dash)}
+/* 小さいサムネイルは樹冠の形＋幹 */
+body.home .row__fig{position:relative;isolation:isolate}
+body.home .row__pic{border-radius:50% 50% 46% 54% / 56% 56% 44% 44%;z-index:1;
+  box-shadow:-10px 9px 0 -6px var(--leaf),11px 8px 0 -7px var(--leaf-2)}
+body.home .row__fig::before{content:"";position:absolute;inset:-5px;z-index:0;border-radius:50%;
+  border:var(--dash);pointer-events:none}
+body.home .row__fig::after{content:"";position:absolute;left:50%;bottom:-8px;width:4px;height:14px;margin-left:-2px;
+  border-radius:2px;background:var(--trunk);z-index:0}
+body.home .tag--p{background:var(--sun);color:var(--bark)}
+body.home .tag--g{background:var(--leaf-l);color:var(--leaf-d)}
+
+/* ================= お知らせ ================= */
+body.home .nw{border-top:var(--dash)}
+body.home .nw__i{border-bottom:var(--dash)}
+body.home .nw__c{color:var(--leaf-d)}
+
+/* ================= キズナ塾 ================= */
+body.home .jk__pic{border-radius:clamp(40px,9vw,150px) clamp(40px,9vw,150px) 0 0;
+  outline:1.5px dashed rgba(255,255,255,.7);outline-offset:-12px}
+body.home .jk__pic::after{background:rgba(52,66,40,.28)}
+body.home .jk__panel{border-radius:36px 12px 36px 12px;outline:var(--dash);outline-offset:-9px}
+body.home .jk__x{color:var(--bark-2)}
+body.home .jk__list{border-top:var(--dash)}
+body.home .jk__list li{border-bottom:var(--dash)}
+body.home .jk__list li::before{width:12px;height:12px;border-radius:0;background:var(--leaf-svg) center/contain no-repeat;
+  margin-top:.55em}
+
+/* ================= 会員メニュー（明るい緑の帯に白いタイル） ================= */
+body.home .mem .cap{color:var(--leaf-d)}
+body.home .mem__t{color:var(--bark)}
+body.home .mem__x{color:var(--bark-2)}
+body.home .mi{background:#fff;border:1.5px dashed rgba(168,142,120,.55);border-radius:28px 10px 28px 10px}
+body.home .mi:hover{background:#fff;border-style:solid}
+/* アイコンの入れ物：樹冠＋幹 */
+body.home .mi__i{position:relative;border-radius:50% 50% 46% 54% / 58% 58% 42% 42%;margin-bottom:14px}
+body.home .mi__i::after{content:"";position:absolute;left:50%;bottom:-9px;width:4px;height:12px;margin-left:-2px;
+  border-radius:2px;background:var(--trunk)}
+body.home .mi--blue .mi__i{background:var(--sky);box-shadow:-9px 7px 0 -5px var(--sky-l),10px 6px 0 -5px var(--sky-l)}
+body.home .mi--green .mi__i{background:var(--leaf);box-shadow:-9px 7px 0 -5px var(--leaf-l),10px 6px 0 -5px var(--leaf-l)}
+body.home .mi--purple .mi__i{background:var(--sun);box-shadow:-9px 7px 0 -5px var(--sun-l),10px 6px 0 -5px var(--sun-l)}
+body.home .mi__t{color:var(--bark)}
+body.home .mi__x{color:var(--bark-2)}
+body.home .mem__note{color:var(--sub)}
+
+/* ================= よくある質問 ================= */
+body.home .ch__ill{border-radius:50% 50% 46% 54% / 58% 58% 42% 42%;
+  box-shadow:-12px 10px 0 -7px var(--leaf),13px 9px 0 -8px var(--bud)}
+/* イラストが未設定のあいだは、ロゴの木を出しておく */
+body.home .ch__ill .pic__none b{font-size:0;width:54%;height:62%;background:var(--tree-svg) center/contain no-repeat;
+  margin:0 auto}
+body.home .ch__ill .pic__none span{font-size:.55rem;letter-spacing:.1em}
+body.home .ch__bub{border-radius:24px 24px 24px 6px;border:1.5px dashed rgba(168,142,120,.5)}
+body.home .q{border-bottom:var(--dash)}
+body.home .q:first-of-type{border-top:var(--dash)}
+body.home .q__q{background:var(--leaf-l);color:var(--leaf-d);border-radius:0 12px 0 12px;
+  padding:3px 10px;font-size:var(--t-cap);margin-top:.2em}
+body.home .q__a > span{color:var(--trunk)}
+body.home .q__ex{background:var(--sun-l);border:1.5px dashed rgba(168,142,120,.45)}
+
+/* ================= お問い合わせ ================= */
+body.home .ct__pic::after{
+  background:linear-gradient(180deg,rgba(44,58,36,.74) 0%,rgba(52,48,36,.58) 50%,rgba(52,42,34,.82) 100%)}
+body.home .ct__tel{border-top:1.5px dashed rgba(255,255,255,.4)}
+
+/* ================= フッター・追従ボタン ================= */
+body.home .ft{background:var(--bark);color:rgba(251,248,241,.74)}
+body.home .ft__top{border-bottom:1px dashed rgba(251,248,241,.3)}
+body.home .ft__nav a:hover{color:var(--bud)}
+body.home .fx{background:rgba(251,248,241,.95);border-top:var(--dash)}
+
+/* ================= 広い画面 ================= */
+@media (min-width:900px){
+  /* 左端まで断ち落とした写真に、点線の枠も合わせる */
+  body.home .ab__fig::before{left:calc(var(--edge) * -1 + 14px)}
+  body.home .ab__fig::after{right:-30px;top:-34px;width:88px;height:88px}
+  body.home .big__fig::after{left:-26px;bottom:-28px;width:84px;height:84px}
+}

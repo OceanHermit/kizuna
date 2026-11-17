@@ -15,8 +15,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/home.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28'><circle cx='7.5' cy='12.5' r='6.5' fill='%23B7CFA5'/><circle cx='16.5' cy='11.5' r='6.5' fill='%23C7D5B2'/><circle cx='12' cy='7' r='6.5' fill='%23BFD0AA'/><path d='M12 15v12M12 21l-4-3.5M12 19l4-3.5' stroke='%23A88E78' stroke-width='1.8' stroke-linecap='round' fill='none'/></svg>">
 </head>
-<body>
+<body class="home">
 <header class="hd">
   <p class="draft">このページは準備中のサンプルです。行事の日程や内容は、まだ正式なものではありません。</p>
   <div class="wrap hd__in">
@@ -106,7 +108,7 @@
   <section class="intro">
     <div class="wrap">
       <span class="cap">KIZUNA</span>
-      <h2 class="intro__t">ひとりで抱えこまずに、<br>いっしょに考えていく。</h2>
+      <h2 class="intro__t">ひとりで抱えこまずに、<br><span class="hl">いっしょに</span>考えていく。</h2>
       <p class="intro__x">全国の子どもたちが、仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。学校のこと、進路のこと、毎日のこと。どんな小さなことでも、いっしょに考えます。</p>
     </div>
   </section>
@@ -115,13 +117,13 @@
   <section class="sec ab" id="about">
     <div class="wrap">
       <div class="ab__grid">
-        <div style="position:relative">
+        <div class="ab__fig" style="position:relative">
           <div class="pic ab__pic"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114223_34bb7809-17fd-403b-ae2e-fff279e3a118.png" alt="並木道を歩く子どもたちの後ろ姿" loading="lazy" decoding="async"></div>
           <span class="num ab__num">01</span>
         </div>
         <div class="ab__b">
           <span class="cap">About</span>
-          <h2 class="ab__t">キズナとは</h2>
+          <h2 class="ab__t"><span class="hl">キズナ</span>とは</h2>
           <p class="ab__p">キズナは、全国の子どもたちが仏教の教えをもとに、ステキな毎日を送れるよう、さまざまなサポートを受けることができる集まりです。</p>
           <p class="ab__p">学校のこと、進路のこと、毎日のこと。子どもたち一人ひとりの状況に合わせて、無理のないかたちで参加できます。保護者の方のご相談も、いつでもお受けしています。</p>
           <div class="pts">
@@ -160,13 +162,13 @@
           <span class="num">02</span>
           <div>
             <span class="cap">Event</span>
-            <h2 class="ev__ttl">直近のイベント</h2>
+            <h2 class="ev__ttl">直近の<span class="hl">イベント</span></h2>
           </div>
         </div>
         <a class="link" href="events/">すべて見る <span aria-hidden="true">→</span></a>
       </div>
       <a class="big" href="events/event-2026-11-23/" data-ev-date="2026-11-23">
-        <div class="pic big__pic"><img src="assets/img/ev-event-2026-11-23.png" alt="" loading="lazy" decoding="async"></div>
+        <div class="big__fig"><div class="pic big__pic"><img src="assets/img/ev-event-2026-11-23.png" alt="" loading="lazy" decoding="async"></div></div>
         <div class="big__b">
           <p><span class="big__d">11.23</span><span class="big__w">MON</span><span class="tag tag--p" data-soon hidden></span></p>
           <h3 class="big__t">キズナ塾 オンライン体験会</h3>
@@ -176,7 +178,7 @@
       </a>
       <div class="rows">
         <a class="row" href="events/event-2026-12-13/" data-ev-date="2026-12-13">
-          <div class="pic row__pic"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114114_225021a3-da42-4b38-a8d7-a1b1eb9a30e2.png" alt="テーブルに並んだ折り紙の鶴" loading="lazy" decoding="async"></div>
+          <div class="row__fig"><div class="pic row__pic"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114114_225021a3-da42-4b38-a8d7-a1b1eb9a30e2.png" alt="テーブルに並んだ折り紙の鶴" loading="lazy" decoding="async"></div></div>
           <div>
             <p class="row__d">12.13　SUN<span class="tag tag--g" data-soon hidden></span></p>
             <h3 class="row__t">キズナ もちつき大会</h3>
@@ -184,7 +186,7 @@
           </div>
         </a>
         <a class="row" href="events/event-2027-01-11/" data-ev-date="2027-01-11">
-          <div class="pic row__pic"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114144_c3cdea39-93b2-43b1-9203-352c41352372.png" alt="玄関に並んだ子どもの靴と落ち葉" loading="lazy" decoding="async"></div>
+          <div class="row__fig"><div class="pic row__pic"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114144_c3cdea39-93b2-43b1-9203-352c41352372.png" alt="玄関に並んだ子どもの靴と落ち葉" loading="lazy" decoding="async"></div></div>
           <div>
             <p class="row__d">01.11　MON<span class="tag tag--g" data-soon hidden></span></p>
             <h3 class="row__t">新年のつどい</h3>
@@ -201,7 +203,7 @@
       <div class="ev__head">
         <div>
           <span class="cap">News</span>
-          <h2 class="ev__ttl">お知らせ</h2>
+          <h2 class="ev__ttl"><span class="hl">お知らせ</span></h2>
         </div>
         <a class="link" href="news/">すべて見る <span aria-hidden="true">→</span></a>
       </div>
@@ -248,7 +250,7 @@
     <div class="wrap" style="position:relative">
       <div class="jk__panel">
         <span class="num jk__num">03</span>
-        <h2 class="jk__t">キズナ塾</h2>
+        <h2 class="jk__t"><span class="hl">キズナ</span>塾</h2>
         <p class="jk__x">得意な教科がひとつでもあれば大丈夫。オンラインでも参加できます。申し込みも、サポーターの募集も、キズナ塾のサイトにまとめています。</p>
         <ul class="jk__list">
           <li><span>お子さんの申し込みを受け付けています</span></li>
@@ -266,7 +268,7 @@
   <section class="sec mem" id="member">
     <div class="wrap">
       <span class="cap">Member</span>
-      <h2 class="mem__t">会員メニュー</h2>
+      <h2 class="mem__t"><span class="hl">会員</span>メニュー</h2>
       <p class="mem__x">キズナクラブ会員の方はこちらから</p>
       <div class="mem__grid">
         <a class="mi mi--blue" href="https://script.google.com/macros/s/AKfycbx5_sbV_WLrqEkrwOlyR0nCL1qXDX8gJXjnPwL2amxsV2c_vIrokZ9UR7xCKvMA_2ma/exec">
@@ -310,7 +312,7 @@
       <div class="ev__head">
         <div>
           <span class="cap">Q &amp; A</span>
-          <h2 class="ev__ttl">よくある質問</h2>
+          <h2 class="ev__ttl">よくある<span class="hl">質問</span></h2>
         </div>
       </div>
       <div class="ch">
@@ -380,7 +382,7 @@
     <div class="pic ct__pic"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KPCptZ5309CSs0xpKG9cw5W7CR/hf_20261014_114114_20a8efc9-8527-41fd-861e-13dca1124777.png" alt="朝の光のなかの参道" loading="lazy" decoding="async"></div>
     <div class="wrap wrap--n ct__in">
       <span class="cap cap--light">Contact</span>
-      <h2 class="ct__t">まずは、お話を<br>聞かせてください。</h2>
+      <h2 class="ct__t">まずは、<span class="hl">お話</span>を<br>聞かせてください。</h2>
       <p class="ct__x">キズナ担当へのご紹介、打ち合わせ、個別コース登録、無料体験のご相談を承っています。どんな小さなことでも、お気軽にご連絡ください。</p>
       <div class="ct__btns">
         <a class="btn btn--ghost" href="https://docs.google.com/forms/d/e/1FAIpQLScac2hbPQQ2HuZD_1s0DjuTsQQwartUsrRzhkP4UwKCP0N5Xg/viewform">相談フォームを開く</a>
