@@ -1,0 +1,274 @@
+@charset "utf-8";
+/* =========================================================
+   キズナ ポータル — 全ページ共通の「木」のデザイン
+   ---------------------------------------------------------
+   ・すべてのページが style.css の次に読み込みます
+     （トップページだけは、さらにこの後に home.css を読み込みます）
+   ・トップページ（v3）で決めたデザインを、サイト全体で使えるようにしたものです
+       1. 色とモチーフ（変数）……色を変えるときは、ここだけ直せば全ページに効きます
+       2. 共通の部品……ヘッダー・メニュー・ボタン・見出しラベル・番号バッジ・フッターなど
+       3. 下層ページ（body.sub）……イベント・お知らせ・クラブ・ポイント・スタッフ・才能診断
+   ・style.css の値を上書きするだけで、レイアウト（並び・配置）は変えていません
+   ・モチーフはロゴの「木」：丸く重なった樹冠・葉っぱ・幹・枝のライン
+   ・色はロゴの画像からサンプリング
+       葉   #C7D5B2 / 少し濃い葉 #B7CFA5
+       幹   #A88E78
+       文字 #55413B
+   ・線はステッチ風の点線（dashed）でそろえる
+   ========================================================= */
+
+/* =================================================
+   1. 色とモチーフ
+   ================================================= */
+:root{
+  /* ---- ロゴ由来の色 ---- */
+  --leaf:#C7D5B2;      /* 葉（メイン） */
+  --leaf-2:#B7CFA5;    /* 葉・少し濃いめ（モチーフの主色） */
+  --leaf-3:#9DB889;    /* 葉・さらに濃いめ（線・ドット） */
+  --leaf-d:#557A42;    /* 読める濃さのグリーン（見出しの色付け・小さな文字） */
+  --leaf-l:#E8EFDD;    /* 淡いグリーンの帯 */
+  --leaf-ll:#F2F6EA;
+  --trunk:#A88E78;     /* 幹（サブ） */
+  --bark:#55413B;      /* 文字の濃いブラウン（サブ） */
+  --bark-2:#6F5B4F;
+  /* ---- 木のまわりの色（アクセント） ---- */
+  --sky:#DCE8EE;  --sky-l:#EEF4F7;     /* 空 */
+  --bud:#DCE8B0;                       /* 若葉 */
+  --sun:#FBF1D2;  --sun-l:#FDF8E9;     /* 陽だまり */
+  --cream:#FBF8F1;                     /* 地色 */
+
+  --dash:1.5px dashed var(--trunk);
+  --r-leaf:clamp(90px,24vw,220px);     /* 葉っぱ型の切り抜きの丸み */
+  --wave-h:clamp(26px,4.5vw,58px);     /* 波型の境界の高さ */
+
+  /* ---- 繰り返すモチーフ（SVG） ---- */
+  --leaf-svg:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 21C3 9 10 3 21 3c0 11-6 18-18 18z' fill='%23B7CFA5'/><path d='M5 19C10 13 14 9 19 5' stroke='%23A88E78' stroke-width='1.5' stroke-linecap='round' fill='none'/></svg>");
+  --leaf-svg-w:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 21C3 9 10 3 21 3c0 11-6 18-18 18z' fill='%23FFFFFF' fill-opacity='.92'/><path d='M5 19C10 13 14 9 19 5' stroke='%23FFFFFF' stroke-opacity='.6' stroke-width='1.5' stroke-linecap='round' fill='none'/></svg>");
+  --tree-svg:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28'><circle cx='7.5' cy='12.5' r='6.5' fill='%23B7CFA5'/><circle cx='16.5' cy='11.5' r='6.5' fill='%23C7D5B2'/><circle cx='12' cy='7' r='6.5' fill='%23BFD0AA'/><circle cx='12' cy='13' r='5' fill='%23C7D5B2'/><path d='M12 15v12M12 21l-4-3.5M12 19l4-3.5' stroke='%23A88E78' stroke-width='1.8' stroke-linecap='round' fill='none'/></svg>");
+  --sprig-svg:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M6 58C14 44 24 32 44 18' stroke='%23A88E78' stroke-width='2' stroke-linecap='round' stroke-dasharray='3 4.5' fill='none'/><path d='M44 18c-8 1-14-4-13-12 8 0 13 4 13 12z' fill='%23B7CFA5'/><path d='M26 36c-8 0-13-6-11-14 8 1 12 6 11 14z' fill='%23C7D5B2'/><path d='M18 46c2-8-2-13-9-13-1 7 2 12 9 13z' fill='%23DCE8B0'/></svg>");
+  --wave:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'><path d='M0 36C120 12 240 4 370 20S560 58 720 40 990 4 1200 30V60H0z' fill='%23000'/></svg>");
+
+  /* ---- style.css の変数を木の色に寄せる（レイアウトはそのまま） ---- */
+  --beige:var(--cream);
+  --beige-2:#F1ECDF;
+  --paper:#FFFFFF;
+  --blue:var(--leaf-2);
+  --blue-l:var(--leaf-l);
+  --blue-ll:var(--leaf-ll);
+  --blue-d:var(--leaf-d);
+  --blue-dd:#3E5C30;
+  --green:var(--bud);
+  --green-l:#EEF3DC;
+  --green-d:var(--leaf-d);
+  --purple:var(--sky);
+  --purple-l:var(--sky-l);
+  --purple-d:#4F6B7A;
+  --ink:var(--bark);
+  --ink-2:var(--bark-2);
+  --sub:#8C7D72;
+  --line:#E3D9CB;
+  --hair:#D9CDBC;
+  --sh:0 10px 34px rgba(85,65,59,.10);
+  --sh-h:0 20px 50px rgba(85,65,59,.18);
+}
+
+/* =================================================
+   2. 共通の部品（トップ・下層とも）
+   ================================================= */
+::selection{background:var(--bud)}
+
+/* ---------- 見出しの色付け（キーワード1〜2語だけ） ---------- */
+.hl{color:var(--leaf-d);
+  background:linear-gradient(transparent 70%,rgba(199,213,178,.55) 70%,rgba(199,213,178,.55) 93%,transparent 93%)}
+
+/* ---------- 小さい見出しラベル：葉っぱのマーカー ---------- */
+.cap{color:var(--leaf-d);display:inline-flex;align-items:center;gap:.55em}
+.cap::before{content:"";width:1.2em;height:1.2em;flex:0 0 auto;
+  background:var(--leaf-svg) center/contain no-repeat}
+.cap--light{color:rgba(255,255,255,.86)}
+.cap--light::before{background-image:var(--leaf-svg-w)}
+
+/* ---------- 準備中バナー・ヘッダー・メニュー ---------- */
+.draft{background:var(--bark);color:var(--cream)}
+.hd.is-solid{background:rgba(251,248,241,.92);box-shadow:0 1px 0 rgba(217,205,188,.9)}
+.logo__mark,.ft__logo .logo__mark{width:30px;height:34px;border-radius:0;
+  background:var(--tree-svg) center/contain no-repeat}
+.logo__mark span{display:none}
+.hd__nav a::after{height:0;border-bottom:1.5px dashed currentColor}
+.ovl{background:var(--bark);color:var(--cream)}
+.ovl__nav a{border-bottom:1px dashed rgba(251,248,241,.3)}
+.ovl__nav small{color:var(--leaf-2)}
+
+/* ---------- ボタン・リンク ---------- */
+.btn--primary{background:var(--bark);color:#fff}
+.btn--ghost{background:#fff;color:var(--bark);border:1.5px dashed rgba(168,142,120,.6)}
+.link{border-bottom:1.5px dashed var(--trunk)}
+.link--light{border-bottom-color:rgba(255,255,255,.7)}
+
+/* ---------- 写真の下地（外部URLが読めないときもデザインが保てるように） ---------- */
+.pic{background:linear-gradient(160deg,var(--leaf-l) 0%,var(--sun-l) 100%)}
+.pic__none{color:var(--leaf-d);
+  background:
+    radial-gradient(90% 70% at 22% 18%,rgba(183,207,165,.8) 0%,rgba(183,207,165,0) 60%),
+    radial-gradient(80% 70% at 85% 80%,rgba(251,241,210,.9) 0%,rgba(251,241,210,0) 62%),
+    linear-gradient(160deg,var(--leaf-ll) 0%,var(--sun-l) 100%)}
+.ill .pic__none{color:var(--leaf-d);
+  background:radial-gradient(90% 70% at 25% 20%,rgba(220,232,176,.9) 0%,rgba(220,232,176,0) 62%),
+    linear-gradient(160deg,var(--leaf-l) 0%,var(--sky-l) 100%)}
+
+/* ---------- 特徴の並び：番号バッジは樹冠（丸い葉のかたまり）＋小さな幹 ---------- */
+.pts{border-top:var(--dash)}
+.pt{border-bottom:var(--dash)}
+.pt__n{position:relative;isolation:isolate;width:40px;height:48px;padding:11px 0 0;
+  text-align:center;font-size:var(--t-cap);font-weight:700;color:var(--bark);letter-spacing:.06em;line-height:1}
+.pt__n::before{content:"";position:absolute;inset:0 2px 13px;z-index:-1;
+  border-radius:50% 50% 46% 54% / 58% 58% 42% 42%;background:var(--leaf-2);
+  box-shadow:-9px 7px 0 -6px var(--leaf),10px 6px 0 -6px var(--leaf),0 -7px 0 -5px var(--bud)}
+.pt__n::after{content:"";position:absolute;left:50%;bottom:0;width:3px;height:14px;margin-left:-1.5px;
+  border-radius:2px;background:var(--trunk)}
+.pt__x{color:var(--sub)}
+
+/* ---------- お知らせの並び・小さな印 ---------- */
+.nw{border-top:var(--dash)}
+.nw__i{border-bottom:var(--dash)}
+.nw__c{color:var(--leaf-d)}
+.tag--p{background:var(--sun);color:var(--bark)}
+.tag--g{background:var(--leaf-l);color:var(--leaf-d)}
+
+/* ---------- フッター・追従ボタン ---------- */
+.ft{background:var(--bark);color:rgba(251,248,241,.74)}
+.ft__top{border-bottom:1px dashed rgba(251,248,241,.3)}
+.ft__nav a:hover{color:var(--bud)}
+.fx{background:rgba(251,248,241,.95);border-top:var(--dash)}
+
+/* =================================================
+   3. 下層ページ（body.sub）
+   ================================================= */
+body.sub{
+  --band:var(--leaf-l);                /* ページ上部の帯の色（トップの「イベント」「会員メニュー」と同じ） */
+  --wave-s:clamp(18px,2.7vw,34px);     /* 帯の波の高さ（見出しの下の余白に収まる大きさ） */
+}
+body.sub--news{--band:var(--sun)}      /* お知らせは、トップの「お知らせ」と同じ陽だまり色 */
+
+/* ---------- ヘッダー：トップでスクロールしたときと同じ地 ---------- */
+body.sub .hd{background:rgba(251,248,241,.92);box-shadow:0 1px 0 rgba(217,205,188,.9)}
+
+/* ---------- ページ上部の帯と、波型の境界（背景色の切り替え） ----------
+   ページの見出しのまとまりを淡い色の帯にのせ、本文（クリーム）との境目を波にする。
+   トップの節の切り替えと同じく、本文側の波を帯の下の余白に食い込ませる。
+   帯は一番うしろ（z-index:-1）に敷くだけなので、文字や写真の位置は変わらない。
+   帯の下端は、ページの作りに合わせて次の場所にそろえる：
+     一覧・クラブなど（.phead） … 見出しの下端
+     才能診断                   … 見出しの下の表（.spec）の上端
+     お知らせの詳細             … 本文（.detail__b）の上端
+     イベントの詳細             … 写真の高さの中ほど（写真が帯をまたぐ） */
+body.sub .phead,
+body.sub .phead__x + .spec,
+body.sub .detail--news .detail__b,
+body.sub .detail__hero{position:relative}
+body.sub .phead::before,body.sub .phead::after,
+body.sub .phead__x + .spec::before,body.sub .phead__x + .spec::after,
+body.sub .detail--news .detail__b::before,body.sub .detail--news .detail__b::after,
+body.sub .detail__hero::before,body.sub .detail__hero::after{content:"";position:absolute;z-index:-1;
+  left:50%;width:100vw;margin-left:-50vw;pointer-events:none}
+/* 帯：ページの一番上（ヘッダーの裏）から */
+body.sub .phead::before,
+body.sub .phead__x + .spec::before,
+body.sub .detail--news .detail__b::before,
+body.sub .detail__hero::before{top:-999px;background:var(--band)}
+/* 波：本文の地色（クリーム）の波 */
+body.sub .phead::after,
+body.sub .phead__x + .spec::after,
+body.sub .detail--news .detail__b::after,
+body.sub .detail__hero::after{height:var(--wave-s);background:var(--cream);
+  -webkit-mask:var(--wave) center/100% 100% no-repeat;mask:var(--wave) center/100% 100% no-repeat}
+body.sub .phead::before,body.sub .phead::after{bottom:0}
+body.sub .phead__x + .spec::before,body.sub .phead__x + .spec::after,
+body.sub .detail--news .detail__b::before,body.sub .detail--news .detail__b::after{bottom:100%}
+body.sub .detail__hero::before,body.sub .detail__hero::after{bottom:50%}
+/* 見出しの下の罫は、帯の境目が代わりになるので消す（太さは残してレイアウトを保つ） */
+body.sub .phead{border-bottom-color:transparent}
+
+/* ---------- 並びの見出し：枝（点線）の先に葉っぱ ---------- */
+body.sub .group{position:relative}
+body.sub .group::after{height:0;background:none;border-top:var(--dash);margin-right:13px}
+body.sub .group::before{content:"";position:absolute;right:0;top:50%;width:16px;height:16px;margin-top:-14px;
+  background:var(--leaf-svg) center/contain no-repeat;pointer-events:none}
+body.sub .group--past::before{opacity:.45}
+body.sub .empty{border-top:var(--dash);border-bottom:var(--dash)}
+/* 才能診断：ボタンのすぐ下の見出しが詰まっていたので、ほかの見出しと同じだけ空ける */
+body.sub .detail__cta + .group{margin-top:clamp(44px,7vw,78px)}
+
+/* ---------- イベント一覧：葉っぱの形のカード ---------- */
+body.sub .el{border-radius:36px 12px 36px 12px}
+
+/* ---------- イベントの詳細：葉っぱ型の写真（トップの「直近のイベント」と同じ形） ---------- */
+/* 写真の大きさ（横16:縦9・高さ520pxまで）に枠を合わせて、ずらした点線枠と枝を添える */
+body.sub .detail__fig{position:relative;isolation:isolate;max-width:calc(520px * 16 / 9)}
+body.sub .detail__pic{border-radius:var(--r-leaf) 26px var(--r-leaf) 26px;z-index:1}
+body.sub .detail__fig::before{content:"";position:absolute;inset:-12px 12px 12px -12px;z-index:0;
+  border:var(--dash);border-radius:var(--r-leaf) 26px var(--r-leaf) 26px;pointer-events:none}
+body.sub .detail__fig::after{content:"";position:absolute;left:-18px;bottom:-22px;width:68px;height:68px;z-index:2;
+  background:var(--sprig-svg) center/contain no-repeat;transform:scaleX(-1) rotate(-8deg);pointer-events:none}
+body.sub .detail__past{background:var(--sun-l);outline:1.5px dashed rgba(168,142,120,.45);outline-offset:-1.5px}
+body.sub .detail__past a{border-bottom-style:dashed}
+body.sub .spec{border-top:var(--dash)}
+body.sub .spec__r{border-bottom:var(--dash)}
+body.sub .detail__cta{border-top:var(--dash)}
+
+/* ---------- キズナクラブ ---------- */
+body.sub .cc{border-radius:36px 12px 36px 12px;border-top-color:var(--leaf-2)}
+body.sub .cc--green{border-top-color:var(--leaf-3)}
+body.sub .cc--apricot{border-top-color:var(--trunk)}
+body.sub .cc__dl{border-top:var(--dash)}
+body.sub .cc__dl > div{border-bottom:var(--dash)}
+body.sub .chipb{background:var(--leaf-l);color:var(--leaf-d)}
+body.sub .chipb::before{content:"";align-self:center;width:1.1em;height:1.1em;flex:0 0 auto;
+  background:var(--leaf-svg) center/contain no-repeat}
+/* チェックの印は、トップのキズナ塾の並びと同じ葉っぱに */
+body.sub .ticks li::before{content:"";width:12px;height:12px;margin-top:.55em;padding:0;
+  background:var(--leaf-svg) center/contain no-repeat}
+body.sub .way{border-radius:28px 10px 28px 10px}
+/* 番号：小さな樹冠＋幹 */
+body.sub .way__n{position:relative;border-radius:50% 50% 46% 54% / 58% 58% 42% 42%;
+  background:var(--leaf-2);color:var(--bark);font-weight:700;
+  box-shadow:-7px 6px 0 -4px var(--leaf),8px 5px 0 -4px var(--leaf),0 -5px 0 -3px var(--bud)}
+body.sub .way__n::after{content:"";position:absolute;left:50%;bottom:-7px;width:3px;height:9px;margin-left:-1.5px;
+  border-radius:2px;background:var(--trunk)}
+body.sub .acc{border-radius:20px 6px 20px 6px}
+body.sub .warn li::before{color:var(--trunk)}
+
+/* ---------- キズナカード・キズナポイント ---------- */
+body.sub .ptt{border-radius:28px 10px 28px 10px;border-left-color:transparent;
+  outline:1.5px dashed rgba(168,142,120,.5);outline-offset:-1.5px}
+
+/* ---------- スタッフ・サポーター紹介 ---------- */
+body.sub .pr{border-radius:28px 10px 28px 10px;outline:1.5px dashed rgba(168,142,120,.5);outline-offset:-1.5px}
+/* 写真の入れ物：樹冠の形 */
+body.sub .pr__ph{border-radius:50% 50% 46% 54% / 56% 56% 44% 44%;
+  box-shadow:-8px 7px 0 -5px var(--leaf),9px 6px 0 -6px var(--leaf-2)}
+body.sub .pr__ph .pic__none{background:var(--leaf-l)}
+/* 写真が無いあいだは、ロゴの木を出しておく */
+body.sub .pr__ph .pic__none b{position:absolute;inset:17% 20% 13%;font-size:0;opacity:1;
+  background:var(--tree-svg) center/contain no-repeat}
+body.sub .area{border-top:var(--dash)}
+
+/* ---------- キズナ式 才能診断 ---------- */
+body.sub .gift{border-radius:28px 10px 28px 10px;border-top-color:transparent;
+  outline:1.5px dashed rgba(168,142,120,.5);outline-offset:-1.5px}
+/* 印の入れ物：樹冠＋幹（トップの会員メニューと同じ） */
+body.sub .gift__m{position:relative;border-radius:50% 50% 46% 54% / 58% 58% 42% 42%;color:var(--bark)}
+body.sub .gift__m::after{content:"";position:absolute;left:50%;bottom:-9px;width:4px;height:12px;margin-left:-2px;
+  border-radius:2px;background:var(--trunk)}
+body.sub .gift--rose .gift__m{background:var(--sun);color:var(--bark);
+  box-shadow:-9px 7px 0 -5px var(--sun-l),10px 6px 0 -5px var(--sun-l)}
+body.sub .gift--blue .gift__m{background:var(--sky);color:var(--bark);
+  box-shadow:-9px 7px 0 -5px var(--sky-l),10px 6px 0 -5px var(--sky-l)}
+body.sub .copy{border-radius:22px 8px 22px 8px}
+body.sub .copy__h{border-bottom:var(--dash)}
+body.sub .copy__b{border-style:dashed}
+
+/* ================= 広い画面 ================= */
+@media (min-width:900px){
+  body.sub .detail__fig::after{left:-26px;bottom:-28px;width:84px;height:84px}
+}

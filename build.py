@@ -15,7 +15,10 @@ data/*.json を読んで、サイトのページを一式書き出します。
     news/<slug>/index.html          お知らせ詳細（1件ずつ）
 
 内容を直すときは data/ の JSON を編集して、このスクリプトを実行し、
-git にコミットするだけです。見た目は assets/style.css が持っています。
+git にコミットするだけです。見た目は assets/ の CSS が持っています。
+    style.css   レイアウト（並び・余白・文字の大きさ）
+    tree.css    全ページ共通の「木」のデザイン（色・線・形）。色を変えるときはここ
+    home.css    トップページだけの見た目
 """
 
 import datetime
@@ -149,8 +152,19 @@ def nav_href(h):
     return u("") + h if h.startswith("#") else u(h)
 
 
+# タブのアイコン：ロゴの木（全ページ共通）
+TREE_ICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28'>"
+             "<circle cx='7.5' cy='12.5' r='6.5' fill='%23B7CFA5'/>"
+             "<circle cx='16.5' cy='11.5' r='6.5' fill='%23C7D5B2'/>"
+             "<circle cx='12' cy='7' r='6.5' fill='%23BFD0AA'/>"
+             "<path d='M12 15v12M12 21l-4-3.5M12 19l4-3.5' stroke='%23A88E78' "
+             "stroke-width='1.8' stroke-linecap='round' fill='none'/></svg>")
+
+
 def shell(title, desc, body, extra_class="", head_extra=""):
     """ヘッダー・フッター・追従ボタンを含む、ページの外側。
+    extra_class は body の class。トップは "home"、ほかのページは "sub"
+    （お知らせだけ "sub sub--news" にして、ページ上部の帯を陽だまり色にする）。
     head_extra はトップページだけが使う（home.css の読み込み）。他のページは空のまま。"""
     draft = f'{"  "}<p class="draft">{e(site["draft_note"])}</p>\n' if site.get("draft") else ""
     nav_bar = "".join(f'<a href="{nav_href(h)}">{e(t)}</a>' for t, h, _ in NAV[:6])
@@ -172,11 +186,12 @@ def shell(title, desc, body, extra_class="", head_extra=""):
 <meta property="og:type" content="website">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#1E2430">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23A8C9E5'/><circle cx='16' cy='16' r='5' fill='%23FFFCF6'/></svg>">
+<link rel="icon" href="{TREE_ICON}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{u('assets/style.css')}">
+<link rel="stylesheet" href="{u('assets/tree.css')}">
 {head_extra}</head>
 <body{cls}>
 <header class="hd">
@@ -244,32 +259,31 @@ def crumb(*parts):
     return f'<nav class="crumb" aria-label="現在位置">{"".join(out)}</nav>'
 
 
-def page_head(cap, title, lead=""):
-    x = f'<p class="phead__x">{e(lead)}</p>' if lead else ""
-    return f"""      <div class="phead">
-        <span class="cap">{cap}</span>
-        <h1 class="phead__t">{e(title)}</h1>
-        {x}
-      </div>"""
-
-
-# ================================================================ トップページ
-# トップページだけが読み込む見た目（v3「木」のデザイン）。他のページには付けない。
-HOME_HEAD = ('<link rel="stylesheet" href="assets/home.css">\n'
-             '<link rel="icon" href="data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' '
-             'viewBox=\'0 0 24 28\'><circle cx=\'7.5\' cy=\'12.5\' r=\'6.5\' fill=\'%23B7CFA5\'/>'
-             '<circle cx=\'16.5\' cy=\'11.5\' r=\'6.5\' fill=\'%23C7D5B2\'/>'
-             '<circle cx=\'12\' cy=\'7\' r=\'6.5\' fill=\'%23BFD0AA\'/>'
-             '<path d=\'M12 15v12M12 21l-4-3.5M12 19l4-3.5\' stroke=\'%23A88E78\' '
-             'stroke-width=\'1.8\' stroke-linecap=\'round\' fill=\'none\'/></svg>">\n')
-
-
 def hl(text, word, raw=False):
     """見出しのキーワード1語だけに色を付ける（文言は変えない）。
     word が見つからなければそのまま返す。raw=True は HTML をそのまま使う箇所（導入のひとこと）用。"""
     s = text if raw else e(text)
     w = word if raw else e(word)
     return s.replace(w, f'<span class="hl">{w}</span>', 1) if w in s else s
+
+
+def page_head(cap, title, lead="", marks=()):
+    """下層ページの見出し。marks は色を付けるキーワード（1〜2語。文言は変えない）"""
+    x = f'<p class="phead__x">{e(lead)}</p>' if lead else ""
+    t = e(title)
+    for w in marks:
+        t = hl(t, e(w), raw=True)
+    return f"""      <div class="phead">
+        <span class="cap">{cap}</span>
+        <h1 class="phead__t">{t}</h1>
+        {x}
+      </div>"""
+
+
+# ================================================================ トップページ
+# トップページだけが読み込む見た目（ヒーロー・節ごとの帯・葉っぱ型の写真など）。
+# 色やモチーフ、ヘッダー・フッターなどは全ページ共通の tree.css にある。
+HOME_HEAD = '<link rel="stylesheet" href="assets/home.css">\n'
 
 
 def stage_slides():
@@ -603,7 +617,7 @@ def build_events():
     body = f"""<main class="page">
   <div class="wrap wrap--n">
 {crumb(("イベント", None))}
-{page_head('Event', 'イベント', '参加したいものが見つかったら、申し込みのご案内をご覧ください。')}
+{page_head('Event', 'イベント', '参加したいものが見つかったら、申し込みのご案内をご覧ください。', ['イベント'])}
 {chr(10).join(blocks)}
   </div>
 </main>"""
@@ -637,8 +651,8 @@ def build_event(ev):
   <div class="wrap wrap--n">
 {crumb(("イベント", u("events/")), (ev["title"], None))}
   </div>
-  <div class="wrap">
-    {pic(ev.get('pic', 'ev1'), 'detail__pic')}
+  <div class="wrap detail__hero">
+    <div class="detail__fig">{pic(ev.get('pic', 'ev1'), 'detail__pic')}</div>
   </div>
   <div class="wrap wrap--n">
     <article class="detail">
@@ -665,14 +679,14 @@ def build_news():
     body = f"""<main class="page">
   <div class="wrap wrap--n">
 {crumb(("お知らせ", None))}
-{page_head('News', 'お知らせ', 'キズナからのご案内です。')}
+{page_head('News', 'お知らせ', 'キズナからのご案内です。', ['お知らせ'])}
     <div class="nw">
 {news_items(100)}
     </div>
   </div>
 </main>"""
     return shell(f"お知らせ｜{site['name']}",
-                 "キズナからのお知らせ一覧です。", body, "sub")
+                 "キズナからのお知らせ一覧です。", body, "sub sub--news")
 
 
 def build_news_item(n):
@@ -696,7 +710,7 @@ def build_news_item(n):
     </article>
   </div>
 </main>"""
-    return shell(f"{n['title']}｜{site['name']}", n.get("body", ""), body, "sub")
+    return shell(f"{n['title']}｜{site['name']}", n.get("body", ""), body, "sub sub--news")
 
 
 # ================================================================ キズナクラブ
@@ -761,7 +775,7 @@ def build_club():
     body = f"""<main class="page">
   <div class="wrap wrap--n">
 {crumb(("キズナクラブ", None))}
-{page_head('Club', 'キズナクラブ', club['lead'])}
+{page_head('Club', 'キズナクラブ', club['lead'], ['クラブ'])}
   </div>
 
   <div class="wrap">
@@ -833,7 +847,7 @@ def build_point():
     body = f"""<main class="page">
   <div class="wrap wrap--n">
 {crumb(("キズナカード・キズナポイント", None))}
-{page_head('Point', 'キズナカード・キズナポイント', point_d['lead'])}
+{page_head('Point', 'キズナカード・キズナポイント', point_d['lead'], ['カード', 'ポイント'])}
 
     <h2 class="group">キズナカードとは</h2>
     {about}
@@ -898,7 +912,7 @@ def build_staff():
     body = f"""<main class="page">
   <div class="wrap wrap--n">
 {crumb(("スタッフ・サポーター紹介", None))}
-{page_head('Member', 'スタッフ・サポーター紹介', staff_d['lead'])}
+{page_head('Member', 'スタッフ・サポーター紹介', staff_d['lead'], ['スタッフ', 'サポーター'])}
 
     <h2 class="group">{e(st['title'])}</h2>
     <p class="sect__x">{e(st['text'])}</p>
@@ -941,7 +955,7 @@ def build_shindan():
   <div class="wrap wrap--n">
 {crumb(("キズナ式 才能診断", None))}
     <span class="cap">{e(shindan['label'])}</span>
-    <h1 class="phead__t" style="margin-top:10px">{e(shindan['title'])}</h1>
+    <h1 class="phead__t" style="margin-top:10px">{hl(shindan['title'], '才能診断')}</h1>
     <p class="shin__sub">{e(shindan['sub'])}</p>
     <p class="phead__x" style="max-width:38em">{e(shindan['lead'])}</p>
 
